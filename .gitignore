@@ -1,4 +1,8 @@
-.target
-*.log
-.idea
+# Android Studio
+.gradle/
+.idea/
+build/
+build.gradle
+gradlew
+gradlew.bat
 *.iml

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="gov.smart.health.activity.HomeActivity">
+
+    <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/home_tabHost">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_above="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </FrameLayout>
+            <LinearLayout
+                android:id="@+id/line"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/blackColor"
+                android:layout_above="@android:id/tabs">
+
+            </LinearLayout>
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"></TabWidget>
+        </RelativeLayout>
+    </TabHost>
+</RelativeLayout>
