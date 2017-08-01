@@ -1,0 +1,40 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="gov.smart.health.fragment.SportFragment">
+    <LinearLayout
+        android:id="@+id/activity_start"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.google.vr.sdk.samples.simplevideowidget.StartActivity">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/et_link" />
+        <Button
+            android:text="SetDefaultLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_default_link" />
+        <Button
+            android:text="ClearDefaultLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_clear_default_link" />
+        <Button
+            android:text="PlayFromLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_link" />
+
+        <Button
+            android:text="PlayFromLocalFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_default" />
+
+    </LinearLayout>
+
+</FrameLayout>

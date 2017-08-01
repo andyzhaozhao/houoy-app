@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="登录"
+        android:textColor="@color/blackColor"
+        android:id="@+id/title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="@dimen/top_margin"
+        android:paddingBottom="@dimen/top_margin"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/image_main"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_below="@+id/title"
+        android:src="@mipmap/login_main" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_name"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:hint="用户名/手机号/邮箱"
+        android:layout_below="@+id/image_main"
+    />
+     <EditText
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:inputType="textPassword"
+         android:ems="10"
+         android:id="@+id/user_pwd"
+         android:hint="密码"
+         android:layout_below="@+id/user_name"
+         android:layout_marginTop="10dp"
+         android:layout_marginRight="20dp"
+         android:layout_marginLeft="20dp" />
+
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:layout_marginRight="20dp"
+           android:layout_marginLeft="20dp"
+           android:id="@+id/rl_login"
+           android:layout_below="@+id/user_pwd">
+
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="登录"
+               android:id="@+id/btn_login"
+                />
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="注册"
+               android:id="@+id/btn_register"
+               android:layout_alignParentRight="true"
+                />
+       </RelativeLayout>
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:layout_marginRight="20dp"
+           android:layout_marginLeft="20dp"
+           android:layout_below="@+id/rl_login">
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="忘记密码"
+               android:id="@+id/btn_reset_pwd"
+               />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="游客登录"
+               android:id="@+id/btn_no_login"
+               android:layout_alignParentRight="true"
+               />
+       </RelativeLayout>
+
+   </RelativeLayout>
+
+</ScrollView>
+
+
+</RelativeLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_toRightOf="@+id/event_item_img"
+        android:layout_toLeftOf="@+id/event_item_array"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/list_margin"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/item_date"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="@color/textColor"
+            android:text="运动时间"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/item_cal"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:text="消耗能量"/>
+    </LinearLayout>
+</LinearLayout>
