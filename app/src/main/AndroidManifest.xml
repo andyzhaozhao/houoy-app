@@ -47,7 +47,10 @@
 
         <activity android:name=".activity.message.MessageActivity" />
         <activity android:name=".activity.login.ResetPwdActivity" />
-        <activity android:name=".activity.vr.ShareActivity"></activity>
+        <activity android:name=".activity.vr.ShareActivity" />
+        <activity android:name=".activity.message.FriendsActivity" />
+        <activity android:name=".activity.message.FriendInfoActivity" />
+        <activity android:name=".activity.message.NearlyActivity"></activity>
     </application>
 
 </manifest>
