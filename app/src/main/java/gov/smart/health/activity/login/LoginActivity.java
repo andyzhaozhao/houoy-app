@@ -69,7 +69,9 @@ public class LoginActivity extends AppCompatActivity {
         userResetPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(),ResetPwdActivity.class);
+                startActivity(intent);
             }
         });
 

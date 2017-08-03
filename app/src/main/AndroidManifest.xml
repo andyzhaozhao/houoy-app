@@ -45,7 +45,9 @@
             android:name="io.fabric.ApiKey"
             android:value="d31bd770eb37b494636da1fa59c63570efd684df" />
 
-        <activity android:name=".activity.message.MessageActivity"></activity>
+        <activity android:name=".activity.message.MessageActivity" />
+        <activity android:name=".activity.login.ResetPwdActivity" />
+        <activity android:name=".activity.vr.ShareActivity"></activity>
     </application>
 
 </manifest>

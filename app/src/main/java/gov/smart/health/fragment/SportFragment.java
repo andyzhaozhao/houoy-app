@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.vr.ShareActivity;
 import gov.smart.health.activity.vr.VRPlayerActivity;
 
 public class SportFragment extends Fragment {
@@ -109,6 +110,15 @@ public class SportFragment extends Fragment {
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), "Input Error Link", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        rootView.findViewById(R.id.btn_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ShareActivity.class);
+                startActivity(intent);
             }
         });
         return rootView;
