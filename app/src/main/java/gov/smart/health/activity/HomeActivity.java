@@ -34,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
 
         mTabHost.addTab(mTabHost.newTabSpec("Sport").setIndicator(getItemView("运动",android.R.drawable.ic_menu_agenda)).setContent(android.R.id.tabcontent));
         mTabHost.addTab(mTabHost.newTabSpec("Find").setIndicator(getItemView("发现",android.R.drawable.ic_menu_search)).setContent(android.R.id.tabcontent));
-        mTabHost.addTab(mTabHost.newTabSpec("Message").setIndicator(getItemView("消息",android.R.drawable.ic_menu_info_details)).setContent(android.R.id.tabcontent));
+        //mTabHost.addTab(mTabHost.newTabSpec("Message").setIndicator(getItemView("消息",android.R.drawable.ic_menu_info_details)).setContent(android.R.id.tabcontent));
         mTabHost.addTab(mTabHost.newTabSpec("Self").setIndicator(getItemView("我的",android.R.drawable.ic_menu_myplaces)).setContent(android.R.id.tabcontent));
 
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
