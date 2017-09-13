@@ -36,6 +36,14 @@ public class FriendsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        findViewById(R.id.rl_add_friend).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getApplication(), AddFriendActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mSwiperefreshlayout = (SwipeRefreshLayout)findViewById(R.id.friend_srl);
         RecyclerView recyclerView=(RecyclerView)this.findViewById(R.id.friend_list);

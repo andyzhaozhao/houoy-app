@@ -43,6 +43,5 @@ public class ResetPwdActivity extends AppCompatActivity {
 
             }
         });
-
     }
 }

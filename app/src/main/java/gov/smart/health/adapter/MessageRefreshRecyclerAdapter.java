@@ -1,7 +1,6 @@
 package gov.smart.health.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import gov.smart.health.R;
-import gov.smart.health.activity.message.MessageActivity;
 import gov.smart.health.model.MessageModel;
 
 /**
@@ -83,14 +81,14 @@ public class MessageRefreshRecyclerAdapter extends RecyclerView.Adapter<MessageR
             image = (ImageView)view.findViewById(R.id.message_item_img);
             title = (TextView)view.findViewById(R.id.message_item_title);
             content = (TextView)view.findViewById(R.id.message_item_content);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, MessageActivity.class);
-                    mContext.startActivity(intent);
-                }
-            });
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent();
+//                    intent.setClass(mContext, MessageActivity.class);
+//                    mContext.startActivity(intent);
+//                }
+//            });
         }
     }
 }

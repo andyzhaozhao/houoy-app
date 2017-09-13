@@ -15,6 +15,7 @@
                     android:layout_width="wrap_content"
                     android:text="返回"
                     android:id="@+id/btn_back"
+                    android:visibility="invisible"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -100,7 +101,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_height="200dp"
                     android:ems="10"
-                    android:textAlignment="inherit"
+                    android:gravity="start"
                     android:hint="告诉大家点什么吧！"
                     android:inputType="textMultiLine" />
                 <RelativeLayout

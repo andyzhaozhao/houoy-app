@@ -16,6 +16,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         View btnShare = findViewById(R.id.btn_share);
         View btnShareCancel = findViewById(R.id.btn_share_cancel);
         btnShare.setOnClickListener(this);
+        btnShareCancel.setOnClickListener(this);
     }
 
     @Override
@@ -26,6 +27,9 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 share.putExtra(Intent.EXTRA_TEXT,"Hello");
                 share.setType("text/plain");
                 startActivity(share);
+                break;
+            case R.id.btn_share_cancel:
+                finish();
                 break;
         }
     }
