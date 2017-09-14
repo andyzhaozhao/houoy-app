@@ -35,6 +35,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn_default" />
 
+        <Button
+            android:text="Share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_share" />
+
+        <Button
+            android:id="@+id/start_bluetooth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BlueTooth" />
     </LinearLayout>
 
 </FrameLayout>

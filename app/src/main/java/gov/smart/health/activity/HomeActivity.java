@@ -15,7 +15,7 @@ import gov.smart.health.R;
 import gov.smart.health.fragment.FindFragment;
 import gov.smart.health.fragment.MessageFragment;
 import gov.smart.health.fragment.SelfFragment;
-import gov.smart.health.fragment.SportFragment;
+import gov.smart.health.fragment.VRFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 switch (tabId){
                     case "Sport":
-                        fragment=new SportFragment();
+                        fragment=new VRFragment();
                         break;
                     case "Find":
                         fragment=new FindFragment();

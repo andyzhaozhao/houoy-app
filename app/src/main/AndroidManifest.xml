@@ -4,11 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
         android:name=".app.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/healthicon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
@@ -45,7 +47,19 @@
             android:name="io.fabric.ApiKey"
             android:value="d31bd770eb37b494636da1fa59c63570efd684df" />
 
-        <activity android:name=".activity.message.MessageActivity"></activity>
+        <activity android:name=".activity.message.MessageActivity" />
+        <activity android:name=".activity.login.ResetPwdActivity" />
+        <activity android:name=".activity.vr.ShareActivity" />
+        <activity android:name=".activity.message.FriendsActivity" />
+        <activity android:name=".activity.message.FriendInfoActivity" />
+        <activity android:name=".activity.message.NearlyActivity" />
+        <activity android:name=".activity.vr.BlueToothActivity" />
+        <activity android:name=".activity.vr.DeviceListActivity" />
+        <activity
+            android:name=".activity.vr.SelectParkActivity"
+            android:label="@string/title_activity_select_park"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.message.AddFriendActivity"></activity>
     </application>
 
 </manifest>

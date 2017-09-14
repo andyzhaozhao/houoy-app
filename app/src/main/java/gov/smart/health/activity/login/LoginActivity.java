@@ -8,12 +8,14 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.LoginEvent;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.HomeActivity;
+import gov.smart.health.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,10 +42,10 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (Utils.isEmpty(mUserName.getText().toString()) || Utils.isEmpty(mUserPwd.getText().toString())) {
-//                    Toast.makeText(getApplicationContext(), "请输入用户名或密码!", Toast.LENGTH_LONG).show();
-//                    return;
-//                }
+                if (Utils.isEmpty(mUserName.getText().toString()) || Utils.isEmpty(mUserPwd.getText().toString())) {
+                    Toast.makeText(getApplicationContext(), "请输入用户名或密码!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 LoginEvent loginEvent = new LoginEvent();
                 loginEvent.putSuccess(true);
                 loginEvent.putMethod("Android");
@@ -53,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
                 intent.setClass(getApplicationContext(),HomeActivity.class);
                 startActivity(intent);
                 finish();
-                //TODO login
             }
         });
 
@@ -69,14 +70,24 @@ public class LoginActivity extends AppCompatActivity {
         userResetPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(),ResetPwdActivity.class);
+                startActivity(intent);
             }
         });
 
         userNoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LoginEvent loginEvent = new LoginEvent();
+                loginEvent.putSuccess(false);
+                loginEvent.putMethod("Android");
+                Answers.getInstance().logLogin(loginEvent);
 
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(),HomeActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

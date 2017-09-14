@@ -1,13 +1,20 @@
-package gov.smart.health.activity.vr;
+package gov.smart.health.fragment;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,10 +26,34 @@ import com.google.vr.sdk.widgets.video.VrVideoView;
 import java.io.IOException;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.vr.SelectParkActivity;
+import gov.smart.health.activity.vr.ShareActivity;
+import gov.smart.health.activity.vr.VRPlayerActivity;
+import gov.smart.health.adapter.VRPageAdapter;
 
-public class VRPlayerActivity extends AppCompatActivity {
+import static com.google.vr.cardboard.ThreadUtils.runOnUiThread;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link VRFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link VRFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class VRFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
     private static final String TAG = VRPlayerActivity.class.getSimpleName();
+
+    public static final int SELECT_PARK_REQUEST_CODE = 1;
 
     /**
      * Preserve the video's state when rotating the phone.
@@ -66,30 +97,71 @@ public class VRPlayerActivity extends AppCompatActivity {
      */
     private SeekBar seekBar;
     private TextView statusText;
-
+    private Button mSelectPark;
     private ImageButton volumeToggle;
     private boolean isMuted;
-
+    private ViewPager mViewPager;
     /**
      * By default, the video will start playing as soon as it is loaded. This can be changed by using
      * {@link VrVideoView#pauseVideo()} after loading the video.
      */
     private boolean isPaused = false;
 
+    public VRFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment VRFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static VRFragment newInstance(String param1, String param2) {
+        VRFragment fragment = new VRFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vrplayer);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-        seekBar = (SeekBar) findViewById(R.id.seek_bar);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootview = inflater.inflate(R.layout.fragment_vr, container, false);
+
+        seekBar = (SeekBar) rootview.findViewById(R.id.seek_bar);
         seekBar.setOnSeekBarChangeListener(new SeekBarListener());
-        statusText = (TextView) findViewById(R.id.status_text);
+        statusText = (TextView) rootview.findViewById(R.id.status_text);
 
+        mSelectPark = (Button)rootview.findViewById(R.id.select_park);
+
+        mSelectPark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SelectParkActivity.class);
+                startActivityForResult(intent,SELECT_PARK_REQUEST_CODE);
+            }
+        });
         // Bind input and output objects for the view.
-        videoWidgetView = (VrVideoView) findViewById(R.id.video_view);
+        videoWidgetView = (VrVideoView) rootview.findViewById(R.id.video_view);
         videoWidgetView.setEventListener(new ActivityEventListener());
-
-        volumeToggle = (ImageButton) findViewById(R.id.volume_toggle);
+        volumeToggle = (ImageButton) rootview.findViewById(R.id.volume_toggle);
         volumeToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,21 +172,41 @@ public class VRPlayerActivity extends AppCompatActivity {
         loadVideoStatus = LOAD_VIDEO_STATUS_UNKNOWN;
 
         // Initial launch of the App or an Activity recreation due to rotation.
-        handleIntent(getIntent());
+        handleIntent(getActivity().getIntent());
+
+        mViewPager = (ViewPager) rootview.findViewById(R.id.viewpager);
+        mViewPager.setAdapter(new VRPageAdapter(getActivity(),mViewPager));
+
+        mViewPager.setCurrentItem(Integer.MAX_VALUE/2 - (Integer.MAX_VALUE/2)%4);
+
+        return rootview;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
     /**
-     * Called when the Activity is already running and it's given a new intent.
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
      */
-    @Override
-    protected void onNewIntent(Intent intent) {
-        Log.i(TAG, this.hashCode() + ".onNewIntent()");
-        // Save the intent. This allows the getIntent() call in onCreate() to use this new Intent during
-        // future invocations.
-        setIntent(intent);
-        // Load the new video.
-        handleIntent(intent);
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
+
 
     public int getLoadVideoStatus() {
         return loadVideoStatus;
@@ -164,30 +256,7 @@ public class VRPlayerActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putLong(STATE_PROGRESS_TIME, videoWidgetView.getCurrentPosition());
-        savedInstanceState.putLong(STATE_VIDEO_DURATION, videoWidgetView.getDuration());
-        savedInstanceState.putBoolean(STATE_IS_PAUSED, isPaused);
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        long progressTime = savedInstanceState.getLong(STATE_PROGRESS_TIME);
-        videoWidgetView.seekTo(progressTime);
-        seekBar.setMax((int) savedInstanceState.getLong(STATE_VIDEO_DURATION));
-        seekBar.setProgress((int) progressTime);
-
-        isPaused = savedInstanceState.getBoolean(STATE_IS_PAUSED);
-        if (isPaused) {
-            videoWidgetView.pauseVideo();
-        }
-    }
-
-    @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         // Prevent the view from rendering continuously when in the background.
         videoWidgetView.pauseRendering();
@@ -197,7 +266,7 @@ public class VRPlayerActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         // Resume the 3D rendering.
         videoWidgetView.resumeRendering();
@@ -206,7 +275,7 @@ public class VRPlayerActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         // Destroy the widget and free memory.
         videoWidgetView.shutdown();
         super.onDestroy();
@@ -217,6 +286,7 @@ public class VRPlayerActivity extends AppCompatActivity {
             videoWidgetView.playVideo();
         } else {
             videoWidgetView.pauseVideo();
+            showDialog();
         }
         isPaused = !isPaused;
         updateStatusText();
@@ -254,7 +324,7 @@ public class VRPlayerActivity extends AppCompatActivity {
     /**
      * Listen to the important events from widget.
      */
-    private class ActivityEventListener extends VrVideoEventListener  {
+    private class ActivityEventListener extends VrVideoEventListener {
         /**
          * Called by video widget on the UI thread when it's done loading the video.
          */
@@ -274,7 +344,7 @@ public class VRPlayerActivity extends AppCompatActivity {
             // An error here is normally due to being unable to decode the video format.
             loadVideoStatus = LOAD_VIDEO_STATUS_ERROR;
             Toast.makeText(
-                    VRPlayerActivity.this, "Error loading video: " + errorMessage, Toast.LENGTH_LONG)
+                    getActivity(), "Error loading video: " + errorMessage, Toast.LENGTH_LONG)
                     .show();
             Log.e(TAG, "Error loading video: " + errorMessage);
         }
@@ -300,9 +370,33 @@ public class VRPlayerActivity extends AppCompatActivity {
         @Override
         public void onCompletion() {
             videoWidgetView.seekTo(0);
+            showDialog();
         }
     }
 
+    private void showDialog(){
+        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());  //先得到构造器
+        builder.setTitle("提示"); //设置标题
+        builder.setMessage("是否分享本次运动结果?"); //设置内容
+        builder.setIcon(R.mipmap.healthicon);//设置图标，图片id即可
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() { //设置确定按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); //关闭dialog
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ShareActivity.class);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() { //设置取消按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        //参数都设置完成了，创建并显示出来
+        builder.create().show();
+    }
     /**
      * Helper class to manage threading.
      */
@@ -316,7 +410,7 @@ public class VRPlayerActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(VRPlayerActivity.this, "Play the video from local!", Toast.LENGTH_LONG)
+                            Toast.makeText(getActivity(), "Play the video from local!", Toast.LENGTH_LONG)
                                     .show();
                         }
                     });
@@ -329,7 +423,7 @@ public class VRPlayerActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(VRPlayerActivity.this, "Play the video from "+ uri, Toast.LENGTH_LONG)
+                            Toast.makeText(getActivity(), "Play the video from "+ uri, Toast.LENGTH_LONG)
                                     .show();
                         }
                     });
@@ -343,7 +437,7 @@ public class VRPlayerActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Toast
-                                .makeText(VRPlayerActivity.this, "Error opening file. ", Toast.LENGTH_LONG)
+                                .makeText(getActivity(), "Error opening file. ", Toast.LENGTH_LONG)
                                 .show();
                     }
                 });
@@ -354,4 +448,10 @@ public class VRPlayerActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getActivity(), "select new link", Toast.LENGTH_LONG)
+                .show();
+    }
 }

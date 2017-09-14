@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="gov.smart.health.activity.login.ResetPwdActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_height="match_parent"
+        android:fillViewport="false">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/ll_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/top_margin"
+                android:paddingBottom="@dimen/top_margin"
+                android:layout_alignParentTop="true"
+                >
+                <Button
+                    android:layout_width="wrap_content"
+                    android:text="返回"
+                    android:id="@+id/btn_back"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="重置密码"
+                    android:textColor="@color/blackColor"
+                    android:id="@+id/title"
+                    android:layout_centerInParent="true"
+                    />
+            </RelativeLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:hint="手机号码"
+                android:id="@+id/reset_user_phone"
+                android:layout_below="@id/ll_title"
+                android:paddingTop="@dimen/top_margin"
+                android:paddingBottom="@dimen/top_margin"/>
+            <LinearLayout
+                android:id="@+id/ll_verify"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reset_user_phone"
+                android:paddingTop="@dimen/top_margin"
+                android:paddingBottom="@dimen/top_margin">
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reset_verify"
+                    android:hint="输入验证码"
+                    />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="获取验证码"
+                    android:id="@+id/btn_verify_get"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <EditText
+                android:layout_below="@id/ll_verify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:hint="密码"
+                android:id="@+id/reset_first_pwd"
+                />
+            <EditText
+                android:layout_below="@id/reset_first_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:hint="确认密码"
+                android:id="@+id/reset_second_pwd"
+                />
+
+            <Button
+                android:layout_below="@id/reset_second_pwd"
+                android:layout_width="wrap_content"
+                android:text="注册"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/btn_reset_user"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
