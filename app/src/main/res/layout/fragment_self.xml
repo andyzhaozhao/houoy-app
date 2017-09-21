@@ -18,10 +18,10 @@
     <ImageView
         android:id="@+id/self_bgimg"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@mipmap/img1" />
+        android:src="@mipmap/sport_setting" />
             <ImageView
                 android:id="@+id/self_self_img"
                 android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
                 android:layout_centerInParent="true"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/setting_selected_icon" />
 
             <ImageView
                 android:id="@+id/btn_self_setting"
@@ -47,7 +47,7 @@
                 android:layout_centerHorizontal="true"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="10dp">
                 <TextView
                     android:id="@+id/tv_self_name"
                     android:layout_width="wrap_content"
@@ -62,8 +62,8 @@
                     android:textAlignment="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/grayColor"
-                    android:text="我就是我，不一样的烟火" />
+                    android:text="我就是我，不一样的烟火"
+                    android:layout_marginBottom="5dp"/>
             </LinearLayout>
 
         </RelativeLayout>
@@ -151,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="最近运动时间：" />
+                android:text="运动历史纪录" />
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -169,6 +169,7 @@
             android:id="@+id/rl_self_rank"
             android:orientation="horizontal"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_margin="5dp"
             android:layout_height="wrap_content">
             <TextView
@@ -186,6 +187,7 @@
                 android:src="@android:drawable/ic_menu_send" />
         </RelativeLayout>
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/dash_line" />
@@ -194,6 +196,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_margin="5dp"
+            android:visibility="gone"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
@@ -211,6 +214,7 @@
                 android:src="@android:drawable/ic_menu_send" />
         </RelativeLayout>
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/dash_line" />

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="gov.smart.health.activity.self.UserSettingActivity">
+    tools:context="gov.smart.health.activity.self.DeviceSettingActivity">
     <RelativeLayout
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:text="返回"
             android:id="@+id/btn_back"
+            android:visibility="gone"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
@@ -34,32 +35,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <RelativeLayout
-        android:id="@+id/btn_setting_setting"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_margin="5dp"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="基本设置" />
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@android:drawable/ic_menu_send" />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/dash_line" />
         <RelativeLayout
-            android:id="@+id/btn_setting_device"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_margin="5dp"
@@ -68,7 +44,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="设备设置" />
+                android:textStyle="bold"
+                android:text="VR眼镜" />
+        </RelativeLayout>
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/dash_line" />
+        <RelativeLayout
+            android:id="@+id/btn_setting_setting"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:text="暴风小D" />
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -82,30 +76,47 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/dash_line" />
-    <RelativeLayout
-        android:id="@+id/btn_setting_help"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_margin="5dp"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="帮助和关于" />
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@android:drawable/ic_menu_send" />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/dash_line" />
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:text="智能手环" />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/dash_line" />
+        <RelativeLayout
+            android:id="@+id/btn_setting_help"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:text="小米手环" />
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@android:drawable/ic_menu_send" />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@drawable/dash_line" />
         <RelativeLayout
             android:id="@+id/btn_setting_update"
             android:orientation="horizontal"
@@ -115,8 +126,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:layout_centerVertical="true"
-                android:text="版本更新" />
+                android:text="专用手环" />
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -132,24 +144,4 @@
             android:background="@drawable/dash_line" />
     </LinearLayout>
     </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/btn_setting_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="退出账号"/>
-        <TextView
-            android:id="@+id/setting_tv_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/blackColor"
-            android:text="V1.0"/>
-    </LinearLayout>
 </RelativeLayout>

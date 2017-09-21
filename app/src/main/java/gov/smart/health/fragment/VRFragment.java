@@ -370,6 +370,7 @@ public class VRFragment extends Fragment {
         @Override
         public void onCompletion() {
             videoWidgetView.seekTo(0);
+            videoWidgetView.pauseVideo();
             showDialog();
         }
     }
