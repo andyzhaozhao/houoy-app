@@ -47,6 +47,13 @@
                         android:layout_height="wrap_content" />
                 </RadioGroup>
             </RelativeLayout>
+            <Button
+                android:id="@+id/find_share"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分享"/>
             <LinearLayout
                 android:id="@+id/ll_find_center"
                 android:layout_below="@+id/rl_page_view"

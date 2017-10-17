@@ -166,17 +166,16 @@
             android:layout_height="2dp"
             android:background="@drawable/dash_line" />
         <RelativeLayout
-            android:id="@+id/rl_self_rank"
+            android:id="@+id/rl_self_likes"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_margin="5dp"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="我的排名" />
+                android:text="我的关注" />check
             <ImageView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -187,12 +186,11 @@
                 android:src="@android:drawable/ic_menu_send" />
         </RelativeLayout>
         <View
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@drawable/dash_line" />
         <RelativeLayout
-            android:id="@+id/rl_self_likes"
+            android:id="@+id/rl_self_like"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_margin="5dp"
