@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "gov.smart.health"
-        minSdkVersion 19
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -41,7 +41,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8') {
         transitive = true;
     }
-    compile 'com.google.vr:sdk-videowidget:1.70.0'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'

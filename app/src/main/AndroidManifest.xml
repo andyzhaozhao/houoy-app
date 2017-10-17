@@ -49,14 +49,6 @@
         <activity android:name=".activity.find.LearningActivity" />
         <activity android:name=".activity.find.EventActivity" />
         <activity android:name=".activity.find.DetailActivity" />
-        <activity
-            android:name=".activity.vr.VRPlayerActivity"
-            android:label="@string/title_activity_vrplayer"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <category android:name="com.google.intent.category.CARDBOARD" />
-            </intent-filter>
-        </activity>
         <activity android:name=".activity.self.UserSettingActivity" />
         <activity android:name=".activity.self.UserSettingInfoActivity" />
         <activity android:name=".activity.self.SportHistoryListActivity" />

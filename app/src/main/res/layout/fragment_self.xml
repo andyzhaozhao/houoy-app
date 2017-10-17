@@ -37,9 +37,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginEnd="35dp"
-                android:layout_marginTop="32dp"
-                android:src="@drawable/quantum_ic_settings_white_24" />
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/settings_icon" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
