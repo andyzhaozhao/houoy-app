@@ -37,10 +37,14 @@ public class UserSettingInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //调用相册
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, IMAGE);
+                try {
+                    //调用相册
+                    Intent intent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, IMAGE);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
             }
         });
