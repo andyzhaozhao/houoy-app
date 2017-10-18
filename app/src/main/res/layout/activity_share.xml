@@ -111,13 +111,13 @@
                     android:layout_height="wrap_content">
                     <Button
                         android:id="@+id/btn_share"
-                        android:layout_alignParentStart="true"
+                        android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="分享"/>
                     <Button
                         android:id="@+id/btn_share_cancel"
-                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="取消"/>

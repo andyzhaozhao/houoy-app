@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +25,6 @@ public class LearningActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learning);
-        View btnBack = findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         mSwiperefreshlayout = (SwipeRefreshLayout)findViewById(R.id.learning_srl);
         RecyclerView recyclerView=(RecyclerView)this.findViewById(R.id.learning_list);
 

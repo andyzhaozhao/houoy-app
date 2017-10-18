@@ -1,5 +1,6 @@
 package gov.smart.health.activity.vr;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     private boolean needBufferAnim = true;
     private ImageView imgBuffer;                // 缓冲动画
     private ImageView imgBack;
+    private View mTitle;
     private RelativeLayout rlParent = null;
     protected int CurOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     private int SmallPlayH = 0;
@@ -100,6 +102,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         }
         if (isLandscape)
         {
+            mTitle.setVisibility(View.GONE);
             CurOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -117,6 +120,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         }
         else
         {
+            mTitle.setVisibility(View.VISIBLE);
             CurOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().addFlags(
@@ -135,6 +139,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
 
     private void initView()
     {
+        mTitle = findViewById(R.id.ll_title);
         rlParent = (RelativeLayout) findViewById(R.id.activity_rlParent);
         imgBuffer = (ImageView) findViewById(R.id.activity_imgBuffer);
         imgBack = (ImageView) findViewById(R.id.activity_imgBack);
@@ -211,7 +216,10 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                     break;
                 case UVMediaPlayer.STATE_ENDED:
                     //这里是循环播放，可根据需求更改
-                    mMediaplayer.replay();
+                    //mMediaplayer.replay();
+                    Intent intent = new Intent();
+                    intent.setClass(VTOVRPlayerActivity.this, ShareActivity.class);
+                    startActivity(intent);
                     break;
                 case UVMediaPlayer.TRACK_DISABLED:
                 case UVMediaPlayer.TRACK_DEFAULT:

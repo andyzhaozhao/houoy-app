@@ -29,7 +29,7 @@
             android:text="选择地点"
             android:textColor="@color/blackColor"
             android:id="@+id/select_park"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             />
     </RelativeLayout>
     <LinearLayout

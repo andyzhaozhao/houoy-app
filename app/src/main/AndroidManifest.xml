@@ -29,7 +29,8 @@
         android:windowSoftInputMode="adjustUnspecified|stateHidden">
         <activity
             android:name=".SplashActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,42 +41,87 @@
             android:name=".activity.login.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.login.RegisterActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.find.LearningActivity" />
-        <activity android:name=".activity.find.EventActivity" />
-        <activity android:name=".activity.find.DetailActivity" />
-        <activity android:name=".activity.self.UserSettingActivity" />
-        <activity android:name=".activity.self.UserSettingInfoActivity" />
-        <activity android:name=".activity.self.SportHistoryListActivity" />
+        <activity
+            android:name=".activity.HomeActivity"
+            android:screenOrientation="portrait" />s
+        <activity
+            android:name=".activity.find.LearningActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.find.EventActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.find.DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.self.UserSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.self.UserSettingInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.self.SportHistoryListActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="d31bd770eb37b494636da1fa59c63570efd684df" />
 
-        <activity android:name=".activity.message.MessageActivity" />
+        <activity
+            android:name=".activity.message.MessageActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.login.ResetPwdActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".activity.vr.ShareActivity" />
-        <activity android:name=".activity.message.FriendsActivity" />
-        <activity android:name=".activity.message.FriendInfoActivity" />
-        <activity android:name=".activity.message.NearlyActivity" />
-        <activity android:name=".activity.vr.BlueToothActivity" />
-        <activity android:name=".activity.vr.DeviceListActivity" />
+        <activity
+            android:name=".activity.vr.ShareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.message.FriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.message.FriendInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.message.NearlyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.vr.BlueToothActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.vr.DeviceListActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.vr.SelectParkActivity"
             android:label="@string/title_activity_select_park"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.message.AddFriendActivity" />
-        <activity android:name=".activity.self.DeviceSettingActivity" />
-        <activity android:name=".activity.vr.VTOVRPlayerActivity" />
-        <activity android:name=".activity.vr.SportAreaActivity"></activity>
+        <activity
+            android:name=".activity.message.AddFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.self.DeviceSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.vr.VTOVRPlayerActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden|navigation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.vr.SportAreaActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.self.SelectConditionActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
     </application>
 
 </manifest>
