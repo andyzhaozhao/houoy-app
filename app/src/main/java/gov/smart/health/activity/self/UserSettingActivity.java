@@ -16,7 +16,6 @@ public class UserSettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_setting);
-        View btnBack = findViewById(R.id.btn_back);
         View btnSetting = findViewById(R.id.btn_setting_setting);
         View btnDeviceSetting = findViewById(R.id.btn_setting_device);
 
@@ -26,12 +25,7 @@ public class UserSettingActivity extends AppCompatActivity {
         TextView version = (TextView)findViewById(R.id.setting_tv_version);
         version.setText("V"+Utils.getVersionName(getApplicationContext()));
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
 
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
