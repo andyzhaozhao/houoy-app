@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.message.FriendsActivity;
 import gov.smart.health.activity.self.SportHistoryListActivity;
 import gov.smart.health.activity.self.UserSettingActivity;
 
@@ -70,9 +71,15 @@ public class SelfFragment extends Fragment {
 
         View setting = rootView.findViewById(R.id.btn_self_setting);
         View history = rootView.findViewById(R.id.rl_self_history);
-        View rank = rootView.findViewById(R.id.rl_self_rank);
         View likes = rootView.findViewById(R.id.rl_self_likes);
-
+        likes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), FriendsActivity.class);
+                startActivity(intent);
+            }
+        });
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

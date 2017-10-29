@@ -33,22 +33,18 @@ public class UserSettingInfoActivity extends AppCompatActivity {
 
         View btnUpdate = findViewById(R.id.btn_update_user);
 
-        View btnBack = findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         btnIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //调用相册
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, IMAGE);
+                try {
+                    //调用相册
+                    Intent intent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, IMAGE);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
             }
         });

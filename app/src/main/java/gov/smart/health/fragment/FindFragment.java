@@ -13,6 +13,7 @@ import gov.smart.health.R;
 import gov.smart.health.activity.find.DetailActivity;
 import gov.smart.health.activity.find.EventActivity;
 import gov.smart.health.activity.find.LearningActivity;
+import gov.smart.health.activity.vr.ShareActivity;
 import gov.smart.health.adapter.HomePageAdapter;
 
 public class FindFragment extends Fragment {
@@ -59,10 +60,19 @@ public class FindFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_find, container, false);
+
+        rootView.findViewById(R.id.find_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(FindFragment.this.getActivity(), ShareActivity.class);
+                startActivity(intent);
+            }
+        });
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
         mViewPager.setAdapter(new HomePageAdapter(this,mViewPager));
 

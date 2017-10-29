@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import gov.smart.health.R;
-import gov.smart.health.fragment.VRFragment;
 
 public class SelectParkActivity extends AppCompatActivity {
 
@@ -21,7 +20,7 @@ public class SelectParkActivity extends AppCompatActivity {
                 Intent mIntent = new Intent();
                 mIntent.putExtra("link", "link");
                 // 设置结果，并进行传送
-                setResult(VRFragment.SELECT_PARK_REQUEST_CODE, mIntent);
+                setResult(0, mIntent);
                 finish();
             }
         });

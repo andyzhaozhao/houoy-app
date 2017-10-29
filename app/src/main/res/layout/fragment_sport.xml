@@ -2,50 +2,53 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="gov.smart.health.fragment.SportFragment">
-    <LinearLayout
-        android:id="@+id/activity_start"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.google.vr.sdk.samples.simplevideowidget.StartActivity">
-        <EditText
-            android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/top_margin"
+        android:paddingBottom="@dimen/top_margin"
+        android:layout_alignParentTop="true"
+        >
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:id="@+id/et_link" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="VR运动"
+            android:textColor="@color/blackColor"
+            android:id="@+id/title"
+            android:layout_centerInParent="true"
+            />
         <Button
-            android:text="SetDefaultLink"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_default_link" />
-        <Button
-            android:text="ClearDefaultLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_clear_default_link" />
-        <Button
-            android:text="PlayFromLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_link" />
-
-        <Button
-            android:text="PlayFromLocalFile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_default" />
-
-        <Button
-            android:text="Share"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_share" />
-
-        <Button
-            android:id="@+id/start_bluetooth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="BlueTooth" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="选择地点"
+            android:textColor="@color/blackColor"
+            android:id="@+id/select_park"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_below="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:background="@color/grayColor"
+        android:layout_margin="@dimen/list_margin"
+        android:layout_height="match_parent">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_vr_main"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_vr_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
-
+    </RelativeLayout>
 </FrameLayout>

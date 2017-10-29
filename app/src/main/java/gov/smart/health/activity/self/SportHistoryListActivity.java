@@ -1,5 +1,6 @@
 package gov.smart.health.activity.self;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -27,11 +28,13 @@ public class SportHistoryListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sport_history_list);
-        View btnBack = findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        View condition = findViewById(R.id.select_condition);
+        condition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent();
+                intent.setClass(getApplication(),SelectConditionActivity.class);
+                startActivityForResult(intent,0);
             }
         });
 
