@@ -3,7 +3,7 @@ package gov.smart.health.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by liuruiqiang on 11/5/17.
+ * Created by laoniu on 11/5/17.
  */
 
 public class LoginResultDataModel {
