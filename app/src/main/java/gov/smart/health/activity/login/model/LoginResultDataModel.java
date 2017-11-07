@@ -1,4 +1,4 @@
-package gov.smart.health.model;
+package gov.smart.health.activity.login.model;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -15,8 +15,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.LoginEvent;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -24,7 +22,7 @@ import org.json.JSONObject;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.HomeActivity;
-import gov.smart.health.model.LoginModel;
+import gov.smart.health.activity.login.model.LoginModel;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.Utils;
 
@@ -83,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Gson gson = new Gson();
                                 LoginModel model = gson.fromJson(response,LoginModel.class);
                                 if (model.success){
+
+
                                     Intent intent = new Intent();
                                     intent.setClass(getApplicationContext(),HomeActivity.class);
                                     startActivity(intent);
