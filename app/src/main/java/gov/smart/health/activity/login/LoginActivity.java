@@ -5,16 +5,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.LoginEvent;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.HomeActivity;
+import gov.smart.health.activity.login.model.LoginModel;
+import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.Utils;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,33 +37,67 @@ public class LoginActivity extends AppCompatActivity {
         mUserName = (TextView)findViewById(R.id.user_name);
         mUserPwd = (TextView)findViewById(R.id.user_pwd);
         Button login = (Button)findViewById(R.id.btn_login);
-        Button register = (Button)findViewById(R.id.btn_register);
 
         TextView userResetPwd = (TextView)findViewById(R.id.btn_reset_pwd);
-        TextView userNoLogin = (TextView)findViewById(R.id.btn_no_login);
+        TextView register = (TextView)findViewById(R.id.btn_no_register);
 
+        if(SHConstants.isDebug){
+            mUserName.setText("admin");
+            mUserPwd.setText("1");
+        }
         userResetPwd.setMovementMethod(LinkMovementMethod.getInstance());
         userResetPwd.setText(Html.fromHtml("<u>忘记密码</u>"));
 
-        userNoLogin.setMovementMethod(LinkMovementMethod.getInstance());
-        userNoLogin.setText(Html.fromHtml("<u>游客登录</u>"));
+        register.setMovementMethod(LinkMovementMethod.getInstance());
+        register.setText(Html.fromHtml("<u>注册</u>"));
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Utils.isEmpty(mUserName.getText().toString()) || Utils.isEmpty(mUserPwd.getText().toString())) {
+                String name = mUserName.getText().toString();
+                String pwd = mUserPwd.getText().toString();
+                if (Utils.isEmpty(name) || Utils.isEmpty(pwd)) {
                     Toast.makeText(getApplicationContext(), "请输入用户名或密码!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                LoginEvent loginEvent = new LoginEvent();
-                loginEvent.putSuccess(true);
-                loginEvent.putMethod("Android");
-                Answers.getInstance().logLogin(loginEvent);
 
-                Intent intent = new Intent();
-                intent.setClass(getApplicationContext(),HomeActivity.class);
-                startActivity(intent);
-                finish();
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put(SHConstants.LoginUserCode, name);
+                    jsonObject.put(SHConstants.LoginUserPassword, pwd);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                AndroidNetworking.post(SHConstants.SigninSystemMobile)
+                        .addJSONObjectBody(jsonObject) // posting json
+                        .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
+                        .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
+                        .setPriority(Priority.LOW)
+                        .build()
+                        .getAsString(new StringRequestListener() {
+                            @Override
+                            public void onResponse(String response) {
+                                Gson gson = new Gson();
+                                LoginModel model = gson.fromJson(response,LoginModel.class);
+                                if (model.success){
+
+
+                                    Intent intent = new Intent();
+                                    intent.setClass(getApplicationContext(),HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(getApplication(),"登录失败",Toast.LENGTH_LONG).show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(ANError anError) {
+                                Log.d("","response error"+anError.getErrorDetail());
+                                Toast.makeText(getApplication(),"登录失败",Toast.LENGTH_LONG).show();
+                            }
+                        });
             }
         });
 
@@ -76,19 +119,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        userNoLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginEvent loginEvent = new LoginEvent();
-                loginEvent.putSuccess(false);
-                loginEvent.putMethod("Android");
-                Answers.getInstance().logLogin(loginEvent);
-
-                Intent intent = new Intent();
-                intent.setClass(getApplicationContext(),HomeActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
     }
 }
