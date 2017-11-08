@@ -38,7 +38,7 @@ public class SportAreaActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
 
         List<SportAreaModel> list = new ArrayList<>();
-        SportAreaModel model = new SportAreaModel(R.mipmap.learning_center, "朝阳公园", "朝阳公园地址");
+        SportAreaModel model = new SportAreaModel(R.mipmap.healthicon, "朝阳公园", "朝阳公园地址");
         list.add(model);
 
         recyclerView.setAdapter(mAdapter = new SportAreaRefreshRecyclerAdapter(this, list));
@@ -50,7 +50,7 @@ public class SportAreaActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         List<SportAreaModel> list = new ArrayList<>();
-                        SportAreaModel model = new SportAreaModel(R.mipmap.learning_center, "朝阳公园", "朝阳公园地址");
+                        SportAreaModel model = new SportAreaModel(R.mipmap.healthicon, "朝阳公园", "朝阳公园地址");
                         list.add(model);
                         mAdapter.addNewDataLists(list);
                         mSwiperefreshlayout.setRefreshing(false);
@@ -68,7 +68,7 @@ public class SportAreaActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             List<SportAreaModel> list = new ArrayList<>();
-                            SportAreaModel model = new SportAreaModel(R.mipmap.learning_center, "朝阳公园", "朝阳公园地址");
+                            SportAreaModel model = new SportAreaModel(R.mipmap.healthicon, "朝阳公园", "朝阳公园地址");
                             list.add(model);
                             mAdapter.addDataLists(list);
                             mSwiperefreshlayout.setRefreshing(false);

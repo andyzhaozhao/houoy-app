@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.find.DetailActivity;
+import gov.smart.health.activity.login.LoginActivity;
+import gov.smart.health.utils.SHConstants;
+import gov.smart.health.utils.SharedPreferencesHelper;
 import gov.smart.health.utils.Utils;
 
 public class UserSettingActivity extends AppCompatActivity {
@@ -74,7 +77,11 @@ public class UserSettingActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                SharedPreferencesHelper.settingString(SHConstants.LoginUserPkPerson,"");
+                Intent intent = new Intent();
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setClass(getApplication(), LoginActivity.class);
+                startActivity(intent);
             }
         });
     }

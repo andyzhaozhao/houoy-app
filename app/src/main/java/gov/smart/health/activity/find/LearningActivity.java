@@ -39,7 +39,7 @@ public class LearningActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
 
         List<LearningModel> list = new ArrayList<>();
-        LearningModel model = new LearningModel(R.mipmap.learning_center,"there is title","there is context");
+        LearningModel model = new LearningModel(R.mipmap.healthicon,"there is title","there is context");
         list.add(model);
 
         recyclerView.setAdapter(mAdapter = new LearningRefreshRecyclerAdapter(this,list));
@@ -51,7 +51,7 @@ public class LearningActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         List<LearningModel> list = new ArrayList<>();
-                        LearningModel model = new LearningModel(R.mipmap.learning_center,"there is new title","there is new context");
+                        LearningModel model = new LearningModel(R.mipmap.healthicon,"there is new title","there is new context");
                         list.add(model);
                         mAdapter.addNewDataLists(list);
                         mSwiperefreshlayout.setRefreshing(false);
@@ -69,7 +69,7 @@ public class LearningActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             List<LearningModel> list = new ArrayList<>();
-                            LearningModel model = new LearningModel(R.mipmap.learning_center,"there is old title","there is old context");
+                            LearningModel model = new LearningModel(R.mipmap.healthicon,"there is old title","there is old context");
                             list.add(model);
                             mAdapter.addDataLists(list);
                             mSwiperefreshlayout.setRefreshing(false);

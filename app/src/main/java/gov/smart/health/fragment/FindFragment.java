@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import gov.smart.health.R;
 import gov.smart.health.activity.find.DetailActivity;
 import gov.smart.health.activity.find.EventActivity;
+import gov.smart.health.activity.find.FindShareActivity;
 import gov.smart.health.activity.find.LearningActivity;
 import gov.smart.health.activity.vr.ShareActivity;
 import gov.smart.health.adapter.HomePageAdapter;
@@ -69,7 +70,7 @@ public class FindFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(FindFragment.this.getActivity(), ShareActivity.class);
+                intent.setClass(FindFragment.this.getActivity(), FindShareActivity.class);
                 startActivity(intent);
             }
         });

@@ -96,7 +96,7 @@ public class SportFragment extends Fragment {
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this.getActivity()));
 
         List<SportModel> list = new ArrayList<>();
-        SportModel model = new SportModel(R.mipmap.sport_bg, "上肢伸展运动", "5分钟",true);
+        SportModel model = new SportModel(R.mipmap.healthicon, "上肢伸展运动", "5分钟",true);
         list.add(model);
 
         recyclerView.setAdapter(mAdapter = new SportRefreshRecyclerAdapter(this.getActivity(), list));
@@ -108,7 +108,7 @@ public class SportFragment extends Fragment {
                     @Override
                     public void run() {
                         List<SportModel> list = new ArrayList<>();
-                        SportModel model = new SportModel(R.mipmap.sport_bg, "上肢伸展运动", "5分钟",true);
+                        SportModel model = new SportModel(R.mipmap.healthicon, "上肢伸展运动", "5分钟",true);
                         list.add(model);
                         mAdapter.addNewDataLists(list);
                         mSwiperefreshlayout.setRefreshing(false);
@@ -126,7 +126,7 @@ public class SportFragment extends Fragment {
                         @Override
                         public void run() {
                             List<SportModel> list = new ArrayList<>();
-                            SportModel model = new SportModel(R.mipmap.sport_bg, "上肢伸展运动", "5分钟",false);
+                            SportModel model = new SportModel(R.mipmap.healthicon, "上肢伸展运动", "5分钟",false);
                             list.add(model);
                             mAdapter.addDataLists(list);
                             mSwiperefreshlayout.setRefreshing(false);

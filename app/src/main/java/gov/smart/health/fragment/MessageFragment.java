@@ -65,7 +65,6 @@ public class MessageFragment extends Fragment  implements View.OnClickListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -97,7 +96,7 @@ public class MessageFragment extends Fragment  implements View.OnClickListener {
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(getContext()));
 
         List<MessageModel> list = new ArrayList<>();
-        MessageModel model = new MessageModel(R.mipmap.learning_center,"there is message","there is context");
+        MessageModel model = new MessageModel(R.mipmap.healthicon,"there is message","there is context");
         list.add(model);
 
         recyclerView.setAdapter(mAdapter = new MessageRefreshRecyclerAdapter(getContext(),list));
@@ -109,7 +108,7 @@ public class MessageFragment extends Fragment  implements View.OnClickListener {
                     @Override
                     public void run() {
                         List<MessageModel> list = new ArrayList<>();
-                        MessageModel model = new MessageModel(R.mipmap.learning_center,"there is new message","there is new context");
+                        MessageModel model = new MessageModel(R.mipmap.healthicon,"there is new message","there is new context");
                         list.add(model);
                         mAdapter.addNewDataLists(list);
                         mSwiperefreshlayout.setRefreshing(false);
@@ -127,7 +126,7 @@ public class MessageFragment extends Fragment  implements View.OnClickListener {
                         @Override
                         public void run() {
                             List<MessageModel> list = new ArrayList<>();
-                            MessageModel model = new MessageModel(R.mipmap.learning_center,"there is old message","there is old context");
+                            MessageModel model = new MessageModel(R.mipmap.healthicon,"there is old message","there is old context");
                             list.add(model);
                             mAdapter.addDataLists(list);
                             mSwiperefreshlayout.setRefreshing(false);

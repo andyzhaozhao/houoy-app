@@ -30,7 +30,7 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:layout_below="@+id/title"
-        android:src="@mipmap/sport_setting" />
+        android:src="@drawable/login_bg" />
 
     <EditText
         android:layout_width="match_parent"
