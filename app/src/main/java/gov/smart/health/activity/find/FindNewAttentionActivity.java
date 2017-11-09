@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -21,32 +20,28 @@ import java.util.HashMap;
 import java.util.List;
 
 import gov.smart.health.R;
-import gov.smart.health.activity.find.model.FindEssayDataModel;
-import gov.smart.health.activity.find.model.FindEssayListDataModel;
-import gov.smart.health.activity.find.adapter.LearningRefreshRecyclerAdapter;
+import gov.smart.health.activity.find.adapter.AttentionRefreshRecyclerAdapter;
+import gov.smart.health.activity.find.model.FindAttentionDataModel;
+import gov.smart.health.activity.find.model.FindAttentionListDataModel;
 import gov.smart.health.utils.SHConstants;
 
-public class LearningActivity extends AppCompatActivity {
+public class FindNewAttentionActivity extends AppCompatActivity {
 
-    private LearningRefreshRecyclerAdapter mAdapter;
+    private AttentionRefreshRecyclerAdapter mAdapter;
     private SwipeRefreshLayout mSwiperefreshlayout;
     private int mLastVisibleItem;
     private LinearLayoutManager mLinearLayoutManager;
 
     private int page;
-    private FindEssayDataModel findModel = new FindEssayDataModel();
-    private List<FindEssayListDataModel> essayLists = new ArrayList<>();
+    private FindAttentionDataModel findModel = new FindAttentionDataModel();
+    private List<FindAttentionListDataModel> essayLists = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_learning);
-
-        String titleText = getIntent().getStringExtra(SHConstants.CommonTitle);
-        TextView title = (TextView) findViewById(R.id.title);
-        title.setText(titleText);
-        mSwiperefreshlayout = (SwipeRefreshLayout) findViewById(R.id.learning_srl);
-        RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.learning_list);
+        setContentView(R.layout.activity_attention);
+        mSwiperefreshlayout = (SwipeRefreshLayout) findViewById(R.id.attention_srl);
+        RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.attention_list);
 
         mSwiperefreshlayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         mSwiperefreshlayout.setColorSchemeResources(android.R.color.holo_blue_light,
@@ -58,7 +53,7 @@ public class LearningActivity extends AppCompatActivity {
         page = 0;
         this.loadData();
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
-        recyclerView.setAdapter(mAdapter = new LearningRefreshRecyclerAdapter(this, essayLists));
+        recyclerView.setAdapter(mAdapter = new AttentionRefreshRecyclerAdapter(this, essayLists));
 
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -90,14 +85,12 @@ public class LearningActivity extends AppCompatActivity {
     }
 
     public void loadData() {
-        String type = getIntent().getStringExtra(SHConstants.CommonPkType);
         HashMap<String,Object> map = new HashMap<>();
         map.put(SHConstants.CommonStart, SHConstants.EssayStart);
         map.put(SHConstants.CommonLength, SHConstants.EssayLength);
         map.put(SHConstants.CommonOrderColumnName, SHConstants.EssayOrderColumnName);
-        map.put(SHConstants.CommonPkType, type);
 
-        AndroidNetworking.get(SHConstants.EssayRetrieveMobile)
+        AndroidNetworking.get(SHConstants.RecordShareRetrieveMobile)
                 .addQueryParameter(map)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
@@ -107,7 +100,7 @@ public class LearningActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
-                        findModel = gson.fromJson(response, FindEssayDataModel.class);
+                        findModel = gson.fromJson(response, FindAttentionDataModel.class);
                         if (findModel.success) {
                             essayLists.addAll(findModel.resultData);
                             mAdapter.addDataLists(essayLists);

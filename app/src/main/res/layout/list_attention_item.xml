@@ -6,21 +6,20 @@
     android:padding="@dimen/list_margin">
 
     <ImageView
-        android:id="@+id/event_item_img"
+        android:id="@+id/attention_item_img"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerInside"
-        android:layout_alignParentLeft="true"
-        android:src="@mipmap/centerlearnings"/>
+        android:layout_alignParentLeft="true" />
     <LinearLayout
-        android:layout_toRightOf="@+id/event_item_img"
-        android:layout_toLeftOf="@+id/event_item_array"
+        android:layout_toRightOf="@+id/attention_item_img"
+        android:layout_toLeftOf="@+id/attention_item_array"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/list_margin"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/event_item_title"
+            android:id="@+id/attention_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -29,7 +28,7 @@
             android:text="应急避难所场所"/>
         <TextView
             android:layout_marginTop="@dimen/list_margin"
-            android:id="@+id/event_item_content"
+            android:id="@+id/attention_item_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"
@@ -37,7 +36,7 @@
             android:text="应急避难所描述内容"/>
     </LinearLayout>
     <ImageView
-        android:id="@+id/event_item_array"
+        android:id="@+id/attention_item_array"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

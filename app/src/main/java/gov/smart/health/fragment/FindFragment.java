@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import gov.smart.health.R;
-import gov.smart.health.activity.find.DetailActivity;
-import gov.smart.health.activity.find.EventActivity;
+import gov.smart.health.activity.find.FindAttentionActivity;
+import gov.smart.health.activity.find.FindNewAttentionActivity;
 import gov.smart.health.activity.find.FindShareActivity;
 import gov.smart.health.activity.find.LearningActivity;
-import gov.smart.health.activity.vr.ShareActivity;
 import gov.smart.health.adapter.HomePageAdapter;
+import gov.smart.health.utils.SHConstants;
 
 public class FindFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -121,6 +121,8 @@ public class FindFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(getContext(), LearningActivity.class);
+                intent.putExtra(SHConstants.CommonTitle, "教学中心");
+                intent.putExtra(SHConstants.CommonPkType, SHConstants.EssayType32);
                 startActivity(intent);
             }
         });
@@ -128,7 +130,9 @@ public class FindFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), EventActivity.class);
+                intent.setClass(getContext(), LearningActivity.class);
+                intent.putExtra(SHConstants.CommonTitle, "活动中心");
+                intent.putExtra(SHConstants.CommonPkType, SHConstants.EssayType33);
                 startActivity(intent);
             }
         });
@@ -139,7 +143,7 @@ public class FindFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), DetailActivity.class);
+                intent.setClass(getContext(), FindAttentionActivity.class);
                 startActivity(intent);
             }
         });
@@ -147,7 +151,7 @@ public class FindFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), DetailActivity.class);
+                intent.setClass(getContext(), FindNewAttentionActivity.class);
                 startActivity(intent);
             }
         });

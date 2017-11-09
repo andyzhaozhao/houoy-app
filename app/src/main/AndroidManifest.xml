@@ -55,7 +55,10 @@
             android:name=".activity.find.LearningActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.find.EventActivity"
+            android:name=".activity.find.FindAttentionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.find.FindNewAttentionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.find.DetailActivity"

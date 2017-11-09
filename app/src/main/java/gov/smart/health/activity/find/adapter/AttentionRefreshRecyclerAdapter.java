@@ -1,8 +1,9 @@
-package gov.smart.health.adapter;
+package gov.smart.health.activity.find.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,24 +14,25 @@ import java.util.List;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.find.DetailActivity;
-import gov.smart.health.model.LearningModel;
+import gov.smart.health.activity.find.model.FindAttentionListDataModel;
+import gov.smart.health.activity.find.model.FindEssayListDataModel;
 
 /**
  * Created by laoniu on 2017/07/23.
  */
 
-public class EventRefreshRecyclerAdapter extends RecyclerView.Adapter<EventRefreshRecyclerAdapter.ViewHolder>{
+public class AttentionRefreshRecyclerAdapter extends RecyclerView.Adapter<AttentionRefreshRecyclerAdapter.ViewHolder>{
     private LayoutInflater mInflater;
-    private List<LearningModel> mLists;
+    private List<FindAttentionListDataModel> mLists;
     private Context mContext;
 
-    public EventRefreshRecyclerAdapter(Context context , List<LearningModel> lists){
+    public AttentionRefreshRecyclerAdapter(Context context , List<FindAttentionListDataModel> lists){
         mContext = context;
         this.mInflater=LayoutInflater.from(context);
         this.mLists = lists;
     }
 
-    public void addDataLists(List<LearningModel> lists) {
+    public void addDataLists(List<FindAttentionListDataModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -39,7 +41,7 @@ public class EventRefreshRecyclerAdapter extends RecyclerView.Adapter<EventRefre
         notifyDataSetChanged();
     }
 
-    public void addNewDataLists(List<LearningModel> lists) {
+    public void addNewDataLists(List<FindAttentionListDataModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -50,7 +52,7 @@ public class EventRefreshRecyclerAdapter extends RecyclerView.Adapter<EventRefre
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = mInflater.inflate(R.layout.event_list_item,parent,false);
+        final View view = mInflater.inflate(R.layout.list_attention_item,parent,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -62,9 +64,9 @@ public class EventRefreshRecyclerAdapter extends RecyclerView.Adapter<EventRefre
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.image.setImageResource(mLists.get(position).getImageid());
-        holder.title.setText(mLists.get(position).getTitle());
-        holder.content.setText(mLists.get(position).getContent());
+        holder.image.setImageResource(R.mipmap.healthicon);
+        holder.title.setText(mLists.get(position).record_share_name);
+        holder.content.setText(Html.fromHtml(mLists.get(position).record_share_desc));
         holder.itemView.setTag(position);
     }
     @Override
@@ -80,9 +82,9 @@ public class EventRefreshRecyclerAdapter extends RecyclerView.Adapter<EventRefre
 
         public ViewHolder(View view){
             super(view);
-            image = (ImageView)view.findViewById(R.id.event_item_img);
-            title = (TextView)view.findViewById(R.id.event_item_title);
-            content = (TextView)view.findViewById(R.id.event_item_content);
+            image = (ImageView)view.findViewById(R.id.attention_item_img);
+            title = (TextView)view.findViewById(R.id.attention_item_title);
+            content = (TextView)view.findViewById(R.id.attention_item_content);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

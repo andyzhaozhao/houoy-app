@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="gov.smart.health.activity.find.EventActivity">
+    android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
@@ -17,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="活动中心"
+            android:text="关注中心"
             android:textColor="@color/blackColor"
             android:id="@+id/title"
             android:layout_centerInParent="true"
@@ -30,15 +29,16 @@
         android:layout_margin="@dimen/list_margin"
         android:layout_height="match_parent">
         <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/event_srl"
+            android:id="@+id/attention_srl"
             android:layout_height="match_parent"
             android:layout_width="match_parent">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/event_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-            </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/attention_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
+
 </RelativeLayout>

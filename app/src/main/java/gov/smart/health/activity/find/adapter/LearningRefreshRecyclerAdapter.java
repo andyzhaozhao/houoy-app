@@ -1,8 +1,9 @@
-package gov.smart.health.adapter;
+package gov.smart.health.activity.find.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,8 @@ import java.util.List;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.find.DetailActivity;
-import gov.smart.health.model.LearningModel;
+import gov.smart.health.activity.find.model.FindEssayListDataModel;
+import gov.smart.health.utils.SHConstants;
 
 /**
  * Created by laoniu on 2017/07/23.
@@ -21,16 +23,16 @@ import gov.smart.health.model.LearningModel;
 
 public class LearningRefreshRecyclerAdapter extends RecyclerView.Adapter<LearningRefreshRecyclerAdapter.ViewHolder>{
     private LayoutInflater mInflater;
-    private List<LearningModel> mLists;
+    private List<FindEssayListDataModel> mLists;
     private Context mContext;
 
-    public LearningRefreshRecyclerAdapter(Context context ,List<LearningModel> lists){
+    public LearningRefreshRecyclerAdapter(Context context ,List<FindEssayListDataModel> lists){
         mContext = context;
         this.mInflater=LayoutInflater.from(context);
         this.mLists = lists;
     }
 
-    public void addDataLists(List<LearningModel> lists) {
+    public void addDataLists(List<FindEssayListDataModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -39,7 +41,7 @@ public class LearningRefreshRecyclerAdapter extends RecyclerView.Adapter<Learnin
         notifyDataSetChanged();
     }
 
-    public void addNewDataLists(List<LearningModel> lists) {
+    public void addNewDataLists(List<FindEssayListDataModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -62,10 +64,20 @@ public class LearningRefreshRecyclerAdapter extends RecyclerView.Adapter<Learnin
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.image.setImageResource(mLists.get(position).getImageid());
-        holder.title.setText(mLists.get(position).getTitle());
-        holder.content.setText(mLists.get(position).getContent());
+        final FindEssayListDataModel model = mLists.get(position);
+        holder.image.setImageResource(R.mipmap.healthicon);
+        holder.title.setText(model.essay_name);
+        holder.content.setText(Html.fromHtml(model.essay_content));
         holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(SHConstants.PersonFlowModelKey,model);
+                intent.setClass(mContext, DetailActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -83,14 +95,6 @@ public class LearningRefreshRecyclerAdapter extends RecyclerView.Adapter<Learnin
             image = (ImageView)view.findViewById(R.id.learning_item_img);
             title = (TextView)view.findViewById(R.id.learning_item_title);
             content = (TextView)view.findViewById(R.id.learning_item_content);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, DetailActivity.class);
-                    mContext.startActivity(intent);
-                }
-            });
         }
     }
 }
