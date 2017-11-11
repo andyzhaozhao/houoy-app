@@ -1,4 +1,4 @@
-package gov.smart.health.adapter;
+package gov.smart.health.activity.self.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.self.model.LikeRecordHistoryInfoListModel;
 import gov.smart.health.model.SportHistoryModel;
 
 /**
@@ -18,16 +19,16 @@ import gov.smart.health.model.SportHistoryModel;
 
 public class SportHistoryRecyclerAdapter extends RecyclerView.Adapter<SportHistoryRecyclerAdapter.ViewHolder>{
     private LayoutInflater mInflater;
-    private List<SportHistoryModel> mLists;
+    private List<LikeRecordHistoryInfoListModel> mLists;
     private Context mContext;
 
-    public SportHistoryRecyclerAdapter(Context context , List<SportHistoryModel> lists){
+    public SportHistoryRecyclerAdapter(Context context , List<LikeRecordHistoryInfoListModel> lists){
         mContext = context;
         this.mInflater=LayoutInflater.from(context);
         this.mLists = lists;
     }
 
-    public void addDataLists(List<SportHistoryModel> lists) {
+    public void addDataLists(List<LikeRecordHistoryInfoListModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -36,7 +37,7 @@ public class SportHistoryRecyclerAdapter extends RecyclerView.Adapter<SportHisto
         notifyDataSetChanged();
     }
 
-    public void addNewDataLists(List<SportHistoryModel> lists) {
+    public void addNewDataLists(List<LikeRecordHistoryInfoListModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -59,8 +60,8 @@ public class SportHistoryRecyclerAdapter extends RecyclerView.Adapter<SportHisto
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.sportTime.setText(mLists.get(position).getSportDate());
-        holder.sportCal.setText(mLists.get(position).getSportCal());
+        holder.sportTime.setText(mLists.get(position).heart_rate);
+        holder.sportCal.setText(mLists.get(position).heart_rate_max);
         holder.itemView.setTag(position);
     }
     @Override

@@ -10,7 +10,7 @@ import gov.smart.health.activity.find.model.FindAttentionListDataModel;
  * Created by laoniu on 2017/10/27.
  */
 
-public class LikeRecordHistoryInfoModel {
+public class LikeAttentionInfoModel {
     @SerializedName("msg")
     public String msg;
     @SerializedName("success")
@@ -22,7 +22,7 @@ public class LikeRecordHistoryInfoModel {
     @SerializedName("resultDataType")
     public String resultDataType;
     @SerializedName("resultData")
-    public List<LikeRecordHistoryInfoListModel> resultData;
+    public List<LikeAttentionInfoListModel> resultData;
     @SerializedName("uploadId")
     public String uploadId;
     @SerializedName("def1")

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import gov.smart.health.R;
 import gov.smart.health.activity.find.DetailActivity;
 import gov.smart.health.activity.login.LoginActivity;
+import gov.smart.health.activity.self.model.MyPersonInfoListModel;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
 import gov.smart.health.utils.Utils;
@@ -34,6 +35,10 @@ public class UserSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
+                if(getIntent() != null) {
+                    MyPersonInfoListModel personModel = (MyPersonInfoListModel) getIntent().getSerializableExtra(SHConstants.SettingPersonModelKey);
+                    intent.putExtra(SHConstants.SettingPersonModelKey,personModel);
+                }
                 intent.setClass(getApplication(), UserSettingInfoActivity.class);
                 startActivity(intent);
             }

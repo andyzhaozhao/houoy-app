@@ -4,13 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import gov.smart.health.activity.find.model.FindAttentionListDataModel;
-
 /**
  * Created by laoniu on 2017/10/27.
  */
 
-public class LikeRecordHistoryInfoModel {
+public class MyPersonInfoModel {
     @SerializedName("msg")
     public String msg;
     @SerializedName("success")
@@ -22,7 +20,7 @@ public class LikeRecordHistoryInfoModel {
     @SerializedName("resultDataType")
     public String resultDataType;
     @SerializedName("resultData")
-    public List<LikeRecordHistoryInfoListModel> resultData;
+    public List<MyPersonInfoListModel> resultData;
     @SerializedName("uploadId")
     public String uploadId;
     @SerializedName("def1")
