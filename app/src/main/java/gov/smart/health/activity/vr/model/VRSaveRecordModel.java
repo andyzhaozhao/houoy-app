@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by laoniu on 11/8/17.
  */
-public class RegisterUserModel {
+public class VRSaveRecordModel {
     @SerializedName("msg")
     public String msg;
     @SerializedName("success")

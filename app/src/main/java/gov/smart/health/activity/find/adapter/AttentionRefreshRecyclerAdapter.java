@@ -16,6 +16,7 @@ import gov.smart.health.R;
 import gov.smart.health.activity.find.DetailActivity;
 import gov.smart.health.activity.find.model.FindAttentionListDataModel;
 import gov.smart.health.activity.find.model.FindEssayListDataModel;
+import gov.smart.health.utils.SHConstants;
 
 /**
  * Created by laoniu on 2017/07/23.
@@ -64,10 +65,21 @@ public class AttentionRefreshRecyclerAdapter extends RecyclerView.Adapter<Attent
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final FindAttentionListDataModel model = mLists.get(position);
+
         holder.image.setImageResource(R.mipmap.healthicon);
-        holder.title.setText(mLists.get(position).record_share_name);
-        holder.content.setText(Html.fromHtml(mLists.get(position).record_share_desc));
+        holder.title.setText(model.record_share_name);
+        holder.content.setText(Html.fromHtml(model.record_share_desc));
         holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(SHConstants.PersonAttentionModelKey,model);
+                intent.setClass(mContext, DetailActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
     @Override
     public int getItemCount() {

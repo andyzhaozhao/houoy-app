@@ -9,6 +9,9 @@ public class SHConstants {
     public static String BaseUrl8889 = "http://182.92.128.240:8889/api";
     public static String BaseUrl8888 = "http://182.92.128.240:8888/api";
     public static String SigninSystemMobile = SHConstants.BaseUrl8889 + "/login/signinSystemMobile";
+    public static String PersonSave = SHConstants.BaseUrl8889 + "/person/save";
+    public static String ForgetPassword = BaseUrl8889+"/login/forgetPassword";
+
     public static String RecordShareSave = SHConstants.BaseUrl8889 + "/recordShare/save";
     public static String EssayRetrieveMobile = SHConstants.BaseUrl8888 + "/essay/retrieveMobile";
     public static String RecordShareRetrieveMobile = SHConstants.BaseUrl8889 + "/recordShare/retrieveMobile";
@@ -32,11 +35,24 @@ public class SHConstants {
     //login
     public static String LoginUserPersonName = "person_name";
     public static String LoginUserPkPerson = "pk_person";
+    //register
+    public static String Register_Password = "password";
+    public static String Register_Person_Code = "person_code";
+    public static String Register_Person_name = "person_name";
+    public static String Register_Mobile = "mobile";
+    public static String Register_Email = "email";
+
+    //reset pwd
+    public static String Password_Email = "email";
+    public static String Password_User_PK = "pk_person";
 
     //person flow
     public static String PersonFlowPersonName = "follow_person_name";
     public static String PersonFlowPkPerson = "follow_pk_person";
     public static String PersonFlowModelKey = "follow_model_key";
+
+    //attention flow
+    public static String PersonAttentionModelKey = "attention_model_key";
 
     //find share
     public static String FindSharePersonName = "person_name";

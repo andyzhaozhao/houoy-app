@@ -3,8 +3,10 @@ package gov.smart.health.activity.find;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -18,6 +20,7 @@ import org.json.JSONObject;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.HomeActivity;
+import gov.smart.health.activity.find.model.FindAttentionListDataModel;
 import gov.smart.health.activity.find.model.FindEssayListDataModel;
 import gov.smart.health.activity.find.model.FindPersonFlowModel;
 import gov.smart.health.activity.login.model.LoginModel;
@@ -26,19 +29,36 @@ import gov.smart.health.utils.SharedPreferencesHelper;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private FindEssayListDataModel model = new FindEssayListDataModel();
+    private FindEssayListDataModel model;
+    private FindAttentionListDataModel attentionModel ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         model = (FindEssayListDataModel)getIntent().getSerializableExtra( SHConstants.PersonFlowModelKey);
+        attentionModel = (FindAttentionListDataModel)getIntent().getSerializableExtra( SHConstants.PersonAttentionModelKey);
 
-        findViewById(R.id.btn_attention).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendAttention();
-            }
-        });
+        TextView name = (TextView)findViewById(R.id.detail_name);
+        TextView subname = (TextView)findViewById(R.id.detail_subname);
+        TextView text = (TextView)findViewById(R.id.detail_text);
+        View button = findViewById(R.id.btn_attention);
+        if(model !=null) {
+            name.setText(model.essay_name);
+            subname.setText(model.essay_subname);
+            text.setText(Html.fromHtml(model.essay_content));
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sendAttention();
+                }
+            });
+        }else if(attentionModel !=null) {
+            name.setText(attentionModel.record_share_code);
+            subname.setText(attentionModel.record_share_name);
+            text.setText(Html.fromHtml(attentionModel.record_share_desc));
+            button.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void sendAttention() {
