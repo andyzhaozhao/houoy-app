@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
+import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -148,9 +149,14 @@ public class SelfFragment extends Fragment {
                                 age.setText((personModel.age == null)?"秘密":personModel.age);
 
                                 if(personModel.portraitPath != null && !personModel.portraitPath.isEmpty()) {
-                                    Glide.with(getContext())
-                                            .load(SHConstants.BaseUrlPhoto + personModel.portraitPath)
-                                            .into(selfImg);
+                                    try {
+                                        Glide.with(getContext())
+                                                .load(SHConstants.BaseUrlPhoto + personModel.portraitPath)
+                                                .into(selfImg);
+                                    }catch (Exception e){
+                                        Log.i("",""+e.getMessage());
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         } else {

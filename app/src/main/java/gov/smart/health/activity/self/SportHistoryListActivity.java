@@ -75,15 +75,10 @@ public class SportHistoryListActivity extends AppCompatActivity {
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page = 0;
-                        modelLists.clear();
-                        loadData();
-                        mSwiperefreshlayout.setRefreshing(false);
-                    }
-                }, 1000);
+                page = 0;
+                modelLists.clear();
+                loadData();
+                mSwiperefreshlayout.setRefreshing(false);
             }
         });
 
@@ -129,7 +124,7 @@ public class SportHistoryListActivity extends AppCompatActivity {
                         jsonModel = gson.fromJson(response, LikeRecordHistoryInfoModel.class);
                         if (jsonModel.success) {
                             modelLists.addAll(jsonModel.resultData);
-                            mAdapter.addDataLists(modelLists);
+                            mAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
                         }

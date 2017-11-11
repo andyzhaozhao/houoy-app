@@ -110,7 +110,7 @@ public class LearningActivity extends AppCompatActivity {
                         findModel = gson.fromJson(response, FindEssayDataModel.class);
                         if (findModel.success) {
                             essayLists.addAll(findModel.resultData);
-                            mAdapter.addDataLists(essayLists);
+                            mAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
                         }

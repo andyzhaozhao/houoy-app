@@ -2,6 +2,8 @@ package gov.smart.health.activity.vr.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by laoniu on 11/8/17.
  */
@@ -17,7 +19,7 @@ public class SportVideoModel {
     @SerializedName("resultDataType")
     public String resultDataType;
     @SerializedName("resultData")
-    public SportVideoListModel resultData;
+    public List<SportVideoListModel> resultData;
     @SerializedName("uploadId")
     public String uploadId;
     @SerializedName("def1")
@@ -39,5 +41,5 @@ public class SportVideoModel {
     @SerializedName("orderDir")
     public String orderDir;
     @SerializedName("total")
-    public String total;
+    public int total;
 }

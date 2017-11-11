@@ -4,19 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="gov.smart.health.activity.vr.ShareActivity">
-
+    tools:context="gov.smart.health.activity.vr.SportShareActivity">
             <RelativeLayout
                 android:id="@+id/ll_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:text="返回"
-                    android:id="@+id/btn_back"
-                    android:visibility="invisible"
-                    android:layout_height="wrap_content" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -44,7 +37,7 @@
                     android:layout_height="250dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/share" />
+                    android:src="@mipmap/sport_setting" />
                 <TextView
                     android:id="@+id/tv_share_mark"
                     android:layout_width="wrap_content"
@@ -74,13 +67,6 @@
                         android:textColor="@color/whiteColor"
                         android:textStyle="bold"
                         android:text="心率：120" />
-                    <TextView
-                        android:id="@+id/tv_share_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/whiteColor"
-                        android:textStyle="bold"
-                        android:text="运动时间：25" />
                 </LinearLayout>
             </RelativeLayout>
             <TextView

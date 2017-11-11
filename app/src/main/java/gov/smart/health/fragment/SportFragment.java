@@ -2,25 +2,37 @@ package gov.smart.health.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.SportAreaActivity;
+import gov.smart.health.activity.vr.model.SportVideoListModel;
+import gov.smart.health.activity.vr.model.SportVideoModel;
+import gov.smart.health.activity.vr.model.VideoFolderListModel;
 import gov.smart.health.adapter.SportRefreshRecyclerAdapter;
-import gov.smart.health.model.SportModel;
+import gov.smart.health.utils.SHConstants;
+import gov.smart.health.utils.SharedPreferencesHelper;
 
 public class SportFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +42,11 @@ public class SportFragment extends Fragment {
     private SwipeRefreshLayout mSwiperefreshlayout;
     private int mLastVisibleItem;
     private LinearLayoutManager mLinearLayoutManager;
+    private Button selectButton;
+
+    private int page;
+    private SportVideoModel jsonModel = new SportVideoModel();
+    private List<SportVideoListModel> modelLists = new ArrayList<>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -72,7 +89,7 @@ public class SportFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_sport, container, false);
-        Button selectButton = (Button)rootView.findViewById(R.id.select_park);
+        selectButton = (Button)rootView.findViewById(R.id.select_park);
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +99,7 @@ public class SportFragment extends Fragment {
             }
         });
 
+        page = 0;
         mSwiperefreshlayout = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_vr_main);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_vr_main);
 
@@ -95,25 +113,15 @@ public class SportFragment extends Fragment {
 
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this.getActivity()));
 
-        List<SportModel> list = new ArrayList<>();
-        SportModel model = new SportModel(R.mipmap.healthicon, "上肢伸展运动", "5分钟",true);
-        list.add(model);
-
-        recyclerView.setAdapter(mAdapter = new SportRefreshRecyclerAdapter(this.getActivity(), list));
+        recyclerView.setAdapter(mAdapter = new SportRefreshRecyclerAdapter(this.getActivity(), modelLists));
 
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<SportModel> list = new ArrayList<>();
-                        SportModel model = new SportModel(R.mipmap.healthicon, "上肢伸展运动", "5分钟",true);
-                        list.add(model);
-                        mAdapter.addNewDataLists(list);
-                        mSwiperefreshlayout.setRefreshing(false);
-                    }
-                }, 1000);
+                page = 0;
+                modelLists.clear();
+                loadData();
+                mSwiperefreshlayout.setRefreshing(false);
             }
         });
 
@@ -121,17 +129,9 @@ public class SportFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && mLastVisibleItem + 1 == mAdapter.getItemCount()) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            List<SportModel> list = new ArrayList<>();
-                            SportModel model = new SportModel(R.mipmap.healthicon, "上肢伸展运动", "5分钟",false);
-                            list.add(model);
-                            mAdapter.addDataLists(list);
-                            mSwiperefreshlayout.setRefreshing(false);
-                        }
-                    }, 1000);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mLastVisibleItem + 1 == mAdapter.getItemCount()&& modelLists.size() < jsonModel.total) {
+                    page = page +1;
+                    loadData();
                 }
             }
 
@@ -141,6 +141,60 @@ public class SportFragment extends Fragment {
                 mLastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
+        this.loadData();
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        modelLists.clear();
+        mAdapter.notifyDataSetChanged();
+        loadData(data);
+    }
+
+    public void loadData() {
+        loadData(null);
+    }
+    public void loadData(Intent data) {
+        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
+
+        HashMap<String,Object> map = new HashMap<>();
+        map.put(SHConstants.CommonStart, SHConstants.EssayStart);
+        map.put(SHConstants.CommonLength, SHConstants.EssayLength);
+        map.put(SHConstants.CommonOrderColumnName, SHConstants.Video_List_OrderColumnName_Value);
+        map.put(SHConstants.CommonOrderDir, SHConstants.CommonOrderDir_Desc);
+
+        if(data != null && data.getSerializableExtra(SHConstants.Video_Floder_Key) != null){
+          VideoFolderListModel model =  (VideoFolderListModel)data.getSerializableExtra(SHConstants.Video_Floder_Key);
+            map.put(SHConstants.Video_Floder_Pk_Folder, model.pk_folder);
+            selectButton.setText(model.folder_name);
+        }
+
+        AndroidNetworking.get(SHConstants.VideoRetrieve)
+                .addQueryParameter(map)
+                .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
+                .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        jsonModel = gson.fromJson(response, SportVideoModel.class);
+                        if (jsonModel.success) {
+                            modelLists.addAll(jsonModel.resultData);
+                            mAdapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(getContext(), "信息获取失败", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d("", "response error" + anError.getErrorDetail());
+                        Toast.makeText(getContext(), "信息获取失败", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }

@@ -12,7 +12,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import gov.smart.health.R;
-import gov.smart.health.model.SportAreaModel;
+import gov.smart.health.activity.vr.model.VideoFolderListModel;
+import gov.smart.health.utils.SHConstants;
 
 /**
  * Created by laoniu on 2017/07/23.
@@ -20,16 +21,16 @@ import gov.smart.health.model.SportAreaModel;
 
 public class SportAreaRefreshRecyclerAdapter extends RecyclerView.Adapter<SportAreaRefreshRecyclerAdapter.ViewHolder>{
     private LayoutInflater mInflater;
-    private List<SportAreaModel> mLists;
+    private List<VideoFolderListModel> mLists;
     private Activity mActivity;
 
-    public SportAreaRefreshRecyclerAdapter(Activity activity , List<SportAreaModel> lists){
+    public SportAreaRefreshRecyclerAdapter(Activity activity , List<VideoFolderListModel> lists){
         mActivity = activity;
         this.mInflater=LayoutInflater.from(activity);
         this.mLists = lists;
     }
 
-    public void addDataLists(List<SportAreaModel> lists) {
+    public void addDataLists(List<VideoFolderListModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -38,7 +39,7 @@ public class SportAreaRefreshRecyclerAdapter extends RecyclerView.Adapter<SportA
         notifyDataSetChanged();
     }
 
-    public void addNewDataLists(List<SportAreaModel> lists) {
+    public void addNewDataLists(List<VideoFolderListModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -61,10 +62,20 @@ public class SportAreaRefreshRecyclerAdapter extends RecyclerView.Adapter<SportA
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.image.setImageResource(mLists.get(position).getImageid());
-        holder.title.setText(mLists.get(position).getTitle());
-        holder.content.setText(mLists.get(position).getContent());
+        final VideoFolderListModel model = mLists.get(position);
+        holder.image.setImageResource(R.mipmap.healthicon);
+        holder.title.setText(model.pk_folder);
+        holder.content.setText(model.folder_name);
         holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(SHConstants.Video_Floder_Key,model);
+                mActivity.setResult(0,intent);
+                mActivity.finish();
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -82,14 +93,6 @@ public class SportAreaRefreshRecyclerAdapter extends RecyclerView.Adapter<SportA
             image = (ImageView)view.findViewById(R.id.sport_area_item_img);
             title = (TextView)view.findViewById(R.id.sport_area_item_title);
             content = (TextView)view.findViewById(R.id.sport_area_item_content);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent();
-                    mActivity.setResult(0,intent);
-                    mActivity.finish();
-                }
-            });
         }
     }
 }

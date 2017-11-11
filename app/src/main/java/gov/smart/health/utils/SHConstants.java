@@ -21,6 +21,8 @@ public class SHConstants {
     public static String PersonFollowRetrieve = BaseUrl8889+"/personFollow/retrieveMobile";
     public static String RecordVRSportRetrieve = BaseUrl8889+"/recordVRSport/retrieveMobile";
     public static String PersonRetrieve = BaseUrl8889+"/person/retrieveMobile";
+    public static String FolderVideoRetrieve = BaseUrl8888+"/folderVideo/retrieveMobile";
+    public static String VideoRetrieve = BaseUrl8888+"/video/retrieveMobile";
 
     public static String LoginUserCode = "user_code";
     public static String LoginUserPassword = "user_password";
@@ -67,6 +69,10 @@ public class SHConstants {
     //recordVRSport list parameter.
     public static String RecordVRSport_List_OrderColumnName_Value = "ts";
 
+    //video list parameter.
+    public static String Video_List_OrderColumnName_Value = "video_name";
+    public static String Video_Floder_Key = "folder_key";
+    public static String Video_Floder_Pk_Folder = "pk_folder";
     //find share
     public static String FindSharePersonName = "person_name";
     public static String FindSharePkPerson = "pk_person";

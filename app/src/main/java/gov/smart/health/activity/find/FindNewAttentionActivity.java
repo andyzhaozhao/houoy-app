@@ -103,7 +103,7 @@ public class FindNewAttentionActivity extends AppCompatActivity {
                         findModel = gson.fromJson(response, FindAttentionDataModel.class);
                         if (findModel.success) {
                             essayLists.addAll(findModel.resultData);
-                            mAdapter.addDataLists(essayLists);
+                            mAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
                         }

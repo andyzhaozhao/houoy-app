@@ -13,6 +13,7 @@ import java.util.List;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.VTOVRPlayerActivity;
+import gov.smart.health.activity.vr.model.SportVideoListModel;
 import gov.smart.health.model.SportModel;
 
 /**
@@ -21,16 +22,16 @@ import gov.smart.health.model.SportModel;
 
 public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefreshRecyclerAdapter.ViewHolder>{
     private LayoutInflater mInflater;
-    private List<SportModel> mLists;
+    private List<SportVideoListModel> mLists;
     private Context mContext;
 
-    public SportRefreshRecyclerAdapter(Context context , List<SportModel> lists){
+    public SportRefreshRecyclerAdapter(Context context , List<SportVideoListModel> lists){
         mContext = context;
         this.mInflater=LayoutInflater.from(context);
         this.mLists = lists;
     }
 
-    public void addDataLists(List<SportModel> lists) {
+    public void addDataLists(List<SportVideoListModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -39,7 +40,7 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         notifyDataSetChanged();
     }
 
-    public void addNewDataLists(List<SportModel> lists) {
+    public void addNewDataLists(List<SportVideoListModel> lists) {
         if (this.mLists == null){
             this.mLists = lists;
         } else {
@@ -62,10 +63,10 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.image.setImageResource(mLists.get(position).getImageid());
-        holder.title.setText(mLists.get(position).getTitle());
-        holder.time.setText(mLists.get(position).getTime());
-        holder.download.setText(mLists.get(position).getDownload() ? "已下载":"未下载");
+        holder.image.setImageResource(R.mipmap.healthicon);
+        holder.title.setText(mLists.get(position).video_name);
+        holder.time.setText(mLists.get(position).video_desc);
+        //holder.download.setText(mLists.get(position).getDownload() ? "已下载":"未下载");
         holder.itemView.setTag(position);
     }
     @Override

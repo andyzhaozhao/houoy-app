@@ -7,7 +7,7 @@ import android.view.View;
 
 import gov.smart.health.R;
 
-public class ShareActivity extends AppCompatActivity implements View.OnClickListener{
+public class SportShareActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

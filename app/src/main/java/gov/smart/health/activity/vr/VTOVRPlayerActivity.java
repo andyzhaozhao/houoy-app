@@ -218,7 +218,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                     //这里是循环播放，可根据需求更改
                     //mMediaplayer.replay();
                     Intent intent = new Intent();
-                    intent.setClass(VTOVRPlayerActivity.this, ShareActivity.class);
+                    intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
                     startActivity(intent);
                     break;
                 case UVMediaPlayer.TRACK_DISABLED:

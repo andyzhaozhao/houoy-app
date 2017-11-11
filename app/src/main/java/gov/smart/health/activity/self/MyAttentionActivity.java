@@ -63,15 +63,10 @@ public class MyAttentionActivity extends AppCompatActivity {
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page = 0;
-                        modelLists.clear();
-                        loadData();
-                        mSwiperefreshlayout.setRefreshing(false);
-                    }
-                }, 1000);
+                page = 0;
+                modelLists.clear();
+                loadData();
+                mSwiperefreshlayout.setRefreshing(false);
             }
         });
 
