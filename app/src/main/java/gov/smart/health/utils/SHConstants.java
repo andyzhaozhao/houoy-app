@@ -25,6 +25,13 @@ public class SHConstants {
     public static String VideoRetrieve = BaseUrl8888+"/video/retrieveMobile";
     public static String RecordVRSportSave = BaseUrl8889+"/recordVRSport/save";
 
+
+    //dowmnload
+    public static String Download_Base_Link = "http://47.94.6.120/video/";
+    public static String Download_Download = "SHDownloads/";
+    public static String Download_Temp = "SHTemp/";
+    public static String Download_File_Divide = "/";
+
     public static String LoginUserCode = "user_code";
     public static String LoginUserPassword = "user_password";
 

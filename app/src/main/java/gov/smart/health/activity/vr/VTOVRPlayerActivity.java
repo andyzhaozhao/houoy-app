@@ -24,6 +24,7 @@ import com.utovr.player.UVMediaType;
 import com.utovr.player.UVPlayerCallBack;
 
 
+import java.io.File;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
@@ -235,11 +236,12 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                 case UVMediaPlayer.STATE_ENDED:
                     //这里是循环播放，可根据需求更改
                     //mMediaplayer.replay();
-//                    if(!isSecond) {
-//                        isSecond= true;
-//                        String path = "file:///android_asset/videos/wu.mp4";
-//                        mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, path);
-//                    }else {
+                    if(!isSecond) {
+                        isSecond= true;
+                        String downlaodFilePathStr = getApplicationContext().getCacheDir().getAbsolutePath() + SHConstants.Download_File_Divide+ SHConstants.Download_Download;
+                        String downlaodFile =  downlaodFilePathStr + videoModel.video_name;
+                        mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
+                    }else {
 //                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplication());
 //                        alertDialogBuilder.setMessage("是否分享本次运动？");
 //                        alertDialogBuilder.setPositiveButton("取消",null);
@@ -256,7 +258,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
 //                        alertDialogBuilder.setCancelable(true);
 //                        AlertDialog alertDialog = alertDialogBuilder.create();
 //                        alertDialog.show();
-//                    }
+                    }
                     break;
                 case UVMediaPlayer.TRACK_DISABLED:
                 case UVMediaPlayer.TRACK_DEFAULT:
