@@ -23,6 +23,7 @@ public class SHConstants {
     public static String PersonRetrieve = BaseUrl8889+"/person/retrieveMobile";
     public static String FolderVideoRetrieve = BaseUrl8888+"/folderVideo/retrieveMobile";
     public static String VideoRetrieve = BaseUrl8888+"/video/retrieveMobile";
+    public static String RecordVRSportSave = BaseUrl8889+"/recordVRSport/save";
 
     public static String LoginUserCode = "user_code";
     public static String LoginUserPassword = "user_password";
@@ -73,6 +74,30 @@ public class SHConstants {
     public static String Video_List_OrderColumnName_Value = "video_name";
     public static String Video_Floder_Key = "folder_key";
     public static String Video_Floder_Pk_Folder = "pk_folder";
+    public static String Video_ModelKey = "video_model_key";
+
+
+    //recordVR sport save parameter
+    public static String Record_VRSport_Save_calorie = "calorie";
+    public static String Record_VRSport_Save_heart_rate = "heart_rate";
+    public static String Record_VRSport_Save_heart_rate_max = "heart_rate_max";
+
+    public static String Record_VRSport_Save_Pk_Person = "pk_person";
+    public static String Record_VRSport_Save_Person_Name = "person_name";
+
+    public static String Record_VRSport_Save_Pk_Place = "pk_place";
+    public static String Record_VRSport_Save_Place_Name = "place_name";
+
+    public static String Record_VRSport_Save_Pk_Video = "pk_video";
+    public static String Record_VRSport_Save_Video_Name = "video_name";
+
+    public static String Record_VRSport_Save_Record_Sport_Code = "record_sport_code";
+    public static String Record_VRSport_Save_Record_Sport_name = "record_sport_name";
+
+    public static String Record_VRSport_Save_Time_End = "time_end";
+    public static String Record_VRSport_Save_Time_Length = "time_length";
+    public static String Record_VRSport_Save_Time_Start = "time_start";
+
     //find share
     public static String FindSharePersonName = "person_name";
     public static String FindSharePkPerson = "pk_person";

@@ -1,7 +1,9 @@
 package gov.smart.health.adapter;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.vr.SportShareActivity;
+import gov.smart.health.activity.vr.VTOVRPlayerActivity;
 import gov.smart.health.activity.vr.model.VideoFolderListModel;
 import gov.smart.health.utils.SHConstants;
 
@@ -70,10 +74,23 @@ public class SportAreaRefreshRecyclerAdapter extends RecyclerView.Adapter<SportA
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(SHConstants.Video_Floder_Key,model);
-                mActivity.setResult(0,intent);
-                mActivity.finish();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
+                alertDialogBuilder.setMessage("确认选择[" +model.folder_name +"]这个地点？");
+                alertDialogBuilder.setPositiveButton("取消",null);
+                alertDialogBuilder.setNeutralButton("好的",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent();
+                                intent.putExtra(SHConstants.Video_Floder_Key,model);
+                                mActivity.setResult(0,intent);
+                                mActivity.finish();
+                            }
+                        });
+                alertDialogBuilder.setCancelable(true);
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
             }
         });
     }

@@ -1,9 +1,12 @@
 package gov.smart.health.activity.vr;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.utovr.player.UVEventListener;
@@ -19,13 +23,16 @@ import com.utovr.player.UVMediaPlayer;
 import com.utovr.player.UVMediaType;
 import com.utovr.player.UVPlayerCallBack;
 
+
+
 import gov.smart.health.R;
+import gov.smart.health.activity.vr.model.SportVideoListModel;
+import gov.smart.health.utils.SHConstants;
 
 public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCallBack, VideoController.PlayerControl{
 
     private UVMediaPlayer mMediaplayer = null;  // 媒体视频播放器
     private VideoController mCtrl = null;
-    private String Path = "http://cache.utovr.com/201508270528174780.m3u8";
     private boolean bufferResume = true;
     private boolean needBufferAnim = true;
     private ImageView imgBuffer;                // 缓冲动画
@@ -35,11 +42,22 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     protected int CurOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     private int SmallPlayH = 0;
     private boolean colseDualScreen = false;
+    private boolean isSecond = false;
+    private SportVideoListModel videoModel = new SportVideoListModel();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vto_vrplayer);
+
+        if(getIntent() != null && getIntent().getSerializableExtra(SHConstants.Video_ModelKey)!= null){
+            videoModel = (SportVideoListModel) getIntent().getSerializableExtra(SHConstants.Video_ModelKey);
+        }
+
         initView();
+
+        TextView textView = (TextView)findViewById(R.id.tv_detail);
+        textView.setText(videoModel.video_desc);
         //初始化播放器
         RelativeLayout rlPlayView = (RelativeLayout) findViewById(R.id.activity_rlPlayView);
         mMediaplayer = new UVMediaPlayer(this, rlPlayView);
@@ -171,9 +189,9 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
             mMediaplayer.setListener(mListener);
             mMediaplayer.setInfoListener(mInfoListener);
             //如果是网络MP4，可调用 mCtrl.startCachePro();mCtrl.stopCachePro();
-            mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_M3U8, Path);
-
-            //mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, "/sdcard/wu.mp4");
+            //mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_M3U8, Path);
+            String path = "file:///android_asset/videos/wu.mp4";
+            mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, path);
         }
         catch (Exception e)
         {
@@ -217,9 +235,28 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                 case UVMediaPlayer.STATE_ENDED:
                     //这里是循环播放，可根据需求更改
                     //mMediaplayer.replay();
-                    Intent intent = new Intent();
-                    intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
-                    startActivity(intent);
+//                    if(!isSecond) {
+//                        isSecond= true;
+//                        String path = "file:///android_asset/videos/wu.mp4";
+//                        mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, path);
+//                    }else {
+//                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplication());
+//                        alertDialogBuilder.setMessage("是否分享本次运动？");
+//                        alertDialogBuilder.setPositiveButton("取消",null);
+//                        alertDialogBuilder.setNeutralButton("好的",
+//                                new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+                                        Intent intent = new Intent();
+                                        intent.putExtra(SHConstants.Video_ModelKey, videoModel);
+                                        intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
+                                        startActivity(intent);
+//                                    }
+//                                });
+//                        alertDialogBuilder.setCancelable(true);
+//                        AlertDialog alertDialog = alertDialogBuilder.create();
+//                        alertDialog.show();
+//                    }
                     break;
                 case UVMediaPlayer.TRACK_DISABLED:
                 case UVMediaPlayer.TRACK_DEFAULT:

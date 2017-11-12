@@ -14,6 +14,7 @@ import java.util.List;
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.VTOVRPlayerActivity;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
+import gov.smart.health.utils.SHConstants;
 
 /**
  * Created by laoniu on 2017/07/23.
@@ -62,11 +63,21 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final SportVideoListModel model = mLists.get(position);
         holder.image.setImageResource(R.mipmap.healthicon);
-        holder.title.setText(mLists.get(position).video_name);
-        holder.time.setText(mLists.get(position).video_desc);
+        holder.title.setText(model.video_name);
+        holder.time.setText(model.video_desc);
         //holder.download.setText(mLists.get(position).getDownload() ? "已下载":"未下载");
         holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(SHConstants.Video_ModelKey, model);
+                intent.setClass(mContext, VTOVRPlayerActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -86,14 +97,6 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
             title = (TextView)view.findViewById(R.id.sport_item_title);
             time = (TextView)view.findViewById(R.id.sport_item_time);
             download = (TextView)view.findViewById(R.id.sport_item_download);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setClass(mContext, VTOVRPlayerActivity.class);
-                    mContext.startActivity(intent);
-                }
-            });
         }
     }
 }

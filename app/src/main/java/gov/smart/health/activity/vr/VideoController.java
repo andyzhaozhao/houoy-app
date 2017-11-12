@@ -43,8 +43,9 @@ public class VideoController implements View.OnClickListener
         tbtnDualScreen = (ToggleButton) toolbar.findViewById(R.id.video_tool_tbtnVR);      // 单双屏
         tbtnPlayPause = (ToggleButton) toolbar.findViewById(R.id.video_tool_tbtnPlayPause);// 播放/暂停
         rlPlayPro = (RelativeLayout) toolbar.findViewById(R.id.video_tool_rlPlayProg);
-        if (changeOrientation)
+        if (changeOrientation) {
             imgFullscreen.setOnClickListener(this);
+        }
         skTime.setOnSeekBarChangeListener(mSeekBarChange);
         tbtnGyro.setOnClickListener(this);
         tbtnDualScreen.setOnClickListener(this);
