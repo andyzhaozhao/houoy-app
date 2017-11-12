@@ -11,7 +11,6 @@ import java.util.List;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.self.model.LikeRecordHistoryInfoListModel;
-import gov.smart.health.model.SportHistoryModel;
 
 /**
  * Created by laoniu on 2017/07/23.

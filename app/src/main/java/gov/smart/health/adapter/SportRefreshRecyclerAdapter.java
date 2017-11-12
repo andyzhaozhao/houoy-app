@@ -14,7 +14,6 @@ import java.util.List;
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.VTOVRPlayerActivity;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
-import gov.smart.health.model.SportModel;
 
 /**
  * Created by laoniu on 2017/07/23.
