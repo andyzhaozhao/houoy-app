@@ -59,7 +59,7 @@ public class FriendsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
 
         List<FriendModel> list = new ArrayList<>();
-        FriendModel model = new FriendModel(R.mipmap.learning_center,"there is title","there is context");
+        FriendModel model = new FriendModel(R.mipmap.healthicon,"there is title","there is context");
         list.add(model);
 
         recyclerView.setAdapter(mAdapter = new FriendRefreshRecyclerAdapter(this,list));
@@ -71,7 +71,7 @@ public class FriendsActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         List<FriendModel> list = new ArrayList<>();
-                        FriendModel model = new FriendModel(R.mipmap.learning_center,"there is new title","there is new context");
+                        FriendModel model = new FriendModel(R.mipmap.healthicon,"there is new title","there is new context");
                         list.add(model);
                         mAdapter.addNewDataLists(list);
                         mSwiperefreshlayout.setRefreshing(false);
@@ -89,7 +89,7 @@ public class FriendsActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             List<FriendModel> list = new ArrayList<>();
-                            FriendModel model = new FriendModel(R.mipmap.learning_center,"there is old title","there is old context");
+                            FriendModel model = new FriendModel(R.mipmap.healthicon,"there is old title","there is old context");
                             list.add(model);
                             mAdapter.addDataLists(list);
                             mSwiperefreshlayout.setRefreshing(false);

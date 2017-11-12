@@ -32,10 +32,10 @@ public class HomeActivity extends AppCompatActivity {
         mTabHost.setup();
         TabWidget tabWidget = mTabHost.getTabWidget();
 
-        mTabHost.addTab(mTabHost.newTabSpec("Sport").setIndicator(getItemView("运动",android.R.drawable.ic_menu_agenda)).setContent(android.R.id.tabcontent));
-        mTabHost.addTab(mTabHost.newTabSpec("Find").setIndicator(getItemView("发现",android.R.drawable.ic_menu_search)).setContent(android.R.id.tabcontent));
+        mTabHost.addTab(mTabHost.newTabSpec("Sport").setIndicator(getItemView("运动",R.drawable.tab_sport_select)).setContent(android.R.id.tabcontent));
+        mTabHost.addTab(mTabHost.newTabSpec("Find").setIndicator(getItemView("发现",R.drawable.tab_find_select)).setContent(android.R.id.tabcontent));
         //mTabHost.addTab(mTabHost.newTabSpec("Message").setIndicator(getItemView("消息",android.R.drawable.ic_menu_info_details)).setContent(android.R.id.tabcontent));
-        mTabHost.addTab(mTabHost.newTabSpec("Self").setIndicator(getItemView("我的",android.R.drawable.ic_menu_myplaces)).setContent(android.R.id.tabcontent));
+        mTabHost.addTab(mTabHost.newTabSpec("Self").setIndicator(getItemView("我的",R.drawable.tab_self_select)).setContent(android.R.id.tabcontent));
 
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override

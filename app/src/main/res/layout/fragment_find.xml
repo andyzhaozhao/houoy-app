@@ -66,14 +66,14 @@
                     android:id="@+id/find_learning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
-                        android:layout_width="100dp"
+                        android:layout_width="80dp"
                         android:adjustViewBounds="true"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/learning_center"/>
+                        android:src="@mipmap/centerlearnings"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,14 +83,14 @@
                     android:id="@+id/find_event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
-                        android:layout_width="100dp"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:src="@mipmap/event_center"/>
+                        android:src="@mipmap/centersports"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,11 +107,11 @@
 
                 <ImageView
                     android:id="@+id/first_item_img"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:scaleType="centerInside"
                     android:layout_alignParentLeft="true"
-                    android:src="@mipmap/learning_center"/>
+                    android:src="@mipmap/healthicon"/>
                 <LinearLayout
                     android:layout_toRightOf="@+id/first_item_img"
                     android:layout_toLeftOf="@+id/first_item_array"
@@ -126,7 +126,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/textColor"
                         android:textSize="18dp"
-                        android:text="应急避难所场所"/>
+                        android:text="最新消息"/>
                     <TextView
                         android:layout_marginTop="@dimen/list_margin"
                         android:id="@+id/first_item_content"
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/textColor"
                         android:textSize="16dp"
-                        android:text="应急避难所描述内容"/>
+                        android:text="您关注的人有动态啦"/>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/first_item_array"
@@ -156,11 +156,11 @@
 
                 <ImageView
                     android:id="@+id/second_item_img"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:scaleType="centerInside"
                     android:layout_alignParentLeft="true"
-                    android:src="@mipmap/learning_center"/>
+                    android:src="@mipmap/healthicon"/>
                 <LinearLayout
                     android:layout_toRightOf="@+id/second_item_img"
                     android:layout_toLeftOf="@+id/second_item_array"
@@ -175,7 +175,7 @@
                         android:textStyle="bold"
                         android:textColor="@color/textColor"
                         android:textSize="18dp"
-                        android:text="应急避难所场所"/>
+                        android:text="我的发现"/>
                     <TextView
                         android:layout_marginTop="@dimen/list_margin"
                         android:id="@+id/second_item_content"
@@ -183,7 +183,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/textColor"
                         android:textSize="16dp"
-                        android:text="应急避难所描述内容"/>
+                        android:text="发现新大陆"/>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/second_item_array"

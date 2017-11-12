@@ -11,7 +11,7 @@
         android:layout_height="100dp"
         android:scaleType="centerInside"
         android:layout_alignParentLeft="true"
-        android:src="@mipmap/learning_center"/>
+        android:src="@mipmap/centerlearnings"/>
     <LinearLayout
         android:layout_toRightOf="@+id/sport_area_item_img"
         android:layout_width="match_parent"

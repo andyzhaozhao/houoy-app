@@ -7,15 +7,27 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Toast;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import gov.smart.health.R;
-import gov.smart.health.adapter.SportHistoryRecyclerAdapter;
-import gov.smart.health.model.SportHistoryModel;
+import gov.smart.health.activity.self.model.LikeRecordHistoryInfoListModel;
+import gov.smart.health.activity.self.model.LikeRecordHistoryInfoModel;
+import gov.smart.health.activity.self.adapter.SportHistoryRecyclerAdapter;
+import gov.smart.health.utils.SHConstants;
+import gov.smart.health.utils.SharedPreferencesHelper;
 
 public class SportHistoryListActivity extends AppCompatActivity {
 
@@ -23,6 +35,11 @@ public class SportHistoryListActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwiperefreshlayout;
     private int mLastVisibleItem;
     private LinearLayoutManager mLinearLayoutManager;
+
+
+    private int page;
+    private LikeRecordHistoryInfoModel jsonModel = new LikeRecordHistoryInfoModel();
+    private List<LikeRecordHistoryInfoListModel> modelLists = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +55,9 @@ public class SportHistoryListActivity extends AppCompatActivity {
             }
         });
 
+        page = 0;
+        this.loadData();
+
         mSwiperefreshlayout = (SwipeRefreshLayout) findViewById(R.id.sport_history_srl);
         RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.sport_history_list);
 
@@ -50,27 +70,15 @@ public class SportHistoryListActivity extends AppCompatActivity {
                         .getDisplayMetrics()));
 
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
-
-        List<SportHistoryModel> list = new ArrayList<>();
-        SportHistoryModel model = new SportHistoryModel("there is time", "30kcal");
-        list.add(model);
-
-        recyclerView.setAdapter(mAdapter = new SportHistoryRecyclerAdapter(this, list));
+        recyclerView.setAdapter(mAdapter = new SportHistoryRecyclerAdapter(this, modelLists));
 
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<SportHistoryModel> list = new ArrayList<>();
-                        SportHistoryModel model = new SportHistoryModel("there is new time", "30kcal");
-                        list.add(model);
-
-                        mAdapter.addNewDataLists(list);
-                        mSwiperefreshlayout.setRefreshing(false);
-                    }
-                }, 1000);
+                page = 0;
+                modelLists.clear();
+                loadData();
+                mSwiperefreshlayout.setRefreshing(false);
             }
         });
 
@@ -78,18 +86,9 @@ public class SportHistoryListActivity extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && mLastVisibleItem + 1 == mAdapter.getItemCount()) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            List<SportHistoryModel> list = new ArrayList<>();
-                            SportHistoryModel model = new SportHistoryModel("there is old time", "30kcal");
-                            list.add(model);
-
-                            mAdapter.addDataLists(list);
-                            mSwiperefreshlayout.setRefreshing(false);
-                        }
-                    }, 1000);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mLastVisibleItem + 1 == mAdapter.getItemCount()&& modelLists.size() < jsonModel.total) {
+                    page = page +1;
+                    loadData();
                 }
             }
 
@@ -100,6 +99,43 @@ public class SportHistoryListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void loadData() {
+        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
+
+        HashMap<String,Object> map = new HashMap<>();
+        map.put(SHConstants.CommonStart, SHConstants.EssayStart);
+        map.put(SHConstants.CommonLength, SHConstants.EssayLength);
+        map.put(SHConstants.CommonOrderColumnName, SHConstants.RecordVRSport_List_OrderColumnName_Value);
+        map.put(SHConstants.CommonOrderDir, SHConstants.CommonOrderDir_Desc);
+        map.put(SHConstants.CommonUser_PK, pk);
+
+        AndroidNetworking.get(SHConstants.RecordVRSportRetrieve)
+                .addQueryParameter(map)
+                .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
+                .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        jsonModel = gson.fromJson(response, LikeRecordHistoryInfoModel.class);
+                        if (jsonModel.success) {
+                            modelLists.addAll(jsonModel.resultData);
+                            mAdapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d("", "response error" + anError.getErrorDetail());
+                        Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }
 

@@ -30,7 +30,7 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:layout_below="@+id/title"
-        android:src="@mipmap/sport_setting" />
+        android:src="@drawable/login_bg" />
 
     <EditText
         android:layout_width="match_parent"
@@ -81,7 +81,7 @@
            android:layout_below="@+id/rl_login">
 
            <TextView
-               android:layout_width="match_parent"
+               android:layout_width="wrap_content"
                android:layout_weight="1"
                android:layout_height="wrap_content"
                android:text="忘记密码"
@@ -90,13 +90,12 @@
                android:layout_marginRight="10dp"
                />
            <TextView
-               android:layout_width="match_parent"
+               android:layout_width="wrap_content"
                android:layout_weight="1"
                android:layout_height="wrap_content"
                android:text="注册"
                android:textAlignment="center"
                android:id="@+id/btn_no_register"
-               android:layout_alignParentRight="true"
                />
        </LinearLayout>
 

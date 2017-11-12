@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -40,6 +41,7 @@
             android:name=".activity.login.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_login"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
@@ -49,12 +51,19 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.HomeActivity"
-            android:screenOrientation="portrait" />s
+            android:screenOrientation="portrait" />
+        s
         <activity
             android:name=".activity.find.LearningActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.find.EventActivity"
+            android:name=".activity.find.FindAttentionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.self.MyAttentionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.find.FindNewAttentionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.find.DetailActivity"
@@ -64,8 +73,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.self.UserSettingInfoActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.self.SportHistoryListActivity"
@@ -84,7 +93,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:name=".activity.vr.ShareActivity"
+            android:name=".activity.vr.SportShareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.find.FindShareActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.message.FriendsActivity"
@@ -119,10 +131,12 @@
         <activity
             android:name=".activity.vr.SportAreaActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.self.SelectConditionActivity"
+        <activity
+            android:name=".activity.self.SelectConditionActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".activity.self.MyAttentionDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.app.Application;
 import com.androidnetworking.AndroidNetworking;
 import com.crashlytics.android.Crashlytics;
 
+import gov.smart.health.utils.SharedPreferencesHelper;
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -17,5 +18,6 @@ public class App extends Application {
         super.onCreate();
         AndroidNetworking.initialize(getApplicationContext());
         Fabric.with(this, new Crashlytics());
+        new SharedPreferencesHelper(getApplicationContext());
     }
 }

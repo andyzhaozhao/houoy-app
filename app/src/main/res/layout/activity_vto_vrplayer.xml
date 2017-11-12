@@ -87,28 +87,8 @@
                     android:textStyle="bold"
                     />
                 <TextView
-                    android:text="收紧腰腹，手臂用力绷紧
-用肩部力量抬臂，背部力量下拉手臂，用手臂带动身体的跳跃
-小腿尽可能放松，不可低头、仰头
-整体有一定的弹性"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/caption_text_size"
-                    android:paddingLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    />
-                <TextView
-                    android:text="呼吸"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:textSize="@dimen/caption_text_size"
-                    android:paddingLeft="10dp"
-                    />
-                <TextView
-                    android:text="收紧腰腹，手臂用力绷紧
-用肩部力量抬臂，背部力量下拉手臂，用手臂带动身体的跳跃
-小腿尽可能放松，不可低头、仰头
-整体有一定的弹性"
+                    android:id="@+id/tv_detail"
+                    android:text="收紧腰腹"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:textSize="@dimen/caption_text_size"

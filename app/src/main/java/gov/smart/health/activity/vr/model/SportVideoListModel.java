@@ -2,10 +2,12 @@ package gov.smart.health.activity.vr.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by laoniu on 11/8/17.
  */
-public class SportVideoListModel {
+public class SportVideoListModel implements Serializable{
     @SerializedName("memo")
     public String memo;
     @SerializedName("def1")
