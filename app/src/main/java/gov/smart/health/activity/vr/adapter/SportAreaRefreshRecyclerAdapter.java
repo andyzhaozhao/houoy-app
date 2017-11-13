@@ -1,4 +1,4 @@
-package gov.smart.health.adapter;
+package gov.smart.health.activity.vr.adapter;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -14,8 +14,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import gov.smart.health.R;
-import gov.smart.health.activity.vr.SportShareActivity;
-import gov.smart.health.activity.vr.VTOVRPlayerActivity;
 import gov.smart.health.activity.vr.model.VideoFolderListModel;
 import gov.smart.health.utils.SHConstants;
 

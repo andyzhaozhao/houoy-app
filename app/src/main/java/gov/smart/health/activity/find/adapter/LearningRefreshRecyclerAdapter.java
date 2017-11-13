@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidnetworking.widget.ANImageView;
+
 import java.util.List;
 
 import gov.smart.health.R;
@@ -65,7 +67,10 @@ public class LearningRefreshRecyclerAdapter extends RecyclerView.Adapter<Learnin
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final FindEssayListDataModel model = mLists.get(position);
-        holder.image.setImageResource(R.mipmap.healthicon);
+        holder.image.setDefaultImageResId(R.mipmap.healthicon);
+        holder.image.setErrorImageResId(R.mipmap.healthicon);
+        holder.image.setImageUrl(model.path_thumbnail);
+
         holder.title.setText(model.essay_name);
         holder.content.setText(Html.fromHtml(model.essay_content));
         holder.itemView.setTag(position);
@@ -86,13 +91,13 @@ public class LearningRefreshRecyclerAdapter extends RecyclerView.Adapter<Learnin
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView image;
+        public ANImageView image;
         public TextView title;
         public TextView content;
 
         public ViewHolder(View view){
             super(view);
-            image = (ImageView)view.findViewById(R.id.learning_item_img);
+            image = (ANImageView)view.findViewById(R.id.learning_item_img);
             title = (TextView)view.findViewById(R.id.learning_item_title);
             content = (TextView)view.findViewById(R.id.learning_item_content);
         }

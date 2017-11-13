@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidnetworking.widget.ANImageView;
 import com.bumptech.glide.Glide;
 
 import gov.smart.health.R;
@@ -34,12 +35,12 @@ public class UserSettingInfoActivity extends AppCompatActivity {
 
         View btnIcon = findViewById(R.id.et_update_user_icon);
         if(getIntent() != null) {
-            ImageView icon = (ImageView) findViewById(R.id.img_update_user_icon);
+            ANImageView icon = (ANImageView) findViewById(R.id.img_update_user_icon);
             MyPersonInfoListModel personModel = (MyPersonInfoListModel) getIntent().getSerializableExtra(SHConstants.SettingPersonModelKey);
             if(personModel.portraitPath != null && !personModel.portraitPath.isEmpty()) {
-                Glide.with(getApplication())
-                        .load(SHConstants.BaseUrlPhoto + personModel.portraitPath)
-                        .into(icon);
+                icon.setDefaultImageResId(R.mipmap.healthicon);
+                icon.setErrorImageResId(R.mipmap.healthicon);
+                icon.setImageUrl(SHConstants.BaseUrlPhoto + personModel.portraitPath);
             }
         }
 

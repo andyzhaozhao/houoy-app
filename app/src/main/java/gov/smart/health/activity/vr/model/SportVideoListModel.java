@@ -43,7 +43,13 @@ public class SportVideoListModel implements Serializable{
     @SerializedName("video_desc")
     public String video_desc;
     @SerializedName("video_length")
+    public String actor_times;
+    @SerializedName("actor_times")
     public String video_length;
+    @SerializedName("actor_calorie")
+    public String actor_calorie;
+    @SerializedName("path_thumbnail")
+    public String path_thumbnail;
     @SerializedName("path")
     public String path;
     @SerializedName("pk_folder")

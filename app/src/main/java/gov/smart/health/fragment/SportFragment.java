@@ -30,7 +30,7 @@ import gov.smart.health.activity.vr.SportAreaActivity;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
 import gov.smart.health.activity.vr.model.SportVideoModel;
 import gov.smart.health.activity.vr.model.VideoFolderListModel;
-import gov.smart.health.adapter.SportRefreshRecyclerAdapter;
+import gov.smart.health.activity.vr.adapter.SportRefreshRecyclerAdapter;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
 

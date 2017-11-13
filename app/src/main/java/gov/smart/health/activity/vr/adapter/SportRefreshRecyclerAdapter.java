@@ -1,4 +1,4 @@
-package gov.smart.health.adapter;
+package gov.smart.health.activity.vr.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +16,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.DownloadListener;
 import com.androidnetworking.interfaces.DownloadProgressListener;
+import com.androidnetworking.widget.ANImageView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,8 +30,6 @@ import gov.smart.health.R;
 import gov.smart.health.activity.vr.VTOVRPlayerActivity;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
 import gov.smart.health.utils.SHConstants;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by laoniu on 2017/07/23.
@@ -81,7 +79,11 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final SportVideoListModel model = mLists.get(position);
-        holder.image.setImageResource(R.mipmap.healthicon);
+
+        holder.image.setDefaultImageResId(R.mipmap.healthicon);
+        holder.image.setErrorImageResId(R.mipmap.healthicon);
+        holder.image.setImageUrl(model.path_thumbnail);
+
         holder.title.setText(model.video_name);
         holder.time.setText(model.video_desc);
         holder.downloadprogressBar.setVisibility(View.INVISIBLE);
@@ -189,7 +191,7 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView image;
+        public ANImageView image;
         public TextView title;
         public TextView time;
         public TextView download;
@@ -197,7 +199,7 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
 
         public ViewHolder(View view){
             super(view);
-            image = (ImageView)view.findViewById(R.id.sport_item_img);
+            image = (ANImageView)view.findViewById(R.id.sport_item_img);
             title = (TextView)view.findViewById(R.id.sport_item_title);
             time = (TextView)view.findViewById(R.id.sport_item_time);
             download = (TextView)view.findViewById(R.id.sport_item_download);

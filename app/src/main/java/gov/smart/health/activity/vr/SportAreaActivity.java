@@ -21,7 +21,7 @@ import java.util.List;
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.model.VideoFolderListModel;
 import gov.smart.health.activity.vr.model.VideoFolderModel;
-import gov.smart.health.adapter.SportAreaRefreshRecyclerAdapter;
+import gov.smart.health.activity.vr.adapter.SportAreaRefreshRecyclerAdapter;
 import gov.smart.health.utils.SHConstants;
 
 public class SportAreaActivity extends AppCompatActivity {
