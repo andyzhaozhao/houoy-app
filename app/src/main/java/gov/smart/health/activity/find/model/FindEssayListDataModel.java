@@ -55,6 +55,8 @@ public class FindEssayListDataModel implements Serializable {
     public String pk_person;
     @SerializedName("person_name")
     public String person_name;
+    @SerializedName("path_thumbnail")
+    public String path_thumbnail;
     @SerializedName("pkvalue")
     public String pkvalue;
     @SerializedName("tableName")

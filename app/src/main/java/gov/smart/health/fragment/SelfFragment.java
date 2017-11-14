@@ -16,6 +16,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.androidnetworking.widget.ANImageView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
@@ -44,7 +45,7 @@ public class SelfFragment extends Fragment {
     private String mParam2;
 
     private TextView name,detail,age;
-    private ImageView selfImg;
+    private ANImageView selfImg;
     private MyPersonInfoListModel personModel;
 
     public SelfFragment() {
@@ -84,7 +85,7 @@ public class SelfFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_self, container, false);
         ImageView bgImg = (ImageView)rootView.findViewById(R.id.self_bgimg);
-        selfImg = (ImageView)rootView.findViewById(R.id.self_self_img);
+        selfImg = (ANImageView)rootView.findViewById(R.id.self_self_img);
 
         name = (TextView)rootView.findViewById(R.id.tv_self_name);
         detail = (TextView)rootView.findViewById(R.id.tv_self_detail);
@@ -149,14 +150,9 @@ public class SelfFragment extends Fragment {
                                 age.setText((personModel.age == null)?"秘密":personModel.age);
 
                                 if(personModel.portraitPath != null && !personModel.portraitPath.isEmpty()) {
-                                    try {
-                                        Glide.with(getContext())
-                                                .load(SHConstants.BaseUrlPhoto + personModel.portraitPath)
-                                                .into(selfImg);
-                                    }catch (Exception e){
-                                        Log.i("",""+e.getMessage());
-                                        e.printStackTrace();
-                                    }
+                                    selfImg.setDefaultImageResId(R.mipmap.healthicon);
+                                    selfImg.setErrorImageResId(R.mipmap.healthicon);
+                                    selfImg.setImageUrl(SHConstants.BaseUrlPhoto + personModel.portraitPath);
                                 }
                             }
                         } else {

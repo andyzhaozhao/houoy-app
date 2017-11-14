@@ -43,11 +43,11 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="头像选择" />
-                <ImageView
+                <com.androidnetworking.widget.ANImageView
                     android:id="@+id/img_update_user_icon"
                     android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
