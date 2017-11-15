@@ -34,22 +34,18 @@ public class FileUtils {
      * @param fileName
      * @return 创建新文件   创建过程中出现异常返回null
      */
-    public static File createTempFile(String dri,String fileName){
-        File file = new File(dri + File.separator+ fileName + ".dl");
+    public static File createTempFile(String dri,String fileName) throws IOException{
+        //TODO path mkdirs
+        File path = new File(dri);
+        if(!path.exists()){
+            path.mkdirs();
+        }
+
+        File file = new File(path , fileName);
         if(file.exists()){
             file.delete();
         }
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-            file = null;
-        }
-        if(file == null){
-            LogUtils.E(TAG,"createTempFile is fail");
-        }else{
-            LogUtils.D(TAG,"createTempFile====="+file.getName());
-        }
+        file.createNewFile();
         return file;
     }
 

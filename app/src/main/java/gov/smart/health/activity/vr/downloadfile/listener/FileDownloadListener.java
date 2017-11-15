@@ -1,6 +1,7 @@
 package gov.smart.health.activity.vr.downloadfile.listener;
 
-import gov.smart.health.activity.vr.downloadfile.database.model.DownloadFileInfo;
+import gov.smart.health.activity.vr.model.SportVideoListModel;
+import gov.smart.health.activity.vr.model.SportVideoListModelEx;
 
 /**
  *  文件下载监听
@@ -9,23 +10,29 @@ public interface FileDownloadListener{
 
     /**
      *
-     * @param downloadFileInfo
+     * @param model
      */
-    public void onFileDownloading(DownloadFileInfo downloadFileInfo);
+    public void onFileDownloadStart(SportVideoListModelEx model);
 
     /**
      *
-     * @param downloadFileInfo
+     * @param model
      */
-    public void onFileDownloadFail(DownloadFileInfo downloadFileInfo);
+    public void onFileDownloading(SportVideoListModelEx model);
+
     /**
      *
-     * @param downloadFileInfo
+     * @param model
      */
-    public void onFileDownloadCompleted(DownloadFileInfo downloadFileInfo);
+    public void onFileDownloadFail(SportVideoListModelEx model);
     /**
      *
-     * @param downloadFileInfo
+     * @param model
      */
-    public void onFileDownloadPaused(DownloadFileInfo downloadFileInfo);
+    public void onFileDownloadCompleted(SportVideoListModelEx model);
+//    /**
+//     *
+//     * @param model
+//     */
+//    public void onFileDownloadPaused(SportVideoListModelEx model);
 }

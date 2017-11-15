@@ -35,4 +35,14 @@ public class SharedPreferencesHelper {
     public static Boolean gettingBoolean(String key ,Boolean defaultvalue){
         return sharedPref.getBoolean(key,defaultvalue);
     }
+
+    public static void settingLong(String key ,long value){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putLong(key, value);
+        editor.apply();
+    }
+
+    public static long gettingLong(String key ,long defaultvalue){
+        return sharedPref.getLong(key,defaultvalue);
+    }
 }

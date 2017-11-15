@@ -1,7 +1,5 @@
 package gov.smart.health.activity.vr;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -28,6 +26,7 @@ import java.io.File;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
+import gov.smart.health.activity.vr.model.SportVideoListModelEx;
 import gov.smart.health.utils.SHConstants;
 
 public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCallBack, VideoController.PlayerControl{
@@ -44,7 +43,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     private int SmallPlayH = 0;
     private boolean colseDualScreen = false;
     private boolean isSecond = false;
-    private SportVideoListModel videoModel = new SportVideoListModel();
+    private SportVideoListModel model = new SportVideoListModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +51,13 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         setContentView(R.layout.activity_vto_vrplayer);
 
         if(getIntent() != null && getIntent().getSerializableExtra(SHConstants.Video_ModelKey)!= null){
-            videoModel = (SportVideoListModel) getIntent().getSerializableExtra(SHConstants.Video_ModelKey);
+            model = (SportVideoListModel) getIntent().getSerializableExtra(SHConstants.Video_ModelKey);
         }
 
         initView();
 
         TextView textView = (TextView)findViewById(R.id.tv_detail);
-        textView.setText(videoModel.video_desc);
+        textView.setText(model.video_desc);
         //初始化播放器
         RelativeLayout rlPlayView = (RelativeLayout) findViewById(R.id.activity_rlPlayView);
         mMediaplayer = new UVMediaPlayer(this, rlPlayView);
@@ -238,8 +237,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                     //mMediaplayer.replay();
                     if(!isSecond) {
                         isSecond= true;
-                        String downlaodFilePathStr = getApplicationContext().getCacheDir().getAbsolutePath() + SHConstants.Download_File_Divide+ SHConstants.Download_Download;
-                        String downlaodFile =  downlaodFilePathStr + videoModel.video_name;
+                        String downlaodFile =  model.downlaodPath + File.separator + model.video_name;
                         mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
                     }else {
 //                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplication());
@@ -250,7 +248,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
 //                                    @Override
 //                                    public void onClick(DialogInterface dialog, int which) {
                                         Intent intent = new Intent();
-                                        intent.putExtra(SHConstants.Video_ModelKey, videoModel);
+                                        intent.putExtra(SHConstants.Video_ModelKey, model);
                                         intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
                                         startActivity(intent);
 //                                    }

@@ -27,9 +27,8 @@ public class SHConstants {
 
     //dowmnload
     public static String Download_Base_Link = "http://47.94.6.120/video/";
-    public static String Download_Download = "SHDownloads/";
-    public static String Download_Temp = "SHTemp/";
-    public static String Download_File_Divide = "/";
+    public static String Download_Download = "SHDownloads";
+    public static String Download_Temp = "SHTemp";
 
     public static String LoginUserCode = "user_code";
     public static String LoginUserPassword = "user_password";
@@ -121,4 +120,5 @@ public class SHConstants {
     public static String EssayType32 = "32";
     public static String EssayType33 = "33";
 
+    public static String VideoLength = "VideoLength_";
 }

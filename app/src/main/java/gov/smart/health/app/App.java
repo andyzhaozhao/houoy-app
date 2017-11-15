@@ -4,8 +4,8 @@ import android.app.Application;
 
 import com.androidnetworking.AndroidNetworking;
 import com.crashlytics.android.Crashlytics;
-import com.raizlabs.android.dbflow.config.FlowManager;
 
+import gov.smart.health.activity.vr.downloadfile.DownloadManager;
 import gov.smart.health.utils.SharedPreferencesHelper;
 import io.fabric.sdk.android.Fabric;
 
@@ -20,6 +20,6 @@ public class App extends Application {
         AndroidNetworking.initialize(getApplicationContext());
         Fabric.with(this, new Crashlytics());
         new SharedPreferencesHelper(getApplicationContext());
-        FlowManager.init(this);
+        DownloadManager.shareDownloadManager();
     }
 }
