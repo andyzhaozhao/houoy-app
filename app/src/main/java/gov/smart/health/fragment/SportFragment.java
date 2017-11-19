@@ -28,6 +28,7 @@ import java.util.List;
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.SportAreaActivity;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
+import gov.smart.health.activity.vr.model.SportVideoListModelEx;
 import gov.smart.health.activity.vr.model.SportVideoModel;
 import gov.smart.health.activity.vr.model.VideoFolderListModel;
 import gov.smart.health.activity.vr.adapter.SportRefreshRecyclerAdapter;
@@ -46,7 +47,7 @@ public class SportFragment extends Fragment {
 
     private int page;
     private SportVideoModel jsonModel = new SportVideoModel();
-    private List<SportVideoListModel> modelLists = new ArrayList<>();
+    private List<SportVideoListModelEx> modelLists = new ArrayList<>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -183,7 +184,11 @@ public class SportFragment extends Fragment {
                         Gson gson = new Gson();
                         jsonModel = gson.fromJson(response, SportVideoModel.class);
                         if (jsonModel.success) {
-                            modelLists.addAll(jsonModel.resultData);
+                            for (int i =0 ; i< jsonModel.resultData.size() ; i++){
+                                SportVideoListModelEx modelEx = new SportVideoListModelEx();
+                                modelEx.videoModel = jsonModel.resultData.get(i);
+                                modelLists.add(modelEx);
+                            }
                             mAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getContext(), "信息获取失败", Toast.LENGTH_LONG).show();

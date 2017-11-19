@@ -1,8 +1,14 @@
 package gov.smart.health.activity.vr.model;
 
+import android.content.Context;
+import android.widget.ProgressBar;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.io.File;
 import java.io.Serializable;
+
+import gov.smart.health.utils.SHConstants;
 
 /**
  * Created by laoniu on 11/8/17.
@@ -60,4 +66,7 @@ public class SportVideoListModel implements Serializable{
     public String tableName;
     @SerializedName("pkfield")
     public String pkfield;
+
+    public String downlaodPath;
+    public String downlaodTempPath;
 }
