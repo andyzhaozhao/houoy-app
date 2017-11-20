@@ -15,6 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fitpolo.support.bluetooth.BluetoothModule;
+import com.fitpolo.support.entity.DailyStep;
+import com.fitpolo.support.entity.HeartRate;
 import com.utovr.player.UVEventListener;
 import com.utovr.player.UVInfoListener;
 import com.utovr.player.UVMediaPlayer;
@@ -23,6 +26,8 @@ import com.utovr.player.UVPlayerCallBack;
 
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
@@ -37,7 +42,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     private boolean needBufferAnim = true;
     private ImageView imgBuffer;                // 缓冲动画
     private ImageView imgBack;
-    private View mTitle;
     private RelativeLayout rlParent = null;
     protected int CurOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     private int SmallPlayH = 0;
@@ -66,7 +70,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         mMediaplayer.setToolbar(rlToolbar, null, imgBack);
         mCtrl = new VideoController(rlToolbar, this, true);
         changeOrientation(false);
-
+        getData();
     }
 
     @Override
@@ -120,7 +124,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         }
         if (isLandscape)
         {
-            mTitle.setVisibility(View.GONE);
             CurOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -138,7 +141,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         }
         else
         {
-            mTitle.setVisibility(View.VISIBLE);
             CurOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().addFlags(
@@ -157,7 +159,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
 
     private void initView()
     {
-        mTitle = findViewById(R.id.ll_title);
         rlParent = (RelativeLayout) findViewById(R.id.activity_rlParent);
         imgBuffer = (ImageView) findViewById(R.id.activity_imgBuffer);
         imgBack = (ImageView) findViewById(R.id.activity_imgBack);
@@ -423,6 +424,16 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
             ScreenH = temp;
         }
         SmallPlayH = ScreenW * ScreenW / ScreenH;
+    }
+
+    private void getData(){
+        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
+        if(bluetoothModule.isSupportHeartRate()){
+           List<HeartRate> heartRates = bluetoothModule.getHeartRates();
+            Log.d("",heartRates.toString());
+        }
+        ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
+        Log.d("",dailySteps.toString());
     }
 }
 
