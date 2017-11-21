@@ -89,32 +89,7 @@
             android:layout_height="2dp"
             android:background="@drawable/dash_line" />
         <RelativeLayout
-            android:id="@+id/btn_setting_help"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_margin="5dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:text="小米手环" />
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@android:drawable/ic_menu_send" />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@drawable/dash_line" />
-        <RelativeLayout
-            android:id="@+id/btn_setting_update"
+            android:id="@+id/btn_setting_device"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_margin="5dp"
