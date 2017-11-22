@@ -26,13 +26,15 @@ import java.util.Map;
 
 import gov.smart.health.R;
 import gov.smart.health.utils.SharedPreferencesHelper;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class DeviceSettingActivity extends AppCompatActivity {
+public class DeviceSettingActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks  {
 
     private Map<String,BleDevice> bleDeviceMap = new HashMap<>();
 
     private static String AddressKey = "addressKey";
     private static int REQUEST_ENABLE_BLUETOOTH = 123;
+    private String[] blueToothPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +50,43 @@ public class DeviceSettingActivity extends AppCompatActivity {
                 }
                 boolean btEnable = Bt.isEnabled();
                 if(btEnable){
-                    doConnectionWatch();
+                    if (Build.VERSION.SDK_INT >= 23 ) {
+                        if (EasyPermissions.hasPermissions(getApplicationContext(), blueToothPermissions)) {
+                            doConnectionWatch();
+                        } else {
+                            EasyPermissions.requestPermissions(DeviceSettingActivity.this, "Access for storage",
+                                    REQUEST_ENABLE_BLUETOOTH, blueToothPermissions);
+                        }
+                    } else {
+                        doConnectionWatch();
+                    }
                 } else {
-                    Intent btOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(btOn, REQUEST_ENABLE_BLUETOOTH);
+                    Toast.makeText(getApplication(), "请确认蓝牙是否正常开启！", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int ResultCode, Intent date){
-        if(requestCode == REQUEST_ENABLE_BLUETOOTH){
-            BluetoothAdapter Bt = BluetoothAdapter.getDefaultAdapter();
-            if(Bt.isEnabled()){
-                doConnectionWatch();
-            } else {
-                Toast.makeText(getApplication(), "请确认蓝牙是否正常开启！", Toast.LENGTH_LONG).show();
-            }
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> list) {
+        // Some permissions have been granted
+        if(requestCode == REQUEST_ENABLE_BLUETOOTH) {
+            doConnectionWatch();
         }
     }
 
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> list) {
+        // Some permissions have been denied
+        // ...
+    }
     private void doConnectionWatch() {
         BluetoothModule bluetoothModule = BluetoothModule.getInstance();
         if(bluetoothModule.isBluetoothOpen()) {
