@@ -3,6 +3,9 @@ package gov.smart.health.activity.self;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,10 +48,13 @@ public class DeviceSettingActivity extends AppCompatActivity {
                 if(btEnable){
                     doConnectionWatch();
                 }else{
-                    Intent btOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(btOn, REQUEST_ENABLE_BLUETOOTH);
+                    if(Build.VERSION.SDK_INT > 23) {
+                        Intent btOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(btOn, REQUEST_ENABLE_BLUETOOTH);
+                    } else {
+                        Toast.makeText(getApplication(), "请确认蓝牙是否正常开启！", Toast.LENGTH_LONG).show();
+                    }
                 }
-
             }
         });
     }
@@ -59,6 +65,8 @@ public class DeviceSettingActivity extends AppCompatActivity {
             BluetoothAdapter Bt = BluetoothAdapter.getDefaultAdapter();
             if(Bt.isEnabled()){
                 doConnectionWatch();
+            } else {
+                Toast.makeText(getApplication(), "请确认蓝牙是否正常开启！", Toast.LENGTH_LONG).show();
             }
         }
     }
