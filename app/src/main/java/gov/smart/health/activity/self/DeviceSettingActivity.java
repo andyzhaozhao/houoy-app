@@ -1,5 +1,6 @@
 package gov.smart.health.activity.self;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +33,7 @@ public class DeviceSettingActivity extends AppCompatActivity {
 
     private static String AddressKey = "addressKey";
     private static int REQUEST_ENABLE_BLUETOOTH = 123;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +49,9 @@ public class DeviceSettingActivity extends AppCompatActivity {
                 boolean btEnable = Bt.isEnabled();
                 if(btEnable){
                     doConnectionWatch();
-                }else{
-                    if(Build.VERSION.SDK_INT > 23) {
-                        Intent btOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivityForResult(btOn, REQUEST_ENABLE_BLUETOOTH);
-                    } else {
-                        Toast.makeText(getApplication(), "请确认蓝牙是否正常开启！", Toast.LENGTH_LONG).show();
-                    }
+                } else {
+                    Intent btOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(btOn, REQUEST_ENABLE_BLUETOOTH);
                 }
             }
         });

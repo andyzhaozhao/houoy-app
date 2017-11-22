@@ -25,6 +25,7 @@ public class SHConstants {
     public static String VideoRetrieve = BaseUrl8888+"/video/retrieveMobile";
     public static String RecordVRSportSave = BaseUrl8889+"/recordVRSport/save";
     public static String RecordVRSportDetailsave = BaseUrl8889+"/recordVRSportDetail/save";
+    public static String PersonUploadMobile = BaseUrl8889+"/person/uploadMobile";
 
     //dowmnload
     public static String Download_Base_Link = "http://47.94.6.120/video/";
@@ -50,6 +51,9 @@ public class SHConstants {
     public static String CommonTitle = "title";
     //Setting
     public static String SettingPersonModelKey = "PersonModelKey";
+
+    //Setting
+    public static String SettingPersonImage = "image";
 
     //splash
     public static String IsShowSplash = "IsShowSplash";

@@ -150,7 +150,7 @@ public class SelfFragment extends Fragment {
                                 age.setText((personModel.age == null)?"秘密":personModel.age);
 
                                 if(personModel.portraitPath != null && !personModel.portraitPath.isEmpty()) {
-                                    selfImg.setDefaultImageResId(R.mipmap.healthicon);
+                                    selfImg.setDefaultImageResId(R.mipmap.person_default_icon);
                                     selfImg.setErrorImageResId(R.mipmap.healthicon);
                                     selfImg.setImageUrl(SHConstants.BaseUrlPhoto + personModel.portraitPath);
                                 }

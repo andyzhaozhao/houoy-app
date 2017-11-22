@@ -1,6 +1,7 @@
 package gov.smart.health.app;
 
 import android.app.Application;
+import android.bluetooth.BluetoothAdapter;
 
 import com.androidnetworking.AndroidNetworking;
 import com.crashlytics.android.Crashlytics;
@@ -22,6 +23,9 @@ public class App extends Application {
         Fabric.with(this, new Crashlytics());
         new SharedPreferencesHelper(getApplicationContext());
         DownloadManager.shareDownloadManager();
-        Fitpolo.init(this);
+        BluetoothAdapter Bt = BluetoothAdapter.getDefaultAdapter();
+        if(Bt != null) {
+            Fitpolo.init(this);
+        }
     }
 }
