@@ -24,6 +24,7 @@ public class SHConstants {
     public static String FolderVideoRetrieve = BaseUrl8888+"/folderVideo/retrieveMobile";
     public static String VideoRetrieve = BaseUrl8888+"/video/retrieveMobile";
     public static String RecordVRSportSave = BaseUrl8889+"/recordVRSport/save";
+    public static String RecordVRSportDetailsave = BaseUrl8889+"/recordVRSportDetail/save";
 
     //dowmnload
     public static String Download_Base_Link = "http://47.94.6.120/video/";

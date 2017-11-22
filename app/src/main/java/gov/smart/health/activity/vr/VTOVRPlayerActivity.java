@@ -15,15 +15,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.fitpolo.support.bluetooth.BluetoothModule;
 import com.fitpolo.support.entity.DailyStep;
 import com.fitpolo.support.entity.HeartRate;
+import com.google.gson.Gson;
 import com.utovr.player.UVEventListener;
 import com.utovr.player.UVInfoListener;
 import com.utovr.player.UVMediaPlayer;
 import com.utovr.player.UVMediaType;
 import com.utovr.player.UVPlayerCallBack;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,7 +40,9 @@ import java.util.List;
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
 import gov.smart.health.activity.vr.model.SportVideoListModelEx;
+import gov.smart.health.activity.vr.model.VRSaveRecordModel;
 import gov.smart.health.utils.SHConstants;
+import gov.smart.health.utils.SharedPreferencesHelper;
 
 public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCallBack, VideoController.PlayerControl{
 
@@ -435,5 +445,63 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
         Log.d("",dailySteps.toString());
     }
+
+    private void sendData(){
+
+        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
+        String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Person, pk);
+            jsonObject.put(SHConstants.Record_VRSport_Save_Person_Name, name);
+
+            jsonObject.put(SHConstants.Record_VRSport_Save_calorie, "555");
+            jsonObject.put(SHConstants.Record_VRSport_Save_heart_rate, "100");
+            jsonObject.put(SHConstants.Record_VRSport_Save_heart_rate_max, "128");
+
+            jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Place, model.pk_folder);
+            jsonObject.put(SHConstants.Record_VRSport_Save_Place_Name, "Place");
+
+            jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Video, model.pk_video);
+            jsonObject.put(SHConstants.Record_VRSport_Save_Video_Name, model.video_name);
+
+            jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_Code, "1");
+            jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_name, "record_sport_name");
+
+            jsonObject.put(SHConstants.Record_VRSport_Save_Time_End, "2017-10-25 09:09:09");
+            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Length, "300");
+            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Start, "2017-10-25 09:09:09");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        AndroidNetworking.post(SHConstants.RecordVRSportDetailsave)
+                .addJSONObjectBody(jsonObject)
+                .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
+                .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        VRSaveRecordModel model = gson.fromJson(response,VRSaveRecordModel.class);
+                        if (model.success){
+                            Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d("","response error"+anError.getErrorDetail());
+                        Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
 }
 

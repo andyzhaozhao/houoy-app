@@ -52,7 +52,6 @@
         <activity
             android:name=".activity.HomeActivity"
             android:screenOrientation="portrait" />
-        s
         <activity
             android:name=".activity.find.LearningActivity"
             android:screenOrientation="portrait" />
