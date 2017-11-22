@@ -110,6 +110,25 @@ public class SHConstants {
     public static String Record_VRSport_Save_Time_Length = "time_length";
     public static String Record_VRSport_Save_Time_Start = "time_start";
 
+    //recordVR sport detail save parameter
+    public static String Record_VRSportDetailSave_calorie = "calorie";
+    public static String Record_VRSportDetailSave_heart = "heart";
+    public static String Record_VRSportDetailSave_length = "length";
+
+    public static String Record_VRSportDetailSave_Pk_Person = "pk_person";
+    public static String Record_VRSportDetailSave_Person_Name = "person_name";
+
+    public static String Record_VRSportDetailSave_Pk_Place = "pk_place";
+    public static String Record_VRSportDetailSave_Place_Name = "place_name";
+
+    public static String Record_VRSportDetailSave_Pk_Video = "pk_video";
+    public static String Record_VRSportDetailSave_Video_Name = "video_name";
+
+    public static String Record_VRSportDetailSave_Record_SportDetailCode = "sport_detail_code";
+    public static String Record_VRSportDetailSave_Record_SportDetailname = "sport_detail_name";
+
+    public static String Record_VRSportDetailSave_Timestamp = "timestamp";
+
     //find share
     public static String FindSharePersonName = "person_name";
     public static String FindSharePkPerson = "pk_person";

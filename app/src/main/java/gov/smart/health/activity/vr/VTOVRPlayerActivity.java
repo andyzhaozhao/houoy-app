@@ -444,34 +444,37 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         }
         ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
         Log.d("",dailySteps.toString());
+
+
     }
 
-    private void sendData(){
+    private void sendData(HeartRate heartRate,DailyStep dailyStep){
 
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
         String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Person, pk);
-            jsonObject.put(SHConstants.Record_VRSport_Save_Person_Name, name);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_calorie, dailyStep.calories);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_heart, heartRate.value);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_length, "0");
 
-            jsonObject.put(SHConstants.Record_VRSport_Save_calorie, "555");
-            jsonObject.put(SHConstants.Record_VRSport_Save_heart_rate, "100");
-            jsonObject.put(SHConstants.Record_VRSport_Save_heart_rate_max, "128");
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Person, pk);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Person_Name, name);
 
-            jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Place, model.pk_folder);
-            jsonObject.put(SHConstants.Record_VRSport_Save_Place_Name, "Place");
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Place, model.pk_folder);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Place_Name, "Place");
 
             jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Video, model.pk_video);
             jsonObject.put(SHConstants.Record_VRSport_Save_Video_Name, model.video_name);
 
-            jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_Code, "1");
-            jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_name, "record_sport_name");
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Video, "1");
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Video_Name, "record_sport_name");
 
-            jsonObject.put(SHConstants.Record_VRSport_Save_Time_End, "2017-10-25 09:09:09");
-            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Length, "300");
-            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Start, "2017-10-25 09:09:09");
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Timestamp, "2017-10-25 09:09:09");
+            long millis = System.currentTimeMillis();
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailCode, millis);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailname, millis);
         } catch (JSONException e) {
             e.printStackTrace();
         }
