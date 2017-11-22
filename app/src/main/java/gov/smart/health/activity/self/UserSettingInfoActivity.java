@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -126,11 +127,11 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
         }
     }
 
-    private void saveImageToServer(byte[] imageBytes){
+    private void saveImageToServer(String imageBase64Str){
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
 
         AndroidNetworking.post(SHConstants.PersonUploadMobile+"?"+SHConstants.CommonUser_PK+"="+pk)
-                .addByteBody(imageBytes)
+                .addStringBody(imageBase64Str)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
                 .setPriority(Priority.LOW)
@@ -169,7 +170,7 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
                 c.close();
                 Bitmap bm = BitmapFactory.decodeFile(imagePath);
                 ((ImageView)findViewById(R.id.img_update_user_icon)).setImageBitmap(bm);
-                saveImageToServer(bitmap2Bytes(bm));
+                saveImageToServer(Base64.encodeToString(bitmap2Bytes(bm), Base64.DEFAULT));
             }catch (Exception e){
                 e.printStackTrace();
             }
