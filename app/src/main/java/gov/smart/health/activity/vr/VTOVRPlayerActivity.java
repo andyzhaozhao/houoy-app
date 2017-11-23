@@ -1,10 +1,13 @@
 package gov.smart.health.activity.vr;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import android.preference.DialogPreference;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,15 +18,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.fitpolo.support.bluetooth.BluetoothModule;
 import com.fitpolo.support.entity.DailyStep;
 import com.fitpolo.support.entity.HeartRate;
+import com.google.gson.Gson;
 import com.utovr.player.UVEventListener;
 import com.utovr.player.UVInfoListener;
 import com.utovr.player.UVMediaPlayer;
 import com.utovr.player.UVMediaType;
 import com.utovr.player.UVPlayerCallBack;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,7 +43,9 @@ import java.util.List;
 import gov.smart.health.R;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
 import gov.smart.health.activity.vr.model.SportVideoListModelEx;
+import gov.smart.health.activity.vr.model.VRSaveRecordModel;
 import gov.smart.health.utils.SHConstants;
+import gov.smart.health.utils.SharedPreferencesHelper;
 
 public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCallBack, VideoController.PlayerControl{
 
@@ -43,6 +56,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     private ImageView imgBuffer;                // 缓冲动画
     private ImageView imgBack;
     private RelativeLayout rlParent = null;
+    private AlertDialog.Builder mAlertDialogBuilder;
     protected int CurOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     private int SmallPlayH = 0;
     private boolean colseDualScreen = false;
@@ -68,7 +82,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         //将工具条的显示或隐藏交个SDK管理，也可自己管理
         RelativeLayout rlToolbar = (RelativeLayout) findViewById(R.id.activity_rlToolbar);
         mMediaplayer.setToolbar(rlToolbar, null, imgBack);
-        mCtrl = new VideoController(rlToolbar, this, true);
+        mCtrl = new VideoController(rlToolbar, this, true,false);
         changeOrientation(false);
         getData();
     }
@@ -190,9 +204,9 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
             mMediaplayer.setListener(mListener);
             mMediaplayer.setInfoListener(mInfoListener);
             //如果是网络MP4，可调用 mCtrl.startCachePro();mCtrl.stopCachePro();
-            //mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_M3U8, Path);
             String path = "file:///android_asset/videos/wu.mp4";
             mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, path);
+            mMediaplayer.pause();
         }
         catch (Exception e)
         {
@@ -234,29 +248,40 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                     }
                     break;
                 case UVMediaPlayer.STATE_ENDED:
-                    //这里是循环播放，可根据需求更改
-                    //mMediaplayer.replay();
                     if(!isSecond) {
                         isSecond= true;
                         String downlaodFile =  model.downlaodPath + File.separator + model.video_name;
                         mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
-                    }else {
-//                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplication());
-//                        alertDialogBuilder.setMessage("是否分享本次运动？");
-//                        alertDialogBuilder.setPositiveButton("取消",null);
-//                        alertDialogBuilder.setNeutralButton("好的",
-//                                new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent = new Intent();
-                                        intent.putExtra(SHConstants.Video_ModelKey, model);
-                                        intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
-                                        startActivity(intent);
-//                                    }
-//                                });
-//                        alertDialogBuilder.setCancelable(true);
-//                        AlertDialog alertDialog = alertDialogBuilder.create();
-//                        alertDialog.show();
+                        model.time_start = System.currentTimeMillis();
+                    } else {
+                        seekTo(0);
+                        mMediaplayer.pause();
+                        mCtrl.settbtnPlayPauseStatus(false);
+                        if(mAlertDialogBuilder == null) {
+                            mAlertDialogBuilder = new AlertDialog.Builder(VTOVRPlayerActivity.this);
+                            mAlertDialogBuilder.setMessage("是否分享本次运动？");
+                            mAlertDialogBuilder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    mAlertDialogBuilder = null;
+                                }
+                            });
+                            mAlertDialogBuilder.setNeutralButton("好的",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            mAlertDialogBuilder = null;
+                                            model.time_end = System.currentTimeMillis();
+                                            Intent intent = new Intent();
+                                            intent.putExtra(SHConstants.Video_ModelKey, model);
+                                            intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                            mAlertDialogBuilder.setCancelable(true);
+                            AlertDialog alertDialog = mAlertDialogBuilder.create();
+                            alertDialog.show();
+                        }
                     }
                     break;
                 case UVMediaPlayer.TRACK_DISABLED:
@@ -333,13 +358,13 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     @Override
     public boolean isGyroEnabled()
     {
-        return mMediaplayer != null ? mMediaplayer.isGyroEnabled() : false;
+        return mMediaplayer != null && mMediaplayer.isGyroEnabled();
     }
 
     @Override
     public boolean isDualScreenEnabled()
     {
-        return mMediaplayer != null ? mMediaplayer.isDualScreenEnabled() : false;
+        return mMediaplayer != null && mMediaplayer.isDualScreenEnabled();
     }
 
     @Override
@@ -427,13 +452,75 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     }
 
     private void getData(){
+        //TODO get data.
         BluetoothModule bluetoothModule = BluetoothModule.getInstance();
         if(bluetoothModule.isSupportHeartRate()){
            List<HeartRate> heartRates = bluetoothModule.getHeartRates();
             Log.d("",heartRates.toString());
         }
-        ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
-        Log.d("",dailySteps.toString());
+        if(bluetoothModule.isSupportTodayData()) {
+            ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
+            Log.d("", dailySteps.toString());
+        }
     }
+
+    private void sendData(HeartRate heartRate,DailyStep dailyStep){
+
+        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
+        String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_calorie, dailyStep.calories);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_heart, heartRate.value);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_length, "0");
+
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Person, pk);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Person_Name, name);
+
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Place, model.pk_folder);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Place_Name, "Place");
+
+            jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Video, model.pk_video);
+            jsonObject.put(SHConstants.Record_VRSport_Save_Video_Name, model.video_name);
+
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Video, "1");
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Video_Name, "record_sport_name");
+
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Timestamp, "2017-10-25 09:09:09");
+            long millis = System.currentTimeMillis();
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailCode, millis);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailname, millis);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        AndroidNetworking.post(SHConstants.RecordVRSportDetailsave)
+                .addJSONObjectBody(jsonObject)
+                .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
+                .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        VRSaveRecordModel model = gson.fromJson(response,VRSaveRecordModel.class);
+                        if (model.success){
+                            Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d("","response error"+anError.getErrorDetail());
+                        Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
 }
 

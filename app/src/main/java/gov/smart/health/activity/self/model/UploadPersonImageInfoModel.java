@@ -1,11 +1,14 @@
-package gov.smart.health.activity.vr.model;
+package gov.smart.health.activity.self.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
- * Created by laoniu on 11/8/17.
+ * Created by laoniu on 2017/10/27.
  */
-public class VRSaveRecordModel {
+
+public class UploadPersonImageInfoModel {
     @SerializedName("msg")
     public String msg;
     @SerializedName("success")
@@ -17,7 +20,7 @@ public class VRSaveRecordModel {
     @SerializedName("resultDataType")
     public String resultDataType;
     @SerializedName("resultData")
-    public String resultData;
+    public Boolean resultData;
     @SerializedName("uploadId")
     public String uploadId;
     @SerializedName("def1")

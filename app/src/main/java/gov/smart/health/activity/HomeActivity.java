@@ -1,6 +1,7 @@
 package gov.smart.health.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import gov.smart.health.R;
 import gov.smart.health.fragment.FindFragment;
@@ -21,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private  TabHost mTabHost;
     private LayoutInflater mInflater;
+    boolean doubleBackToExitPressedOnce = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,5 +75,24 @@ public class HomeActivity extends AppCompatActivity {
         ImageView tabImg = (ImageView)tabView.findViewById(R.id.tab_img);
         tabImg.setImageResource(resId);
         return tabView;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "请再按一次返回按钮退出程序！", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }

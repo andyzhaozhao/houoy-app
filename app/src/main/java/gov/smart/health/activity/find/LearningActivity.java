@@ -24,6 +24,7 @@ import gov.smart.health.R;
 import gov.smart.health.activity.find.model.FindEssayDataModel;
 import gov.smart.health.activity.find.model.FindEssayListDataModel;
 import gov.smart.health.activity.find.adapter.LearningRefreshRecyclerAdapter;
+import gov.smart.health.activity.vr.model.VideoFolderModel;
 import gov.smart.health.utils.SHConstants;
 
 public class LearningActivity extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class LearningActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwiperefreshlayout;
     private int mLastVisibleItem;
     private LinearLayoutManager mLinearLayoutManager;
-
+    private boolean isLoadingApi;
     private int page;
     private FindEssayDataModel findModel = new FindEssayDataModel();
     private List<FindEssayListDataModel> essayLists = new ArrayList<>();
@@ -46,8 +47,6 @@ public class LearningActivity extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.title);
         title.setText(titleText);
         mSwiperefreshlayout = (SwipeRefreshLayout) findViewById(R.id.learning_srl);
-        RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.learning_list);
-
         mSwiperefreshlayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         mSwiperefreshlayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light, android.R.color.holo_orange_light,
@@ -55,16 +54,14 @@ public class LearningActivity extends AppCompatActivity {
         mSwiperefreshlayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
-        page = 0;
-        this.loadData();
+        RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.learning_list);
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter = new LearningRefreshRecyclerAdapter(this, essayLists));
 
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 0;
-                essayLists.clear();
+                resetAllData();
                 loadData();
                 mSwiperefreshlayout.setRefreshing(false);
             }
@@ -87,25 +84,39 @@ public class LearningActivity extends AppCompatActivity {
                 mLastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
+        this.resetAllData();
+        this.loadData();
+    }
+
+    private void resetAllData(){
+        page = 0;
+        essayLists.clear();
+        findModel = new FindEssayDataModel();
+        mAdapter.notifyDataSetChanged();
     }
 
     public void loadData() {
+        if(isLoadingApi){
+            return;
+        }
+        isLoadingApi = true;
         String type = getIntent().getStringExtra(SHConstants.CommonPkType);
         HashMap<String,Object> map = new HashMap<>();
-        map.put(SHConstants.CommonStart, SHConstants.EssayStart);
+        map.put(SHConstants.CommonStart, String.valueOf(page));
         map.put(SHConstants.CommonLength, SHConstants.EssayLength);
         map.put(SHConstants.CommonOrderColumnName, SHConstants.EssayOrderColumnName);
         map.put(SHConstants.CommonPkType, type);
-
+        //TODO api bug.
         AndroidNetworking.get(SHConstants.EssayRetrieveMobile)
                 .addQueryParameter(map)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
+                        Log.i("","response "+response);
                         Gson gson = new Gson();
                         findModel = gson.fromJson(response, FindEssayDataModel.class);
                         if (findModel.success) {
@@ -114,12 +125,14 @@ public class LearningActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
                         }
+                        isLoadingApi = false;
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Log.d("", "response error" + anError.getErrorDetail());
                         Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
+                        isLoadingApi = false;
                     }
                 });
     }

@@ -33,6 +33,9 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
         View btnShare = findViewById(R.id.btn_share);
+        if(getIntent() != null && getIntent().getSerializableExtra(SHConstants.Video_ModelKey)!= null){
+            videoModel = (SportVideoListModel) getIntent().getSerializableExtra(SHConstants.Video_ModelKey);
+        }
         btnShare.setOnClickListener(this);
         sendData();
     }
@@ -42,7 +45,7 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()){
             case R.id.btn_share:
                 Intent share = new Intent(Intent.ACTION_SEND);
-                share.putExtra(Intent.EXTRA_TEXT,"Hello");
+                share.putExtra(Intent.EXTRA_TEXT,"我参加了"+videoModel.video_name+"运动！，你也来运动吧！");
                 share.setType("text/plain");
                 startActivity(share);
                 break;
@@ -51,13 +54,10 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
 
     private void sendData(){
 
-        if(getIntent() != null && getIntent().getSerializableExtra(SHConstants.Video_ModelKey)!= null){
-            videoModel = (SportVideoListModel) getIntent().getSerializableExtra(SHConstants.Video_ModelKey);
-        }
-
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
         String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
 
+        //TODO get data.
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Person, pk);
@@ -73,22 +73,20 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
             jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Video, videoModel.pk_video);
             jsonObject.put(SHConstants.Record_VRSport_Save_Video_Name, videoModel.video_name);
 
-            jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_Code, "1");
-            jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_name, "record_sport_name");
+            jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_Code, System.currentTimeMillis());
+            jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_name, System.currentTimeMillis());
 
-            jsonObject.put(SHConstants.Record_VRSport_Save_Time_End, "2017-10-25 09:09:09");
-            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Length, "300");
-            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Start, "2017-10-25 09:09:09");
+            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Start, videoModel.time_start);
+            jsonObject.put(SHConstants.Record_VRSport_Save_Time_End, videoModel.time_end);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         AndroidNetworking.post(SHConstants.RecordVRSportSave)
                 .addJSONObjectBody(jsonObject)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override

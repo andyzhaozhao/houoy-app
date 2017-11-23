@@ -12,7 +12,7 @@ public class FindAttentionDataModel {
     @SerializedName("msg")
     public String msg;
     @SerializedName("success")
-    public Boolean success;
+    public boolean success;
     @SerializedName("detailMessage")
     public String detailMessage;
     @SerializedName("statusCode")

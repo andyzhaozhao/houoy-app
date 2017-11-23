@@ -38,15 +38,6 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/sport_setting" />
-                <TextView
-                    android:id="@+id/tv_share_mark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="@color/whiteColor"
-                    android:textStyle="bold"
-                    android:text="得分：89" />
-
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_alignParentBottom="true"
@@ -57,20 +48,18 @@
                         android:id="@+id/tv_share_times"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/whiteColor"
-                        android:textStyle="bold"
+                        android:textColor="@color/blackColor"
                         android:text="运动次数：60" />
                     <TextView
                         android:id="@+id/tv_share_heart_times"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/whiteColor"
-                        android:textStyle="bold"
+                        android:textColor="@color/blackColor"
                         android:text="心率：120" />
                 </LinearLayout>
             </RelativeLayout>
             <TextView
-                android:padding="15dp"
+                android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/blackColor"
@@ -79,8 +68,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
+                android:padding="5dp"
                 android:layout_height="wrap_content">
                 <EditText
+
                     android:id="@+id/editText"
                     android:layout_above="@+id/ll_btn"
                     android:layout_width="match_parent"

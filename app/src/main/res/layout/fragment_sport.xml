@@ -19,6 +19,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="VR运动"
             android:textColor="@color/blackColor"
+            android:background="@color/btnGrayColor"
             android:id="@+id/title"
             android:layout_centerInParent="true"
             />

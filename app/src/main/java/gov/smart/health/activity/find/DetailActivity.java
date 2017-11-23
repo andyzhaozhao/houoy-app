@@ -42,10 +42,14 @@ public class DetailActivity extends AppCompatActivity {
         TextView name = (TextView)findViewById(R.id.detail_name);
         TextView subname = (TextView)findViewById(R.id.detail_subname);
         TextView text = (TextView)findViewById(R.id.detail_text);
+        TextView time = (TextView)findViewById(R.id.detail_time);
+        TextView writer = (TextView)findViewById(R.id.detail_writer);
         View button = findViewById(R.id.btn_attention);
         if(model !=null) {
             name.setText(model.essay_name);
             subname.setText(model.essay_subname);
+            time.setText(model.ts_start);
+            writer.setText(model.person_name);
             text.setText(Html.fromHtml(model.essay_content));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -56,6 +60,8 @@ public class DetailActivity extends AppCompatActivity {
         }else if(attentionModel !=null) {
             name.setText(attentionModel.record_share_code);
             subname.setText(attentionModel.record_share_name);
+            time.setText(attentionModel.ts);
+            writer.setText(attentionModel.person_name);
             text.setText(Html.fromHtml(attentionModel.record_share_desc));
             button.setVisibility(View.INVISIBLE);
         }
@@ -79,7 +85,7 @@ public class DetailActivity extends AppCompatActivity {
                 .addJSONObjectBody(jsonObject) // posting json
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override

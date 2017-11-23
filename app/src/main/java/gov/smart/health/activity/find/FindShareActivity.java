@@ -31,11 +31,12 @@ import gov.smart.health.utils.SharedPreferencesHelper;
 
 public class FindShareActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private  View btnShare;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_share);
-        View btnShare = findViewById(R.id.btn_share);
+        btnShare = findViewById(R.id.btn_share);
         btnShare.setOnClickListener(this);
     }
 
@@ -43,6 +44,7 @@ public class FindShareActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_share:
+                btnShare.setClickable(false);
                 this.sendData();
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -56,6 +58,7 @@ public class FindShareActivity extends AppCompatActivity implements View.OnClick
         TextView tvContext = (TextView) findViewById(R.id.tv_context);
         if(tvTitle.getText().toString().isEmpty()){
             Toast.makeText(getApplication(),"请输入分享信息",Toast.LENGTH_LONG).show();
+            btnShare.setClickable(true);
             return;
         }
         String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
@@ -75,7 +78,7 @@ public class FindShareActivity extends AppCompatActivity implements View.OnClick
                 .addJSONObjectBody(jsonObject) // posting json
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
@@ -87,12 +90,14 @@ public class FindShareActivity extends AppCompatActivity implements View.OnClick
                         } else {
                             Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
                         }
+                        btnShare.setClickable(true);
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Log.d("","response error"+anError.getErrorDetail());
                         Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
+                        btnShare.setClickable(true);
                     }
                 });
     }

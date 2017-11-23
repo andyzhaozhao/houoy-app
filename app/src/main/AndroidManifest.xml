@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".app.App"
@@ -41,7 +42,6 @@
             android:name=".activity.login.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_login"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
@@ -52,7 +52,6 @@
         <activity
             android:name=".activity.HomeActivity"
             android:screenOrientation="portrait" />
-        s
         <activity
             android:name=".activity.find.LearningActivity"
             android:screenOrientation="portrait" />
@@ -108,17 +107,6 @@
             android:name=".activity.message.NearlyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.vr.BlueToothActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.vr.DeviceListActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.vr.SelectParkActivity"
-            android:label="@string/title_activity_select_park"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activity.message.AddFriendActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -136,7 +124,9 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".activity.self.MyAttentionDetailActivity"></activity>
+        <activity android:name=".activity.self.MyAttentionDetailActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.self.MyDetailActivity" android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

@@ -44,7 +44,8 @@ public class SportFragment extends Fragment {
     private int mLastVisibleItem;
     private LinearLayoutManager mLinearLayoutManager;
     private Button selectButton;
-
+    private boolean isLoadingApi;
+    private static int SELECT_PLACE = 123;
     private int page;
     private SportVideoModel jsonModel = new SportVideoModel();
     private List<SportVideoListModelEx> modelLists = new ArrayList<>();
@@ -90,20 +91,7 @@ public class SportFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_sport, container, false);
-        selectButton = (Button)rootView.findViewById(R.id.select_park);
-        selectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(SportFragment.this.getActivity(), SportAreaActivity.class);
-                startActivityForResult(intent,0);
-            }
-        });
-
-        page = 0;
         mSwiperefreshlayout = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_vr_main);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_vr_main);
-
         mSwiperefreshlayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         mSwiperefreshlayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light, android.R.color.holo_orange_light,
@@ -111,16 +99,14 @@ public class SportFragment extends Fragment {
         mSwiperefreshlayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
-
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_vr_main);
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this.getActivity()));
-
         recyclerView.setAdapter(mAdapter = new SportRefreshRecyclerAdapter(this.getActivity(), modelLists));
 
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 0;
-                modelLists.clear();
+                resetAllData();
                 loadData();
                 mSwiperefreshlayout.setRefreshing(false);
             }
@@ -142,45 +128,74 @@ public class SportFragment extends Fragment {
                 mLastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
+
+        selectButton = (Button)rootView.findViewById(R.id.select_park);
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(SportFragment.this.getActivity(), SportAreaActivity.class);
+                startActivityForResult(intent,SELECT_PLACE);
+            }
+        });
+        resetAllData();
         this.loadData();
         return rootView;
     }
 
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SELECT_PLACE) {
+            resetAllData();
+            loadData(data);
+        }
+    }
+
+
+
+    private void resetAllData(){
+        page = 0;
         modelLists.clear();
+        jsonModel = new SportVideoModel();
         mAdapter.notifyDataSetChanged();
-        loadData(data);
     }
 
     public void loadData() {
         loadData(null);
     }
     public void loadData(Intent data) {
-        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
+        if(isLoadingApi){
+            return;
+        }
+        isLoadingApi = true;
 
         HashMap<String,Object> map = new HashMap<>();
-        map.put(SHConstants.CommonStart, SHConstants.EssayStart);
+        map.put(SHConstants.CommonStart, String.valueOf(page));
         map.put(SHConstants.CommonLength, SHConstants.EssayLength);
         map.put(SHConstants.CommonOrderColumnName, SHConstants.Video_List_OrderColumnName_Value);
         map.put(SHConstants.CommonOrderDir, SHConstants.CommonOrderDir_Desc);
 
         if(data != null && data.getSerializableExtra(SHConstants.Video_Floder_Key) != null){
-          VideoFolderListModel model =  (VideoFolderListModel)data.getSerializableExtra(SHConstants.Video_Floder_Key);
+            VideoFolderListModel model =  (VideoFolderListModel)data.getSerializableExtra(SHConstants.Video_Floder_Key);
             map.put(SHConstants.Video_Floder_Pk_Folder, model.pk_folder);
             selectButton.setText(model.folder_name);
+        } else {
+            selectButton.setText("选择地点");
         }
 
         AndroidNetworking.get(SHConstants.VideoRetrieve)
                 .addQueryParameter(map)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
+                        Log.i("","response "+response);
                         Gson gson = new Gson();
                         jsonModel = gson.fromJson(response, SportVideoModel.class);
                         if (jsonModel.success) {
@@ -193,12 +208,14 @@ public class SportFragment extends Fragment {
                         } else {
                             Toast.makeText(getContext(), "信息获取失败", Toast.LENGTH_LONG).show();
                         }
+                        isLoadingApi = false;
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Log.d("", "response error" + anError.getErrorDetail());
                         Toast.makeText(getContext(), "信息获取失败", Toast.LENGTH_LONG).show();
+                        isLoadingApi = false;
                     }
                 });
     }

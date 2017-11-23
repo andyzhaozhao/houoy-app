@@ -27,7 +27,7 @@ public class DownloadUtils {
      * @return
      */
     public static int conversionPercent(long length,long totalLength){
-        int percent = (int) (length * 100 / totalLength);
+        int percent = (int) (length * 10000 / totalLength);
         return percent;
     }
 

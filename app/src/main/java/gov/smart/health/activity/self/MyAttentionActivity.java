@@ -25,6 +25,7 @@ import gov.smart.health.activity.find.model.FindAttentionDataModel;
 import gov.smart.health.activity.self.adapter.MyAttentionRefreshRecyclerAdapter;
 import gov.smart.health.activity.self.model.LikeAttentionInfoModel;
 import gov.smart.health.activity.self.model.LikeAttentionInfoListModel;
+import gov.smart.health.activity.vr.model.VideoFolderModel;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
 
@@ -34,8 +35,7 @@ public class MyAttentionActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwiperefreshlayout;
     private int mLastVisibleItem;
     private LinearLayoutManager mLinearLayoutManager;
-
-
+    private boolean isLoadingApi;
     private int page;
     private LikeAttentionInfoModel jsonModel = new LikeAttentionInfoModel();
     private List<LikeAttentionInfoListModel> modelLists = new ArrayList<>();
@@ -46,8 +46,6 @@ public class MyAttentionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_attention);
 
         mSwiperefreshlayout = (SwipeRefreshLayout)findViewById(R.id.attention_srl);
-        RecyclerView recyclerView=(RecyclerView)this.findViewById(R.id.attention_list);
-
         mSwiperefreshlayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         mSwiperefreshlayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light,android.R.color.holo_orange_light,
@@ -55,16 +53,14 @@ public class MyAttentionActivity extends AppCompatActivity {
         mSwiperefreshlayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
-        page = 0;
-        this.loadData();
+        RecyclerView recyclerView=(RecyclerView)this.findViewById(R.id.attention_list);
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter = new MyAttentionRefreshRecyclerAdapter(this,modelLists));
 
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 0;
-                modelLists.clear();
+                resetAllData();
                 loadData();
                 mSwiperefreshlayout.setRefreshing(false);
             }
@@ -85,14 +81,27 @@ public class MyAttentionActivity extends AppCompatActivity {
                 mLastVisibleItem =mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
+        this.resetAllData();
+        this.loadData();
     }
 
+    private void resetAllData(){
+        page = 0;
+        modelLists.clear();
+        jsonModel = new LikeAttentionInfoModel();
+        mAdapter.notifyDataSetChanged();
+    }
 
     public void loadData() {
+        if(isLoadingApi){
+            return;
+        }
+        isLoadingApi = true;
+
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
 
         HashMap<String,Object> map = new HashMap<>();
-        map.put(SHConstants.CommonStart, SHConstants.EssayStart);
+        map.put(SHConstants.CommonStart, String.valueOf(page));
         map.put(SHConstants.CommonLength, SHConstants.EssayLength);
         map.put(SHConstants.CommonOrderColumnName, SHConstants.PersonFollow_List_OrderColumnName_Value);
         map.put(SHConstants.CommonOrderDir, SHConstants.CommonOrderDir_Desc);
@@ -102,7 +111,7 @@ public class MyAttentionActivity extends AppCompatActivity {
                 .addQueryParameter(map)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
@@ -115,12 +124,14 @@ public class MyAttentionActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
                         }
+                        isLoadingApi = false;
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Log.d("", "response error" + anError.getErrorDetail());
                         Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
+                        isLoadingApi = false;
                     }
                 });
     }

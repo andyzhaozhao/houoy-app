@@ -24,6 +24,8 @@ public class SHConstants {
     public static String FolderVideoRetrieve = BaseUrl8888+"/folderVideo/retrieveMobile";
     public static String VideoRetrieve = BaseUrl8888+"/video/retrieveMobile";
     public static String RecordVRSportSave = BaseUrl8889+"/recordVRSport/save";
+    public static String RecordVRSportDetailsave = BaseUrl8889+"/recordVRSportDetail/save";
+    public static String PersonUploadMobile = BaseUrl8889+"/person/uploadMobile";
 
     //dowmnload
     public static String Download_Base_Link = "http://47.94.6.120/video/";
@@ -49,6 +51,9 @@ public class SHConstants {
     public static String CommonTitle = "title";
     //Setting
     public static String SettingPersonModelKey = "PersonModelKey";
+
+    //Setting
+    public static String SettingPersonImage = "image";
 
     //splash
     public static String IsShowSplash = "IsShowSplash";
@@ -104,6 +109,25 @@ public class SHConstants {
     public static String Record_VRSport_Save_Time_End = "time_end";
     public static String Record_VRSport_Save_Time_Length = "time_length";
     public static String Record_VRSport_Save_Time_Start = "time_start";
+
+    //recordVR sport detail save parameter
+    public static String Record_VRSportDetailSave_calorie = "calorie";
+    public static String Record_VRSportDetailSave_heart = "heart";
+    public static String Record_VRSportDetailSave_length = "length";
+
+    public static String Record_VRSportDetailSave_Pk_Person = "pk_person";
+    public static String Record_VRSportDetailSave_Person_Name = "person_name";
+
+    public static String Record_VRSportDetailSave_Pk_Place = "pk_place";
+    public static String Record_VRSportDetailSave_Place_Name = "place_name";
+
+    public static String Record_VRSportDetailSave_Pk_Video = "pk_video";
+    public static String Record_VRSportDetailSave_Video_Name = "video_name";
+
+    public static String Record_VRSportDetailSave_Record_SportDetailCode = "sport_detail_code";
+    public static String Record_VRSportDetailSave_Record_SportDetailname = "sport_detail_name";
+
+    public static String Record_VRSportDetailSave_Timestamp = "timestamp";
 
     //find share
     public static String FindSharePersonName = "person_name";

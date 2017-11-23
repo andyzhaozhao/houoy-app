@@ -32,7 +32,7 @@ public class VideoController implements View.OnClickListener
     private Handler CacheProHandler = null;    //网络播放，且不是m3u8时添加缓冲进度条
     private boolean changeOrientation;
 
-    public VideoController(RelativeLayout toolbar, PlayerControl player, boolean changeOrientation)
+    public VideoController(RelativeLayout toolbar, PlayerControl player, boolean changeOrientation,boolean playStatus)
     {
         this.player = player;
         this.changeOrientation = changeOrientation;
@@ -46,10 +46,15 @@ public class VideoController implements View.OnClickListener
         if (changeOrientation) {
             imgFullscreen.setOnClickListener(this);
         }
+        tbtnPlayPause.setChecked(!playStatus);
         skTime.setOnSeekBarChangeListener(mSeekBarChange);
         tbtnGyro.setOnClickListener(this);
         tbtnDualScreen.setOnClickListener(this);
         tbtnPlayPause.setOnClickListener(this);
+    }
+
+    public void settbtnPlayPauseStatus(boolean playStatus){
+        tbtnPlayPause.setChecked(!playStatus);
     }
 
     private SeekBar.OnSeekBarChangeListener mSeekBarChange = new SeekBar.OnSeekBarChangeListener()

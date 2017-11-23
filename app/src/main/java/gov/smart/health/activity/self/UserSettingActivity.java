@@ -2,6 +2,7 @@ package gov.smart.health.activity.self;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -29,8 +30,6 @@ public class UserSettingActivity extends AppCompatActivity {
         TextView version = (TextView)findViewById(R.id.setting_tv_version);
         version.setText("V"+Utils.getVersionName(getApplicationContext()));
 
-
-
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +55,7 @@ public class UserSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(getApplication(), DetailActivity.class);
+                intent.setClass(getApplication(), MyDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -65,16 +64,7 @@ public class UserSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(getApplication(), DetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getApplication(), DetailActivity.class);
+                intent.setClass(getApplication(), MyDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -84,7 +74,7 @@ public class UserSettingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SharedPreferencesHelper.settingString(SHConstants.LoginUserPkPerson,"");
                 Intent intent = new Intent();
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(IntentCompat.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setClass(getApplication(), LoginActivity.class);
                 startActivity(intent);
             }
