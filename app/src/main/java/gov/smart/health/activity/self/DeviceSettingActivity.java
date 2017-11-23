@@ -86,6 +86,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
     public void onPermissionsDenied(int requestCode, List<String> list) {
         // Some permissions have been denied
         // ...
+        Toast.makeText(getApplication(), "需要您的权限授权！", Toast.LENGTH_LONG).show();
     }
     private void doConnectionWatch() {
         BluetoothModule bluetoothModule = BluetoothModule.getInstance();
@@ -159,14 +160,13 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
         });
 
         // add OK and Cancel buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("取消连接", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // user clicked OK
             }
         });
-        builder.setNegativeButton("Cancel", null);
-
+        
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();
