@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -48,6 +49,7 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
     private static final int IMAGE = 1;
     private String[] galleryPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static int REQUEST_ENABLE_LIBRARY = 123;
+    private MyPersonInfoListModel personModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +62,8 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
 
         View btnIcon = findViewById(R.id.et_update_user_icon);
         if(getIntent() != null) {
-            ANImageView icon = (ANImageView) findViewById(R.id.img_update_user_icon);
-            MyPersonInfoListModel personModel = (MyPersonInfoListModel) getIntent().getSerializableExtra(SHConstants.SettingPersonModelKey);
-            if(personModel.portraitPath != null && !personModel.portraitPath.isEmpty()) {
-                icon.setDefaultImageResId(R.mipmap.person_default_icon);
-                icon.setErrorImageResId(R.mipmap.healthicon);
-                icon.setImageUrl(SHConstants.BaseUrlPhoto + personModel.portraitPath);
-            }
+            personModel = (MyPersonInfoListModel) getIntent().getSerializableExtra(SHConstants.SettingPersonModelKey);
+            loadIcon();
         }
 
         View btnUpdate = findViewById(R.id.btn_update_user);
@@ -95,6 +92,15 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
         });
     }
 
+    private void loadIcon(){
+        if(personModel.portraitPath != null && !personModel.portraitPath.isEmpty()) {
+            ANImageView icon = (ANImageView) findViewById(R.id.img_update_user_icon);
+            icon.setDefaultImageResId(R.mipmap.person_default_icon);
+            icon.setErrorImageResId(R.mipmap.person_default_icon);
+            String path =  SHConstants.BaseUrlPhoto + personModel.portraitPath +"?time="+ System.currentTimeMillis();
+            icon.setImageUrl(path);
+        }
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -145,6 +151,8 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
                             Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
+                            ANImageView icon = (ANImageView) findViewById(R.id.img_update_user_icon);
+                            icon.setDefaultImageResId(R.mipmap.person_default_icon);
                         }
                     }
 
@@ -152,6 +160,8 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
                     public void onError(ANError anError) {
                         Log.d("","response error"+anError.getErrorDetail());
                         Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
+                        ANImageView icon = (ANImageView) findViewById(R.id.img_update_user_icon);
+                        icon.setDefaultImageResId(R.mipmap.person_default_icon);
                     }
                 });
     }

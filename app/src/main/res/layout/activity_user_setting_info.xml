@@ -46,8 +46,8 @@
                 <com.androidnetworking.widget.ANImageView
                     android:id="@+id/img_update_user_icon"
                     android:layout_gravity="center"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="@dimen/list_image_size"
+                    android:layout_height="@dimen/list_image_size"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
