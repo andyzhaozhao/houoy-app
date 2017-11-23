@@ -143,6 +143,8 @@ public class SportFragment extends Fragment {
         return rootView;
     }
 
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -151,6 +153,8 @@ public class SportFragment extends Fragment {
             loadData(data);
         }
     }
+
+
 
     private void resetAllData(){
         page = 0;
