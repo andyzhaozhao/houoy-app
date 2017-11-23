@@ -71,7 +71,7 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
         btnIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= 23 ) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (EasyPermissions.hasPermissions(getApplicationContext(), galleryPermissions)) {
                         pickImageFromGallery();
                     } else {
