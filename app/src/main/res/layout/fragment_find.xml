@@ -18,7 +18,7 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="250dp"
                     android:clipChildren="false" >
                 </android.support.v4.view.ViewPager>
 
@@ -31,18 +31,22 @@
                     android:layout_height="wrap_content" >
                     <RadioButton
                         android:id="@+id/page_r1"
+                        android:clickable="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
                         android:id="@+id/page_r2"
+                        android:clickable="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
                         android:id="@+id/page_r3"
+                        android:clickable="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
                         android:id="@+id/page_r4"
+                        android:clickable="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </RadioGroup>
@@ -53,6 +57,7 @@
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/btnGrayColor"
                 android:text="分享"/>
             <LinearLayout
                 android:id="@+id/ll_find_center"
@@ -70,9 +75,9 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
-                        android:layout_width="80dp"
+                        android:layout_width="@dimen/list_image_size"
                         android:adjustViewBounds="true"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/list_image_size"
                         android:src="@mipmap/centerlearnings"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -87,8 +92,8 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/list_image_size"
+                        android:layout_height="@dimen/list_image_size"
                         android:adjustViewBounds="true"
                         android:src="@mipmap/centersports"/>
                     <TextView
@@ -107,8 +112,8 @@
 
                 <ImageView
                     android:id="@+id/first_item_img"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="@dimen/list_image_size"
+                    android:layout_height="@dimen/list_image_size"
                     android:scaleType="centerInside"
                     android:layout_alignParentLeft="true"
                     android:src="@mipmap/healthicon"/>
@@ -156,8 +161,8 @@
 
                 <ImageView
                     android:id="@+id/second_item_img"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="@dimen/list_image_size"
+                    android:layout_height="@dimen/list_image_size"
                     android:scaleType="centerInside"
                     android:layout_alignParentLeft="true"
                     android:src="@mipmap/healthicon"/>

@@ -66,17 +66,8 @@ public class FindFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_find, container, false);
 
-        rootView.findViewById(R.id.find_share).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(FindFragment.this.getActivity(), FindShareActivity.class);
-                startActivity(intent);
-            }
-        });
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
         mViewPager.setAdapter(new HomePageAdapter(this,mViewPager));
-
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -113,6 +104,15 @@ public class FindFragment extends Fragment {
         });
         mViewPager.setCurrentItem(Integer.MAX_VALUE/2 - (Integer.MAX_VALUE/2)%4);
 
+        rootView.findViewById(R.id.find_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(FindFragment.this.getActivity(), FindShareActivity.class);
+                startActivity(intent);
+            }
+        });
+        
         View btnLearning = rootView.findViewById(R.id.find_learning);
         View btnEvent = rootView.findViewById(R.id.find_event);
 
@@ -137,9 +137,8 @@ public class FindFragment extends Fragment {
             }
         });
 
-        View findFirst = rootView.findViewById(R.id.find_item_first);
-        View findSecond = rootView.findViewById(R.id.find_item_second);
-        findFirst.setOnClickListener(new View.OnClickListener() {
+        View findAttention = rootView.findViewById(R.id.find_item_first);
+        findAttention.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -147,7 +146,8 @@ public class FindFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        findSecond.setOnClickListener(new View.OnClickListener() {
+        View findNewAttention = rootView.findViewById(R.id.find_item_second);
+        findNewAttention.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();

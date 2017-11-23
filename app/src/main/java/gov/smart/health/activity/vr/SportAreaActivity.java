@@ -16,6 +16,7 @@ import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import gov.smart.health.R;
@@ -92,10 +93,15 @@ public class SportAreaActivity extends AppCompatActivity {
             return;
         }
         isLoadingApi = true;
+        HashMap<String,Object> map = new HashMap<>();
+        map.put(SHConstants.CommonStart, String.valueOf(page));
+        map.put(SHConstants.CommonLength, SHConstants.EssayLength);
+
         AndroidNetworking.get(SHConstants.FolderVideoRetrieve)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .addQueryParameter(map)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override

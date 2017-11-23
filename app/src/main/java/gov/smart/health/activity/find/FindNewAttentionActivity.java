@@ -31,7 +31,7 @@ public class FindNewAttentionActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwiperefreshlayout;
     private int mLastVisibleItem;
     private LinearLayoutManager mLinearLayoutManager;
-
+    private boolean isLoadingApi;
     private int page;
     private FindAttentionDataModel findModel = new FindAttentionDataModel();
     private List<FindAttentionListDataModel> essayLists = new ArrayList<>();
@@ -41,8 +41,6 @@ public class FindNewAttentionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attention);
         mSwiperefreshlayout = (SwipeRefreshLayout) findViewById(R.id.attention_srl);
-        RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.attention_list);
-
         mSwiperefreshlayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         mSwiperefreshlayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light, android.R.color.holo_orange_light,
@@ -50,16 +48,14 @@ public class FindNewAttentionActivity extends AppCompatActivity {
         mSwiperefreshlayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
-        page = 0;
-        this.loadData();
+        RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.attention_list);
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter = new AttentionRefreshRecyclerAdapter(this, essayLists));
 
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 0;
-                essayLists.clear();
+                resetAllData();
                 loadData();
                 mSwiperefreshlayout.setRefreshing(false);
             }
@@ -82,11 +78,24 @@ public class FindNewAttentionActivity extends AppCompatActivity {
                 mLastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
+        this.resetAllData();
+        this.loadData();
+    }
+
+    private void resetAllData(){
+        page = 0;
+        essayLists.clear();
+        findModel = new FindAttentionDataModel();
+        mAdapter.notifyDataSetChanged();
     }
 
     public void loadData() {
+        if(isLoadingApi){
+            return;
+        }
+        isLoadingApi = true;
         HashMap<String,Object> map = new HashMap<>();
-        map.put(SHConstants.CommonStart, SHConstants.EssayStart);
+        map.put(SHConstants.CommonStart, String.valueOf(page));
         map.put(SHConstants.CommonLength, SHConstants.EssayLength);
         map.put(SHConstants.CommonOrderColumnName, SHConstants.EssayOrderColumnName);
 
@@ -94,11 +103,12 @@ public class FindNewAttentionActivity extends AppCompatActivity {
                 .addQueryParameter(map)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
                     public void onResponse(String response) {
+                        Log.i("","response "+response);
                         Gson gson = new Gson();
                         findModel = gson.fromJson(response, FindAttentionDataModel.class);
                         if (findModel.success) {
@@ -107,12 +117,14 @@ public class FindNewAttentionActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
                         }
+                        isLoadingApi = false;
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Log.d("", "response error" + anError.getErrorDetail());
                         Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
+                        isLoadingApi = false;
                     }
                 });
     }

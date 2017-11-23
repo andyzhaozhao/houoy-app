@@ -169,7 +169,7 @@ public class SportFragment extends Fragment {
         isLoadingApi = true;
 
         HashMap<String,Object> map = new HashMap<>();
-        map.put(SHConstants.CommonStart, SHConstants.EssayStart);
+        map.put(SHConstants.CommonStart, String.valueOf(page));
         map.put(SHConstants.CommonLength, SHConstants.EssayLength);
         map.put(SHConstants.CommonOrderColumnName, SHConstants.Video_List_OrderColumnName_Value);
         map.put(SHConstants.CommonOrderDir, SHConstants.CommonOrderDir_Desc);
