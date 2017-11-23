@@ -57,6 +57,7 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
         String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
 
+        //TODO get data.
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Person, pk);
@@ -85,7 +86,7 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
                 .addJSONObjectBody(jsonObject)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override

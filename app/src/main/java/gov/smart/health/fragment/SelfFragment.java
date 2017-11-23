@@ -118,13 +118,11 @@ public class SelfFragment extends Fragment {
             }
         });
         loadData();
-
         return rootView;
     }
 
     public void loadData() {
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
-
         HashMap<String,Object> map = new HashMap<>();
         map.put(SHConstants.CommonUser_PK, pk);
 
@@ -132,7 +130,7 @@ public class SelfFragment extends Fragment {
                 .addQueryParameter(map)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override
@@ -164,6 +162,4 @@ public class SelfFragment extends Fragment {
                     }
                 });
     }
-
-
 }

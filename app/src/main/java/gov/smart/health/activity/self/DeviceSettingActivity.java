@@ -122,7 +122,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
 
     private void showDialog(){
         // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplication());
+        AlertDialog.Builder builder = new AlertDialog.Builder(DeviceSettingActivity.this);
         builder.setTitle("选择设备");
 
         final ArrayList<String> devicesList = new ArrayList<String>();

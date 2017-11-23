@@ -29,8 +29,6 @@ public class UserSettingActivity extends AppCompatActivity {
         TextView version = (TextView)findViewById(R.id.setting_tv_version);
         version.setText("V"+Utils.getVersionName(getApplicationContext()));
 
-
-
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +54,7 @@ public class UserSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(getApplication(), DetailActivity.class);
+                intent.setClass(getApplication(), MyDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -65,16 +63,7 @@ public class UserSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(getApplication(), DetailActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getApplication(), DetailActivity.class);
+                intent.setClass(getApplication(), MyDetailActivity.class);
                 startActivity(intent);
             }
         });

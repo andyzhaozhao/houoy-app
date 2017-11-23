@@ -106,7 +106,7 @@ public class LearningActivity extends AppCompatActivity {
         map.put(SHConstants.CommonLength, SHConstants.EssayLength);
         map.put(SHConstants.CommonOrderColumnName, SHConstants.EssayOrderColumnName);
         map.put(SHConstants.CommonPkType, type);
-
+        //TODO api bug.
         AndroidNetworking.get(SHConstants.EssayRetrieveMobile)
                 .addQueryParameter(map)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)

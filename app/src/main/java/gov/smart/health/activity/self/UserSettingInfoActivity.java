@@ -53,7 +53,7 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_setting_info);
 
-
+        //TODO save userInfo.
         TextView userName = (TextView) findViewById(R.id.et_update_user_name);
         TextView userAge = (TextView) findViewById(R.id.et_update_user_age);
         TextView userContent = (TextView) findViewById(R.id.et_update_user_content);
@@ -134,7 +134,7 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
                 .addStringBody(imageBase64Str)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override

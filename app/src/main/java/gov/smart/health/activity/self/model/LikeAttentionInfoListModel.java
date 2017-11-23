@@ -2,11 +2,13 @@ package gov.smart.health.activity.self.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by laoniu on 11/5/17.
  */
 
-public class LikeAttentionInfoListModel {
+public class LikeAttentionInfoListModel implements Serializable{
     @SerializedName("memo")
     public String memo;
     @SerializedName("def1")

@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.self.model.LikeAttentionInfoModel;
 import gov.smart.health.activity.self.model.LikeRecordHistoryInfoListModel;
 import gov.smart.health.activity.self.model.LikeRecordHistoryInfoModel;
 import gov.smart.health.activity.self.adapter.SportHistoryRecyclerAdapter;
@@ -35,8 +36,7 @@ public class SportHistoryListActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwiperefreshlayout;
     private int mLastVisibleItem;
     private LinearLayoutManager mLinearLayoutManager;
-
-
+    private boolean isLoadingApi;
     private int page;
     private LikeRecordHistoryInfoModel jsonModel = new LikeRecordHistoryInfoModel();
     private List<LikeRecordHistoryInfoListModel> modelLists = new ArrayList<>();
@@ -54,13 +54,7 @@ public class SportHistoryListActivity extends AppCompatActivity {
                 startActivityForResult(intent,0);
             }
         });
-
-        page = 0;
-        this.loadData();
-
         mSwiperefreshlayout = (SwipeRefreshLayout) findViewById(R.id.sport_history_srl);
-        RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.sport_history_list);
-
         mSwiperefreshlayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         mSwiperefreshlayout.setColorSchemeResources(android.R.color.holo_blue_light,
                 android.R.color.holo_red_light, android.R.color.holo_orange_light,
@@ -68,15 +62,14 @@ public class SportHistoryListActivity extends AppCompatActivity {
         mSwiperefreshlayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
-
+        RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.sport_history_list);
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter = new SportHistoryRecyclerAdapter(this, modelLists));
 
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 0;
-                modelLists.clear();
+                resetAllData();
                 loadData();
                 mSwiperefreshlayout.setRefreshing(false);
             }
@@ -99,13 +92,27 @@ public class SportHistoryListActivity extends AppCompatActivity {
             }
         });
 
+        this.resetAllData();
+        this.loadData();
+    }
+
+    private void resetAllData(){
+        page = 0;
+        modelLists.clear();
+        jsonModel = new LikeRecordHistoryInfoModel();
+        mAdapter.notifyDataSetChanged();
     }
 
     public void loadData() {
+        if(isLoadingApi){
+            return;
+        }
+        isLoadingApi = true;
+
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
 
         HashMap<String,Object> map = new HashMap<>();
-        map.put(SHConstants.CommonStart, SHConstants.EssayStart);
+        map.put(SHConstants.CommonStart, String.valueOf(page));
         map.put(SHConstants.CommonLength, SHConstants.EssayLength);
         map.put(SHConstants.CommonOrderColumnName, SHConstants.RecordVRSport_List_OrderColumnName_Value);
         map.put(SHConstants.CommonOrderDir, SHConstants.CommonOrderDir_Desc);
@@ -115,7 +122,7 @@ public class SportHistoryListActivity extends AppCompatActivity {
                 .addQueryParameter(map)
                 .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
                 .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.LOW)
+                .setPriority(Priority.MEDIUM)
                 .build()
                 .getAsString(new StringRequestListener() {
                     @Override

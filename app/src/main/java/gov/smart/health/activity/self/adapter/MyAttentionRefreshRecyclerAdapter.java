@@ -12,10 +12,13 @@ import android.widget.TextView;
 import java.util.List;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.find.DetailActivity;
+import gov.smart.health.activity.find.model.FindAttentionListDataModel;
 import gov.smart.health.activity.message.FriendInfoActivity;
 import gov.smart.health.activity.self.MyAttentionDetailActivity;
 import gov.smart.health.activity.self.model.LikeAttentionInfoListModel;
 import gov.smart.health.model.FriendModel;
+import gov.smart.health.utils.SHConstants;
 
 /**
  * Created by laoniu on 2017/07/23.
@@ -64,10 +67,21 @@ public class MyAttentionRefreshRecyclerAdapter extends RecyclerView.Adapter<MyAt
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        final LikeAttentionInfoListModel model = mLists.get(position);
+
         holder.image.setImageResource(R.mipmap.healthicon);
-        holder.title.setText(mLists.get(position).follow_pk_person);
-        holder.content.setText(mLists.get(position).follow_person_name);
+        holder.title.setText(model.follow_pk_person);
+        holder.content.setText(model.follow_person_name);
         holder.itemView.setTag(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(SHConstants.PersonAttentionModelKey,model);
+                intent.setClass(mContext, MyAttentionDetailActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
     }
     @Override
     public int getItemCount() {
