@@ -23,7 +23,6 @@ import org.json.JSONObject;
 import gov.smart.health.R;
 import gov.smart.health.activity.HomeActivity;
 import gov.smart.health.activity.login.model.LoginModel;
-import gov.smart.health.activity.vr.bluetooth.Constants;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
 import gov.smart.health.utils.Utils;

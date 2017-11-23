@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="blackColor">#000</color>
     <color name="grayColor">#eee</color>
+    <color name="btnGrayColor">#eee</color>
     <color name="whiteColor">#fff</color>
     <color name="textColor">#000</color>
     <color name="textDark">#222</color>

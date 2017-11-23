@@ -1,10 +1,13 @@
 package gov.smart.health.activity.vr;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import android.preference.DialogPreference;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -53,6 +56,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     private ImageView imgBuffer;                // 缓冲动画
     private ImageView imgBack;
     private RelativeLayout rlParent = null;
+    private AlertDialog.Builder mAlertDialogBuilder;
     protected int CurOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     private int SmallPlayH = 0;
     private boolean colseDualScreen = false;
@@ -78,7 +82,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         //将工具条的显示或隐藏交个SDK管理，也可自己管理
         RelativeLayout rlToolbar = (RelativeLayout) findViewById(R.id.activity_rlToolbar);
         mMediaplayer.setToolbar(rlToolbar, null, imgBack);
-        mCtrl = new VideoController(rlToolbar, this, true);
+        mCtrl = new VideoController(rlToolbar, this, true,false);
         changeOrientation(false);
         getData();
     }
@@ -200,9 +204,9 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
             mMediaplayer.setListener(mListener);
             mMediaplayer.setInfoListener(mInfoListener);
             //如果是网络MP4，可调用 mCtrl.startCachePro();mCtrl.stopCachePro();
-            //mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_M3U8, Path);
             String path = "file:///android_asset/videos/wu.mp4";
             mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, path);
+            mMediaplayer.pause();
         }
         catch (Exception e)
         {
@@ -244,29 +248,40 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                     }
                     break;
                 case UVMediaPlayer.STATE_ENDED:
-                    //这里是循环播放，可根据需求更改
-                    //mMediaplayer.replay();
                     if(!isSecond) {
                         isSecond= true;
                         String downlaodFile =  model.downlaodPath + File.separator + model.video_name;
                         mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
-                    }else {
-//                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplication());
-//                        alertDialogBuilder.setMessage("是否分享本次运动？");
-//                        alertDialogBuilder.setPositiveButton("取消",null);
-//                        alertDialogBuilder.setNeutralButton("好的",
-//                                new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent = new Intent();
-                                        intent.putExtra(SHConstants.Video_ModelKey, model);
-                                        intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
-                                        startActivity(intent);
-//                                    }
-//                                });
-//                        alertDialogBuilder.setCancelable(true);
-//                        AlertDialog alertDialog = alertDialogBuilder.create();
-//                        alertDialog.show();
+                        model.time_start = System.currentTimeMillis();
+                    } else {
+                        seekTo(0);
+                        mMediaplayer.pause();
+                        mCtrl.settbtnPlayPauseStatus(false);
+                        if(mAlertDialogBuilder == null) {
+                            mAlertDialogBuilder = new AlertDialog.Builder(VTOVRPlayerActivity.this);
+                            mAlertDialogBuilder.setMessage("是否分享本次运动？");
+                            mAlertDialogBuilder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    mAlertDialogBuilder = null;
+                                }
+                            });
+                            mAlertDialogBuilder.setNeutralButton("好的",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            mAlertDialogBuilder = null;
+                                            model.time_end = System.currentTimeMillis();
+                                            Intent intent = new Intent();
+                                            intent.putExtra(SHConstants.Video_ModelKey, model);
+                                            intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                            mAlertDialogBuilder.setCancelable(true);
+                            AlertDialog alertDialog = mAlertDialogBuilder.create();
+                            alertDialog.show();
+                        }
                     }
                     break;
                 case UVMediaPlayer.TRACK_DISABLED:
@@ -343,13 +358,13 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     @Override
     public boolean isGyroEnabled()
     {
-        return mMediaplayer != null ? mMediaplayer.isGyroEnabled() : false;
+        return mMediaplayer != null && mMediaplayer.isGyroEnabled();
     }
 
     @Override
     public boolean isDualScreenEnabled()
     {
-        return mMediaplayer != null ? mMediaplayer.isDualScreenEnabled() : false;
+        return mMediaplayer != null && mMediaplayer.isDualScreenEnabled();
     }
 
     @Override

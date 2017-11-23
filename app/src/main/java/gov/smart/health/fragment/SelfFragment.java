@@ -23,14 +23,11 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 
 import gov.smart.health.R;
-import gov.smart.health.activity.message.FriendsActivity;
 import gov.smart.health.activity.self.MyAttentionActivity;
 import gov.smart.health.activity.self.SportHistoryListActivity;
 import gov.smart.health.activity.self.UserSettingActivity;
-import gov.smart.health.activity.self.model.LikeRecordHistoryInfoModel;
 import gov.smart.health.activity.self.model.MyPersonInfoListModel;
 import gov.smart.health.activity.self.model.MyPersonInfoModel;
-import gov.smart.health.activity.vr.bluetooth.Constants;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
 
