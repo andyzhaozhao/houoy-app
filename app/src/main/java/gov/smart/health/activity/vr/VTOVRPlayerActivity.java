@@ -442,10 +442,10 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
            List<HeartRate> heartRates = bluetoothModule.getHeartRates();
             Log.d("",heartRates.toString());
         }
-        ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
-        Log.d("",dailySteps.toString());
-
-
+        if(bluetoothModule.isSupportTodayData()) {
+            ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
+            Log.d("", dailySteps.toString());
+        }
     }
 
     private void sendData(HeartRate heartRate,DailyStep dailyStep){

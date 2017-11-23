@@ -73,6 +73,9 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        if(mLists.size() <position){
+            return;
+        }
         final SportVideoListModelEx model = mLists.get(position);
         model.videoModel.downlaodTempPath = mActivity.getCacheDir().getAbsolutePath() + File.separator+ SHConstants.Download_Temp+ File.separator + model.videoModel.video_code;
         model.videoModel.downlaodPath = mActivity.getCacheDir().getAbsolutePath() + File.separator+ SHConstants.Download_Download+ File.separator + model.videoModel.video_code;
@@ -86,23 +89,24 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
 
         holder.title.setText(fileName);
         holder.time.setText(model.videoModel.video_desc);
-        holder.downloadprogressBar.setMax(100);
+        holder.downloadprogressBar.setMax(10000);
         holder.downloadprogressBar.setVisibility(View.INVISIBLE);
 
         DownloadManager downloadManager = DownloadManager.shareDownloadManager();
         SportVideoListModelEx oldModel = downloadManager.downloadMap.get(model.videoModel.video_code);
         if(oldModel != null){
+            downloadManager.downloadMap.remove(oldModel.videoModel.video_code);
             model.isDownloading = oldModel.isDownloading;
             model.downlaodTask = oldModel.downlaodTask;
             model.downlaodTask.setFileDownloadListener(fileDownloadListener,model);
         }
 
-        File downlaodFile = new File(model.videoModel.downlaodPath + File.separator + fileName);
-        final boolean isDownlaoded = downlaodFile.exists();
+        File downloadFile = new File(model.videoModel.downlaodPath + File.separator + fileName);
+        final boolean isDownloaded = downloadFile.exists();
         if(model.isDownloading){
             holder.downloadStatus.setText("准备下载");
             holder.downloadprogressBar.setVisibility(View.VISIBLE);
-        } else if(isDownlaoded){
+        } else if(isDownloaded){
             holder.downloadStatus.setText("已下载");
         } else {
             File downlaodTempFile = new File(model.videoModel.downlaodTempPath + File.separator + fileName);
@@ -119,7 +123,7 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isDownlaoded) {
+                if(isDownloaded) {
                     model.progressBar.setVisibility(View.INVISIBLE);
                     Intent intent = new Intent();
                     intent.putExtra(SHConstants.Video_ModelKey, model.videoModel);
