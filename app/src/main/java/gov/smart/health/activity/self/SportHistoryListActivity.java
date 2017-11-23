@@ -135,12 +135,14 @@ public class SportHistoryListActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
                         }
+                        isLoadingApi = false;
                     }
 
                     @Override
                     public void onError(ANError anError) {
                         Log.d("", "response error" + anError.getErrorDetail());
                         Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
+                        isLoadingApi = false;
                     }
                 });
     }
