@@ -461,7 +461,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         //TODO get data.
         BluetoothModule bluetoothModule = BluetoothModule.getInstance();
         if(!dateKeylist.contains(dateKey) && (bluetoothModule.isSupportHeartRate() || bluetoothModule.isSupportTodayData())) {
-            dateKeylist.add(dateKey);
             HeartRate heartRate = new HeartRate();
             DailyStep dailyStep = new DailyStep();
             if (bluetoothModule.isSupportHeartRate()) {
@@ -470,6 +469,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                     String heartKey = rate.time;
                     if(dateKey.equals(heartKey)) {
                         heartRate = rate;
+                        dateKeylist.add(dateKey);
                         break;
                     }
                 }
@@ -481,6 +481,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                     String heartKey = step.date;
                     if(dateKey.equals(heartKey)) {
                         dailyStep = step;
+                        dateKeylist.add(dateKey);
                         break;
                     }
                 }
