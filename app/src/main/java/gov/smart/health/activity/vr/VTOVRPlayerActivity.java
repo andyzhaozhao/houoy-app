@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.DialogPreference;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -38,6 +39,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import gov.smart.health.R;
@@ -63,6 +65,8 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     private boolean isSecond = false;
     private SportVideoListModel model = new SportVideoListModel();
 
+    private List<String> dateKeylist = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +88,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         mMediaplayer.setToolbar(rlToolbar, null, imgBack);
         mCtrl = new VideoController(rlToolbar, this, true,false);
         changeOrientation(false);
-        getData();
     }
 
     @Override
@@ -220,6 +223,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         if (mCtrl != null) {
             mCtrl.updateCurrentPosition();
         }
+        getData();
     }
 
     private UVEventListener mListener = new UVEventListener()
@@ -452,19 +456,41 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     }
 
     private void getData(){
+        String dateKey = DateFormat.format("yyyy-MM-dd-HH-mm", Calendar.getInstance()).toString();
+        Log.d("",dateKey);
         //TODO get data.
         BluetoothModule bluetoothModule = BluetoothModule.getInstance();
-        if(bluetoothModule.isSupportHeartRate()){
-           List<HeartRate> heartRates = bluetoothModule.getHeartRates();
-            Log.d("",heartRates.toString());
-        }
-        if(bluetoothModule.isSupportTodayData()) {
-            ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
-            Log.d("", dailySteps.toString());
+        if(!dateKeylist.contains(dateKey) && (bluetoothModule.isSupportHeartRate() || bluetoothModule.isSupportTodayData())) {
+            dateKeylist.add(dateKey);
+            HeartRate heartRate = new HeartRate();
+            DailyStep dailyStep = new DailyStep();
+            if (bluetoothModule.isSupportHeartRate()) {
+                List<HeartRate> heartRates = bluetoothModule.getHeartRates();
+                for (HeartRate rate:heartRates) {
+                    String heartKey = rate.time;
+                    if(dateKey.equals(heartKey)) {
+                        heartRate = rate;
+                        break;
+                    }
+                }
+                Log.d("", heartRates.toString());
+            }
+            if (bluetoothModule.isSupportTodayData()) {
+                ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
+                for (DailyStep step :dailySteps) {
+                    String heartKey = step.date;
+                    if(dateKey.equals(heartKey)) {
+                        dailyStep = step;
+                        break;
+                    }
+                }
+                Log.d("", dailySteps.toString());
+            }
+            sendData(dateKey, heartRate,dailyStep);
         }
     }
 
-    private void sendData(HeartRate heartRate,DailyStep dailyStep){
+    private void sendData(String dateKey, HeartRate heartRate,DailyStep dailyStep){
 
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
         String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
@@ -481,13 +507,10 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
             jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Place, model.pk_folder);
             jsonObject.put(SHConstants.Record_VRSportDetailSave_Place_Name, "Place");
 
-            jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Video, model.pk_video);
-            jsonObject.put(SHConstants.Record_VRSport_Save_Video_Name, model.video_name);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Video, model.pk_video);
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Video_Name, model.video_name);
 
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Video, "1");
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Video_Name, "record_sport_name");
-
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Timestamp, "2017-10-25 09:09:09");
+            jsonObject.put(SHConstants.Record_VRSportDetailSave_Timestamp, dateKey);
             long millis = System.currentTimeMillis();
             jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailCode, millis);
             jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailname, millis);
