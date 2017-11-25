@@ -24,11 +24,9 @@
         android:src="@mipmap/sport_setting" />
             <com.androidnetworking.widget.ANImageView
                 android:id="@+id/self_self_img"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/list_image_size"
+                android:layout_height="@dimen/list_image_size"
                 android:layout_centerInParent="true"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
                 android:src="@mipmap/person_default_icon" />
 
             <ImageView

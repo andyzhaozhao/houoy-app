@@ -146,8 +146,9 @@ public class SelfFragment extends Fragment {
 
                                 if(personModel.portraitPath != null && !personModel.portraitPath.isEmpty()) {
                                     selfImg.setDefaultImageResId(R.mipmap.person_default_icon);
-                                    selfImg.setErrorImageResId(R.mipmap.healthicon);
-                                    selfImg.setImageUrl(SHConstants.BaseUrlPhoto + personModel.portraitPath);
+                                    selfImg.setErrorImageResId(R.mipmap.person_default_icon);
+                                    String path =  SHConstants.BaseUrlPhoto + personModel.portraitPath +"?time="+ System.currentTimeMillis();
+                                    selfImg.setImageUrl(path);
                                 }
                             }
                         } else {

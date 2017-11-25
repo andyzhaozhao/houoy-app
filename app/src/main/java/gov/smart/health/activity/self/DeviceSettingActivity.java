@@ -34,7 +34,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
 
     private static String AddressKey = "addressKey";
     private static int REQUEST_ENABLE_BLUETOOTH = 123;
-    //private String[] blueToothPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private String[] blueToothPermissions = { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +50,16 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                 }
                 boolean btEnable = Bt.isEnabled();
                 if(btEnable){
-//                    if (Build.VERSION.SDK_INT >= 23 ) {
-//                        if (EasyPermissions.hasPermissions(getApplicationContext(), blueToothPermissions)) {
-//                            doConnectionWatch();
-//                        } else {
-//                            EasyPermissions.requestPermissions(DeviceSettingActivity.this, "Access for storage",
-//                                    REQUEST_ENABLE_BLUETOOTH, blueToothPermissions);
-//                        }
-//                    } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+                        if (EasyPermissions.hasPermissions(getApplicationContext(), blueToothPermissions)) {
+                            doConnectionWatch();
+                        } else {
+                            EasyPermissions.requestPermissions(DeviceSettingActivity.this, "请求授权",
+                                    REQUEST_ENABLE_BLUETOOTH, blueToothPermissions);
+                        }
+                    } else {
                         doConnectionWatch();
- //                   }
+                    }
                 } else {
                     Toast.makeText(getApplication(), "请确认蓝牙是否正常开启！", Toast.LENGTH_LONG).show();
                 }
@@ -86,6 +86,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
     public void onPermissionsDenied(int requestCode, List<String> list) {
         // Some permissions have been denied
         // ...
+        Toast.makeText(getApplication(), "需要您的权限授权！", Toast.LENGTH_LONG).show();
     }
     private void doConnectionWatch() {
         BluetoothModule bluetoothModule = BluetoothModule.getInstance();
@@ -159,14 +160,13 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
         });
 
         // add OK and Cancel buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("取消连接", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // user clicked OK
             }
         });
-        builder.setNegativeButton("Cancel", null);
-
+        
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();

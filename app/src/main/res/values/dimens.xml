@@ -19,4 +19,8 @@
     <dimen name="caption_text_size">12dip</dimen>
     <dimen name="paragragh_text_size">15dip</dimen>
 
+    <dimen name="text_size_title">26dp</dimen>
+    <dimen name="text_size_sub_title">20dp</dimen>
+    <dimen name="text_size_context">16dp</dimen>
+
 </resources>
