@@ -1,48 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:background="@color/whiteColor"
-    android:padding="@dimen/list_margin">
-
-    <ImageView
-        android:id="@+id/myattention_item_img"
-        android:layout_width="@dimen/list_image_size"
-        android:layout_height="@dimen/list_image_size"
-        android:scaleType="centerInside"
-        android:layout_alignParentLeft="true"
-        android:src="@mipmap/centerlearnings"/>
-    <LinearLayout
-        android:layout_toRightOf="@+id/myattention_item_img"
-        android:layout_toLeftOf="@+id/myattention_item_array"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <RelativeLayout
         android:padding="@dimen/list_margin"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/myattention_item_title"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/myattention_item_img"
+            android:layout_width="@dimen/list_image_size"
+            android:layout_height="@dimen/list_image_size"
+            android:scaleType="centerInside"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/centerlearnings"/>
+        <LinearLayout
+            android:layout_toRightOf="@+id/myattention_item_img"
+            android:layout_toLeftOf="@+id/myattention_item_array"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/textColor"
-            android:textSize="18dp"
-            android:text="应急避难所场所"/>
-        <TextView
-            android:layout_marginTop="@dimen/list_margin"
-            android:id="@+id/myattention_item_content"
-            android:layout_width="match_parent"
+            android:padding="@dimen/list_margin"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/myattention_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_size_sub_title"
+                android:text="应急避难所场所"/>
+            <TextView
+                android:layout_marginTop="@dimen/list_margin"
+                android:id="@+id/myattention_item_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_size_context"
+                android:lines="2"
+                android:ellipsize="end"
+                android:text="应急避难所描述内容"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/myattention_item_array"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
-            android:textSize="16dp"
-            android:text="应急避难所描述内容"/>
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/myattention_item_array"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:src="@android:drawable/ic_menu_send" />
-</RelativeLayout>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/list_margin"
+            android:src="@android:drawable/ic_menu_send" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grayColor"
+        android:layout_height="1dp"/>
+</LinearLayout>

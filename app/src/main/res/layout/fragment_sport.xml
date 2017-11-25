@@ -18,17 +18,18 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="VR运动"
-            android:textColor="@color/blackColor"
-            android:background="@color/btnGrayColor"
+            android:textColor="@color/textColor"
             android:id="@+id/title"
             android:layout_centerInParent="true"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginRight="@dimen/view_defalut_margin"
             android:text="选择地点"
-            android:textColor="@color/blackColor"
+            android:textColor="@color/lightskyblue"
+            android:textSize="@dimen/text_size_context"
+            android:background="@drawable/buttonstyle"
             android:id="@+id/select_park"
             android:layout_alignParentRight="true"
             />

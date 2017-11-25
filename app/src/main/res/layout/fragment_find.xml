@@ -1,10 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="gov.smart.health.fragment.FindFragment">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="find fragment" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -57,7 +53,9 @@
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/btnGrayColor"
+                android:textColor="@color/lightskyblue"
+                android:textSize="@dimen/text_size_context"
+                android:background="@drawable/buttonstyle"
                 android:text="分享"/>
             <LinearLayout
                 android:id="@+id/ll_find_center"
@@ -71,7 +69,7 @@
                     android:id="@+id/find_learning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/view_defalut_margin"
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
@@ -82,13 +80,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size_context"
                         android:text="教学中心"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/find_event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/view_defalut_margin"
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
@@ -99,6 +99,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/textColor"
+                        android:textSize="@dimen/text_size_context"
                         android:text="活动中心"/>
                 </LinearLayout>
             </LinearLayout>
@@ -130,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textColor="@color/textColor"
-                        android:textSize="18dp"
+                        android:textSize="@dimen/text_size_sub_title"
                         android:text="最新消息"/>
                     <TextView
                         android:layout_marginTop="@dimen/list_margin"
@@ -138,19 +140,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textColor"
-                        android:textSize="16dp"
+                        android:textSize="@dimen/text_size_context"
                         android:text="您关注的人有动态啦"/>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/first_item_array"
-                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="@dimen/list_margin"
                     android:src="@android:drawable/ic_menu_send" />
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/grayColor"
+                android:layout_height="1dp"/>
             <RelativeLayout
                 android:id="@+id/find_item_second"
                 android:layout_below="@+id/find_item_first"
@@ -179,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textColor="@color/textColor"
-                        android:textSize="18dp"
+                        android:textSize="@dimen/text_size_sub_title"
                         android:text="我的发现"/>
                     <TextView
                         android:layout_marginTop="@dimen/list_margin"
@@ -187,17 +193,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/textColor"
-                        android:textSize="16dp"
+                        android:textSize="@dimen/text_size_context"
                         android:text="发现新大陆"/>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/second_item_array"
-                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="@dimen/list_margin"
                     android:src="@android:drawable/ic_menu_send" />
             </RelativeLayout>
         </RelativeLayout>

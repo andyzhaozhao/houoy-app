@@ -25,9 +25,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/blackColor"
+                android:background="@color/silver"
                 android:layout_above="@android:id/tabs">
-
             </LinearLayout>
             <TabWidget
                 android:id="@android:id/tabs"

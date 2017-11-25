@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="我的运动记录"
-            android:textColor="@color/blackColor"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_sub_title"
             android:id="@+id/title"
             android:layout_centerInParent="true"
             />
@@ -24,7 +25,10 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="选择条件"
-            android:textColor="@color/blackColor"
+            android:textColor="@color/lightskyblue"
+            android:textSize="@dimen/text_size_context"
+            android:background="@drawable/buttonstyle"
+            android:layout_margin="@dimen/view_defalut_margin"
             android:id="@+id/select_condition"
             android:layout_alignParentRight="true"
             />

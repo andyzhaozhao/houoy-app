@@ -42,14 +42,8 @@
                     android:orientation="vertical"
                     android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
-                    android:padding="20dp"
+                    android:layout_margin="@dimen/view_defalut_margin"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_share_times"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/blackColor"
-                        android:text="运动次数：60" />
                     <TextView
                         android:id="@+id/tv_share_heart_times"
                         android:layout_width="wrap_content"
@@ -59,38 +53,43 @@
                 </LinearLayout>
             </RelativeLayout>
             <TextView
-                android:padding="5dp"
+                android:layout_margin="@dimen/view_defalut_margin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/blackColor"
                 android:textStyle="bold"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_size_context"
                 android:text="分享心得" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:padding="5dp"
+                android:padding="@dimen/view_defalut_margin"
                 android:layout_height="wrap_content">
                 <EditText
-
                     android:id="@+id/editText"
                     android:layout_above="@+id/ll_btn"
                     android:layout_width="match_parent"
                     android:layout_alignParentTop="true"
                     android:layout_height="200dp"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/text_size_context"
                     android:ems="10"
                     android:gravity="start"
+                    android:background="@drawable/textviewstyle"
                     android:hint="告诉大家点什么吧！"
                     android:inputType="textMultiLine" />
                 <RelativeLayout
                     android:id="@+id/ll_btn"
                     android:layout_width="match_parent"
-                    android:padding="10dp"
+                    android:layout_marginTop="@dimen/view_defalut_margin"
                     android:layout_height="wrap_content">
                     <Button
                         android:id="@+id/btn_share"
-                        android:layout_centerInParent="true"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/lightskyblue"
+                        android:textSize="@dimen/text_size_context"
+                        android:background="@drawable/buttonstyle"
                         android:text="分享"/>
                 </RelativeLayout>
             </LinearLayout>
