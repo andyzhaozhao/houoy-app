@@ -44,7 +44,7 @@
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/text_size_context"
                     android:text="头像选择" />
-                <com.androidnetworking.widget.ANImageView
+                <gov.smart.health.activity.views.CircleImageView
                     android:id="@+id/img_update_user_icon"
                     android:layout_gravity="center"
                     android:layout_width="@dimen/list_image_size"

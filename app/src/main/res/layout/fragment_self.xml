@@ -22,7 +22,7 @@
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@mipmap/sport_setting" />
-            <com.androidnetworking.widget.ANImageView
+            <gov.smart.health.activity.views.CircleImageView
                 android:id="@+id/self_self_img"
                 android:layout_width="@dimen/list_image_size"
                 android:layout_height="@dimen/list_image_size"
