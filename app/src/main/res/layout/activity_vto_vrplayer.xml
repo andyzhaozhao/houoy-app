@@ -31,8 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/middle_spacing"
-                android:layout_marginTop="@dimen/small_spacing"
+                android:layout_marginLeft="@dimen/view_defalut_margin"
+                android:layout_marginTop="@dimen/view_defalut_margin"
                 android:src="@drawable/video_back_btn"/>
             <ImageView
                 android:id="@+id/activity_imgBuffer"
@@ -56,25 +56,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:background="@color/grayColor"
+                android:layout_margin="@dimen/view_defalut_margin"
                 android:layout_height="wrap_content">
                 <TextView
                     android:text="重点"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/caption_text_size"
-                    android:paddingLeft="10dp"
+                    android:textSize="@dimen/text_size_sub_title"
+                    android:textColor="@color/textColor"
                     android:textStyle="bold"
                     />
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/grayColor"
+                    android:layout_height="1dp"/>
                 <TextView
                     android:id="@+id/tv_detail"
                     android:text="收紧腰腹"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/caption_text_size"
-                    android:paddingLeft="10dp"
-                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/text_size_context"
+                    android:textColor="@color/textColor"
+                    android:layout_marginTop="@dimen/view_defalut_margin"
                     />
             </LinearLayout>
         </LinearLayout></ScrollView>

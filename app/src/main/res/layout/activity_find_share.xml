@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="分享运动"
-            android:textColor="@color/blackColor"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_context"
             android:id="@+id/title"
             android:layout_centerInParent="true"
             />
@@ -30,35 +31,46 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:padding="10dp"
+                android:padding="@dimen/view_defalut_margin"
                 android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/textviewstyle"
+                    android:padding="@dimen/textview_defalut_margin"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/text_size_context"
                     android:ems="10"
                     android:gravity="start"
                     android:hint="主题"
                     android:inputType="textMultiLine" />
                 <EditText
                     android:id="@+id/tv_context"
+                    android:layout_marginTop="@dimen/view_defalut_margin"
                     android:layout_width="match_parent"
                     android:layout_alignParentTop="true"
                     android:layout_height="200dp"
                     android:ems="10"
                     android:gravity="start"
+                    android:background="@drawable/textviewstyle"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/text_size_context"
                     android:hint="告诉大家点什么吧！"
                     android:inputType="textMultiLine" />
                 <RelativeLayout
                     android:id="@+id/ll_btn"
+                    android:layout_marginTop="@dimen/view_defalut_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <Button
                         android:id="@+id/btn_share"
                         android:layout_centerHorizontal="true"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/btnGrayColor"
+                        android:textColor="@color/lightskyblue"
+                        android:textSize="@dimen/text_size_context"
+                        android:background="@drawable/buttonstyle"
                         android:text="分享"/>
                 </RelativeLayout>
             </LinearLayout>

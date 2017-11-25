@@ -7,8 +7,7 @@
     tools:context="gov.smart.health.activity.login.ResetPwdActivity">
     <ScrollView
         android:layout_width="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:padding="@dimen/view_defalut_margin"
         android:layout_height="match_parent"
         android:fillViewport="false">
         <LinearLayout
@@ -19,15 +18,13 @@
                 android:id="@+id/ll_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/top_margin"
-                android:paddingBottom="@dimen/top_margin"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="重置密码"
-                    android:textColor="@color/blackColor"
+                    android:textColor="@color/textColor"
                     android:id="@+id/title"
                     android:layout_centerInParent="true"
                     />
@@ -39,22 +36,30 @@
                 android:ems="10"
                 android:hint="手机号码"
                 android:id="@+id/reset_user_phone"
-                android:paddingTop="@dimen/top_margin"
-                android:paddingBottom="@dimen/top_margin"/>
+                android:layout_marginTop="@dimen/textview_defalut_margin"
+                android:padding="@dimen/textview_defalut_margin"
+                android:background="@drawable/textviewstyle"
+                android:textColor="@color/textColor"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/reset_mail"
                 android:hint="输入邮箱"
+                android:layout_marginTop="@dimen/textview_defalut_margin"
+                android:padding="@dimen/textview_defalut_margin"
+                android:background="@drawable/textviewstyle"
+                android:textColor="@color/textColor"
                 />
 
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:text="找回密码"
-                android:background="@color/btnGrayColor"
-                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/view_defalut_margin"
+                android:textColor="@color/lightskyblue"
+                android:textSize="@dimen/text_size_context"
+                android:background="@drawable/buttonstyle"
                 android:id="@+id/btn_reset_user"
                 android:layout_height="wrap_content" />
         </LinearLayout>

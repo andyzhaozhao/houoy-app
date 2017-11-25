@@ -10,28 +10,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/ll_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/top_margin"
-            android:paddingBottom="@dimen/top_margin"
-            android:layout_alignParentTop="true"
-            android:gravity="center_vertical">
+            android:gravity="center"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="我的关注"
-                android:textColor="@color/blackColor"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_size_sub_title"
                 android:id="@+id/title"
-                android:layout_centerInParent="true"
+                android:layout_gravity="center"
                 />
-        </RelativeLayout>
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@drawable/dash_line" />
+            android:background="@color/grayColor" />
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/attention_srl"
             android:layout_height="match_parent"

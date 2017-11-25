@@ -10,15 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:paddingTop="@dimen/top_margin"
-        android:paddingBottom="@dimen/top_margin"
         android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="设置"
-            android:textColor="@color/blackColor"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_sub_title"
             android:id="@+id/title"
             android:layout_centerInParent="true"
             />
@@ -36,12 +35,14 @@
                 android:id="@+id/et_update_user_icon"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/view_defalut_margin"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/text_size_context"
                     android:text="头像选择" />
                 <com.androidnetworking.widget.ANImageView
                     android:id="@+id/img_update_user_icon"
@@ -50,38 +51,54 @@
                     android:layout_height="@dimen/list_image_size"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="@dimen/view_defalut_margin"
                     android:src="@mipmap/person_default_icon" />
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@drawable/dash_line" />
+                android:background="@color/grayColor"
+                android:layout_height="1dp"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_update_user_name"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_size_context"
+                android:layout_margin="@dimen/textview_defalut_margin"
+                android:padding="@dimen/textview_defalut_margin"
+                android:background="@drawable/textviewstyle"
                 android:hint="姓名"
-                android:layout_margin="@dimen/top_margin"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_update_user_age"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_size_context"
                 android:hint="年龄"
-                android:layout_margin="@dimen/top_margin"
+                android:layout_margin="@dimen/textview_defalut_margin"
+                android:padding="@dimen/textview_defalut_margin"
+                android:background="@drawable/textviewstyle"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_update_user_content"
                 android:hint="格言"
-                android:layout_margin="@dimen/top_margin"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_size_context"
+                android:layout_margin="@dimen/textview_defalut_margin"
+                android:padding="@dimen/textview_defalut_margin"
+                android:background="@drawable/textviewstyle"
                 />
             <Button
                 android:id="@+id/btn_update_user"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/lightskyblue"
+                android:textSize="@dimen/text_size_context"
+                android:background="@drawable/buttonstyle"
+                android:layout_margin="@dimen/textview_defalut_margin"
                 android:text="更新"/>
         </LinearLayout>
     </ScrollView>

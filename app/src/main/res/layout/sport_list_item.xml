@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/whiteColor"
-    android:orientation="vertical"
-    android:padding="@dimen/list_margin">
+    android:orientation="vertical">
     <LinearLayout
+        android:padding="@dimen/list_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -24,14 +24,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:gravity="center_horizontal"
-                android:padding="5dp"
+                android:padding="@dimen/list_margin"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/sport_item_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColor"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/text_size_sub_title"
                     android:text="上肢伸展运动"/>
                 <TextView
                     android:layout_marginTop="@dimen/list_margin"
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/textColor"
-                    android:textSize="18dp"
+                    android:textSize="@dimen/text_size_context"
                     android:layout_alignParentRight="true"
                     android:text="已下载"/>
             </RelativeLayout>
@@ -50,19 +50,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textColor"
-                android:textSize="16dp"
+                android:lines="2"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_size_context"
                 android:layout_alignParentRight="true"
                 android:layout_alignBottom="@+id/sport_item_img"
                 android:padding="5dp"
                 android:text="简介信息"/>
         </LinearLayout>
-
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/downloadprogressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
+        android:layout_marginRight="@dimen/list_margin"
+        android:layout_marginLeft="@dimen/list_margin"
         android:layout_height="wrap_content" />
-
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grayColor"
+        android:layout_height="1dp"/>
 </LinearLayout>

@@ -12,7 +12,7 @@
         android:id="@+id/video_tool_tbtnPlayPause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/voide_tool_middle"
+        android:layout_marginLeft="@dimen/view_defalut_margin"
         android:background="@drawable/video_toolbar_tb_play"
         android:layout_centerVertical="true"
         android:text=""
@@ -25,8 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
-        android:layout_marginLeft="@dimen/voide_tool_middle"
-        android:layout_marginRight="@dimen/voide_tool_middle"
+        android:layout_marginLeft="@dimen/view_defalut_margin"
+        android:layout_marginRight="@dimen/view_defalut_margin"
         android:layout_toLeftOf="@+id/video_tool_tbtnGyro"
         android:layout_toRightOf="@+id/video_tool_tbtnPlayPause">
 
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/voide_tool_middle"
+            android:layout_marginLeft="@dimen/view_defalut_margin"
             android:textColor="#f5f5f5"
             android:text="00:00/00:00" />
 
@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/video_tool_tvTime"
-            android:paddingLeft="@dimen/little_spacing"
-            android:paddingRight="@dimen/little_spacing"
+            android:paddingLeft="@dimen/view_defalut_margin"
+            android:paddingRight="@dimen/view_defalut_margin"
             android:max="100"
             android:maxHeight="2dp"
             android:minHeight="2dp"
@@ -61,7 +61,7 @@
         android:id="@+id/video_tool_tbtnGyro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/voide_tool_middle"
+        android:layout_marginRight="@dimen/view_defalut_margin"
         android:layout_toLeftOf="@+id/video_tool_tbtnVR"
         android:background="@drawable/video_toolbar_tb_gyro"
         android:layout_centerVertical="true"
@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/voide_tool_large"
+        android:layout_marginRight="@dimen/view_defalut_margin"
         android:background="@drawable/video_toolbar_tb_screen"
         android:layout_centerVertical="true"
         android:checked="false"
@@ -89,8 +89,9 @@
         android:scaleType="centerInside"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:adjustViewBounds="true"
         android:visibility="gone"
-        android:layout_marginRight="@dimen/voide_tool_large"
+        android:layout_marginRight="@dimen/view_defalut_margin"
         android:src="@drawable/video_fullscreen"/>
 
 </RelativeLayout>
