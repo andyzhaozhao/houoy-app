@@ -12,4 +12,7 @@
     <color name="textLight">#555</color>
     <color name="redColor">#F00</color>
 
+    <color name="lightskyblue">#87CEFA</color>
+    <color name="silver">#C0C0C0</color>
+
 </resources>
