@@ -118,7 +118,7 @@
                     android:layout_height="@dimen/list_image_size"
                     android:scaleType="centerInside"
                     android:layout_alignParentLeft="true"
-                    android:src="@mipmap/healthicon"/>
+                    android:src="@mipmap/find_friend_news"/>
                 <LinearLayout
                     android:layout_toRightOf="@+id/first_item_img"
                     android:layout_toLeftOf="@+id/first_item_array"
@@ -171,7 +171,7 @@
                     android:layout_height="@dimen/list_image_size"
                     android:scaleType="centerInside"
                     android:layout_alignParentLeft="true"
-                    android:src="@mipmap/healthicon"/>
+                    android:src="@mipmap/find_news"/>
                 <LinearLayout
                     android:layout_toRightOf="@+id/second_item_img"
                     android:layout_toLeftOf="@+id/second_item_array"

@@ -14,5 +14,11 @@
 
     <color name="lightskyblue">#87CEFA</color>
     <color name="silver">#C0C0C0</color>
+    <color name="blackLine">#000</color>
+    <color name="whitesmoke_bg">#F5F5F5</color>
+    <color name="chartreuse">#09bb07</color>
+    <color name="textWhiteColor">#fff</color>
+    <color name="textlightskyblue">#87CEFA</color>
+    <color name="textSilver">#C0C0C0</color>
 
 </resources>

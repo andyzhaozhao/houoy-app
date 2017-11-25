@@ -11,5 +11,5 @@
     android:color="@color/lightskyblue" />
 
     <solid
-    android:color="@color/whiteColor" />
+    android:color="@color/chartreuse" />
 </shape>

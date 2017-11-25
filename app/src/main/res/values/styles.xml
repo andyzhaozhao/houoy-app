@@ -26,4 +26,35 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">5dip</item>
     </style>
+
+    <style name="customEditTextStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">@dimen/view_defalut_padding_10</item>
+        <item name="android:background">@drawable/textviewstyle</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="customBtnChartStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginTop">@dimen/view_defalut_margin_20</item>
+        <item name="android:textSize">@dimen/text_size_context</item>
+        <item name="android:background">@drawable/buttonstyle_chartreuse</item>
+        <item name="android:textColor">@color/textWhiteColor</item>
+    </style>
+
+    <style name="customBtnStyle">
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginTop">@dimen/view_defalut_margin_20</item>
+        <item name="android:textSize">@dimen/text_size_context</item>
+        <item name="android:background">@drawable/buttonstyle</item>
+        <item name="android:textColor">@color/textlightskyblue</item>
+    </style>
+
+    <style name="customTitleItemStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">@dimen/text_size_sub_title</item>
+        <item name="android:layout_margin">@dimen/view_defalut_margin_15</item>
+        <item name="android:textColor">@color/textlightskyblue</item>
+    </style>
 </resources>
