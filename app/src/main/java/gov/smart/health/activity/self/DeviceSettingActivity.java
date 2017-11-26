@@ -152,7 +152,9 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
         String[] devices = {};
         // add a radio button list
         for (int i = 0 ;i <bleDeviceMap.size() ; i++) {
-            devicesList.add(bleDeviceMap.get(i).name);
+            if(bleDeviceMap.get(i).name != null) {
+                devicesList.add(bleDeviceMap.get(i).name);
+            }
         }
         int checkedItem = 1; // cow
         builder.setSingleChoiceItems(devicesList.toArray(devices), checkedItem, new DialogInterface.OnClickListener() {

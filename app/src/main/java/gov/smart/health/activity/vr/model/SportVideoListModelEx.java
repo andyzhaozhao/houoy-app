@@ -13,6 +13,7 @@ import gov.smart.health.activity.vr.downloadfile.DownloadManager;
 public class SportVideoListModelEx implements Serializable {
     public SportVideoListModel videoModel;
     public ProgressBar progressBar = null;
+    public TextView tvProgress = null;
     public TextView downloadStatus = null;
     public Boolean isDownloading = false;
     public int progress = 0;

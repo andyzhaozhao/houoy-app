@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:background="@color/whiteColor"
     android:orientation="vertical">
-    <LinearLayout
-        android:padding="@dimen/list_margin"
+    <RelativeLayout
+        android:padding="@dimen/view_defalut_margin_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -15,58 +15,88 @@
             android:layout_width="@dimen/list_image_size"
             android:layout_height="@dimen/list_image_size"
             android:scaleType="center"
+            android:layout_gravity="center"
             android:layout_alignParentLeft="true"
             android:src="@mipmap/healthicon"/>
         <LinearLayout
+            android:layout_toRightOf="@+id/sport_item_img"
+            android:layout_toLeftOf="@+id/sport_item_download"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:gravity="center_horizontal"
-                android:padding="@dimen/list_margin"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/sport_item_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size_sub_title"
-                    android:text="上肢伸展运动"/>
-                <TextView
-                    android:layout_marginTop="@dimen/list_margin"
-                    android:id="@+id/sport_item_download"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size_context"
-                    android:layout_alignParentRight="true"
-                    android:text="已下载"/>
-            </RelativeLayout>
-
             <TextView
-                android:layout_marginTop="@dimen/list_margin"
-                android:id="@+id/sport_item_time"
+                android:id="@+id/sport_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColor"
-                android:lines="2"
-                android:ellipsize="end"
-                android:textSize="@dimen/text_size_context"
-                android:layout_alignParentRight="true"
-                android:layout_alignBottom="@+id/sport_item_img"
-                android:padding="5dp"
-                android:text="简介信息"/>
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_marginLeft="@dimen/view_defalut_margin_10"
+                style="@style/customContextDarkGrayTextStyle"
+                android:text="上肢伸展运动"/>
+            <LinearLayout
+                android:padding="@dimen/view_defalut_margin_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/sport_item_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/customContextF13TextStyle"
+                    android:text="126秒"/>
+                <TextView
+                    android:id="@+id/sport_item_cal"
+                    android:layout_marginLeft="@dimen/view_defalut_margin_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/customContextF13TextStyle"
+                    android:text="10cal"/>
+                <TextView
+                    android:id="@+id/sport_item_actor_time"
+                    android:layout_marginLeft="@dimen/view_defalut_margin_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/customContextF13TextStyle"
+                    android:text="60次/分"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/view_defalut_margin_10"
+                style="@style/customContextF14C35TextStyle"
+                android:text="免费"/>
 
-    <ProgressBar
-        android:id="@+id/downloadprogressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+        </LinearLayout>
+        <TextView
+            android:id="@+id/sport_item_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/view_defalut_margin_10"
+            style="@style/customContextDarkGrayTextStyle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="√"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginRight="@dimen/list_margin"
-        android:layout_marginLeft="@dimen/list_margin"
-        android:layout_height="wrap_content" />
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/view_defalut_margin"
+        android:paddingRight="@dimen/view_defalut_margin"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:id="@+id/downloadprogressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/list_margin"
+            android:layout_marginLeft="@dimen/list_margin"
+            android:progressDrawable="@drawable/progress_bar_color"
+            android:layout_toLeftOf="@+id/tv_progress"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            style="@style/customContextF14CBlueTextStyle"
+            android:text="0%"/>
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:background="@color/grayColor"

@@ -44,7 +44,7 @@
             <TextView
                 android:id="@+id/detail_subname"
                 android:text="名称"
-                style="@style/customContextTextStyle"
+                style="@style/customContextF17C57TextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -53,7 +53,7 @@
                 android:layout_marginTop="@dimen/view_defalut_margin_30"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/customContextTextStyle"
+                style="@style/customContextF17C35TextStyle"
                 android:text="内容"
                 />
             <ImageView
@@ -77,13 +77,13 @@
                     <TextView
                         android:id="@+id/detail_time"
                         android:text="时间"
-                        style="@style/customContextDarkGrayTextStyle"
+                        style="@style/customContextF17C88TextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         />
                     <TextView
                         android:text="著作权归作者所有"
-                        style="@style/customContextDarkGrayTextStyle"
+                        style="@style/customContextF17C88TextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         />

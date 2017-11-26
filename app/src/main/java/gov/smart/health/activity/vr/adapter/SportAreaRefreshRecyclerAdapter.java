@@ -65,8 +65,6 @@ public class SportAreaRefreshRecyclerAdapter extends RecyclerView.Adapter<SportA
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final VideoFolderListModel model = mLists.get(position);
-        holder.image.setImageResource(R.mipmap.healthicon);
-        holder.title.setText(model.pk_folder);
         holder.content.setText(model.folder_name);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -99,14 +97,10 @@ public class SportAreaRefreshRecyclerAdapter extends RecyclerView.Adapter<SportA
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView image;
-        public TextView title;
         public TextView content;
 
         public ViewHolder(View view){
             super(view);
-            image = (ImageView)view.findViewById(R.id.sport_area_item_img);
-            title = (TextView)view.findViewById(R.id.sport_area_item_title);
             content = (TextView)view.findViewById(R.id.sport_area_item_content);
         }
     }

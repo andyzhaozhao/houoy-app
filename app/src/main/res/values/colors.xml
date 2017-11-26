@@ -7,14 +7,17 @@
     <color name="grayColor">#eee</color>
     <color name="btnGrayColor">#eee</color>
     <color name="whiteColor">#fff</color>
-    <color name="textColor">#000</color>
     <color name="textDark">#222</color>
     <color name="textLight">#555</color>
     <color name="redColor">#F00</color>
 
+    <color name="color_bg_selected">#888888</color>
+    <color name="color_bg_normal">#e7e7e8</color>
+
     <color name="lightskyblue">#2a96db</color>
     <color name="silver">#C0C0C0</color>
     <color name="blackLine">#000</color>
+    <color name="colorC88Line">#888888</color>
     <color name="whitesmoke_bg">#F5F5F5</color>
     <color name="chartreuse">#09bb07</color>
     <color name="textWhiteColor">#fff</color>
@@ -22,4 +25,9 @@
     <color name="textSilver">#C0C0C0</color>
     <color name="transparent">#00000000</color>
     <color name="textdarkgray">#A9A9A9</color>
+
+    <color name="textColor">#888888</color>
+    <color name="textColor_353535">#353535</color>
+    <color name="textColor_e64340">#e64340</color>
+    <color name="textColor_576b95">#576b95</color>
 </resources>

@@ -34,7 +34,10 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
     private LayoutInflater mInflater;
     private List<SportVideoListModelEx> mLists;
     private Activity mActivity;
-
+    private static String VideoNotDownalod = " ";
+    private static String VideoContinueDownalod = " ▶ ";
+    private static String VideoDownaloding = "┃┃";
+    private static String VideoDownalodOver = " √ ";
     public SportRefreshRecyclerAdapter(Activity activity , List<SportVideoListModelEx> lists){
         mActivity = activity;
         this.mInflater=LayoutInflater.from(activity);
@@ -82,20 +85,26 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         String fileName = model.videoModel.video_name;
 
         model.progressBar = holder.downloadprogressBar;
+        model.tvProgress = holder.tvProgress;
         model.downloadStatus = holder.downloadStatus;
+
         holder.image.setDefaultImageResId(R.mipmap.healthicon);
         holder.image.setErrorImageResId(R.mipmap.healthicon);
         holder.image.setImageUrl(model.videoModel.path_thumbnail);
 
         holder.title.setText(fileName);
-        holder.time.setText(model.videoModel.video_desc);
+        holder.time.setText(model.videoModel.time_length+"秒");
+        holder.cal.setText(model.videoModel.actor_calorie+"cal");
+        holder.actorTime.setText(model.videoModel.actor_times+"次/分");
+
         holder.downloadprogressBar.setMax(10000);
-        holder.downloadprogressBar.setVisibility(View.INVISIBLE);
+        holder.downloadprogressBar.setVisibility(View.GONE);
+        holder.tvProgress.setVisibility(View.GONE);
 
         DownloadManager downloadManager = DownloadManager.shareDownloadManager();
         SportVideoListModelEx oldModel = downloadManager.downloadMap.get(model.videoModel.video_code);
         if(oldModel != null){
-            downloadManager.downloadMap.remove(oldModel.videoModel.video_code);
+            downloadManager.downloadMap.put(model.videoModel.video_code,model);
             model.isDownloading = oldModel.isDownloading;
             model.downlaodTask = oldModel.downlaodTask;
             model.downlaodTask.setFileDownloadListener(fileDownloadListener,model);
@@ -104,19 +113,24 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         File downloadFile = new File(model.videoModel.downlaodPath + File.separator + fileName);
         final boolean isDownloaded = downloadFile.exists();
         if(model.isDownloading){
-            holder.downloadStatus.setText("准备下载");
+            holder.downloadStatus.setText(VideoDownaloding);
             holder.downloadprogressBar.setVisibility(View.VISIBLE);
+            holder.tvProgress.setVisibility(View.VISIBLE);
+            holder.tvProgress.setText("0%");
         } else if(isDownloaded){
-            holder.downloadStatus.setText("已下载");
+            holder.downloadStatus.setText(VideoDownalodOver);
         } else {
             File downlaodTempFile = new File(model.videoModel.downlaodTempPath + File.separator + fileName);
             if(downlaodTempFile.exists() && downlaodTempFile.length() > 0){
-                holder.downloadStatus.setText("继续下载");
+                holder.downloadStatus.setText(VideoContinueDownalod);
                 holder.downloadprogressBar.setVisibility(View.VISIBLE);
+                holder.tvProgress.setVisibility(View.VISIBLE);
                 long fileLength = SharedPreferencesHelper.gettingLong(SHConstants.VideoLength + model.videoModel.video_code,1);
-                holder.downloadprogressBar.setProgress(DownloadUtils.getProgress(downlaodTempFile.length(),fileLength));
+                int progress = DownloadUtils.getProgress(downlaodTempFile.length(),fileLength);
+                holder.downloadprogressBar.setProgress(progress);
+                holder.tvProgress.setText((progress/100)+"%");
             } else {
-                holder.downloadStatus.setText("未下载");
+                holder.downloadStatus.setText(VideoNotDownalod);
             }
         }
         holder.itemView.setTag(position);
@@ -124,19 +138,30 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
             @Override
             public void onClick(View v) {
                 if(isDownloaded) {
-                    model.progressBar.setVisibility(View.INVISIBLE);
                     Intent intent = new Intent();
                     intent.putExtra(SHConstants.Video_ModelKey, model.videoModel);
                     intent.setClass(mActivity, VTOVRPlayerActivity.class);
                     mActivity.startActivity(intent);
                 }else {
-                    if(!model.isDownloading) {
+                    if(model.isDownloading) {
+                        DownloadManager downloadManager = DownloadManager.shareDownloadManager();
+                        SportVideoListModelEx oldModel = downloadManager.downloadMap.get(model.videoModel.video_code);
+                        if(oldModel != null){
+                            if(!oldModel.downlaodTask.isCancelled()) {
+                                model.isDownloading = false;
+                                downloadManager.downloadMap.remove(oldModel.videoModel.video_code);
+                                oldModel.downlaodTask.cancel(true);
+                                oldModel.downlaodTask = null;
+                                Toast.makeText(mActivity, model.videoModel.video_name + "已停止下载！", Toast.LENGTH_LONG).show();
+                            }
+                            SportRefreshRecyclerAdapter.this.notifyDataSetChanged();
+                        }
+                    } else {
                         model.isDownloading = true;
                         model.progressBar.setVisibility(View.VISIBLE);
-                        model.downloadStatus.setText("准备下载");
+                        model.tvProgress.setVisibility(View.VISIBLE);
+                        model.downloadStatus.setText(VideoDownaloding);
                         downloadVideo(model);
-                    } else {
-                        Toast.makeText(mActivity, model.videoModel.video_name + "下载中！", Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -155,8 +180,9 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    model.downloadStatus.setText("下载中");
+                    model.downloadStatus.setText(VideoDownaloding);
                     model.progressBar.setProgress(model.progress);
+                    model.tvProgress.setText((model.progress/100)+"%");
                 }
             });
         }
@@ -167,8 +193,9 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    model.downloadStatus.setText("下载中");
+                    model.downloadStatus.setText(VideoDownaloding);
                     model.progressBar.setProgress(model.progress);
+                    model.tvProgress.setText((model.progress/100)+"%");
                 }
             });
         }
@@ -210,6 +237,9 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         public ANImageView image;
         public TextView title;
         public TextView time;
+        public TextView tvProgress;
+        public TextView cal;
+        public TextView actorTime;
         public TextView downloadStatus;
         public ProgressBar downloadprogressBar;
 
@@ -218,6 +248,9 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
             image = (ANImageView)view.findViewById(R.id.sport_item_img);
             title = (TextView)view.findViewById(R.id.sport_item_title);
             time = (TextView)view.findViewById(R.id.sport_item_time);
+            tvProgress = (TextView)view.findViewById(R.id.tv_progress);
+            cal = (TextView)view.findViewById(R.id.sport_item_cal);
+            actorTime = (TextView)view.findViewById(R.id.sport_item_actor_time);
             downloadStatus = (TextView)view.findViewById(R.id.sport_item_download);
             downloadprogressBar = (ProgressBar)view.findViewById(R.id.downloadprogressBar);
         }

@@ -17,7 +17,6 @@
             android:layout_alignParentLeft="true"/>
         <LinearLayout
             android:layout_toRightOf="@+id/myattention_item_img"
-            android:layout_toLeftOf="@+id/btn_goto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/list_margin"
@@ -36,7 +35,6 @@
                 style="@style/customListContextTextStyle"
                 android:text="应急避难所描述内容"/>
         </LinearLayout>
-        <include layout="@layout/btn_goto"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

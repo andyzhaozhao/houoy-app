@@ -29,7 +29,7 @@
                     android:id="@+id/user_name"
                     android:padding="@dimen/view_defalut_padding_10"
                     android:hint="用户名/手机号/邮箱"
-                    style="@style/customEditTextStyle"
+                    style="@style/customEditTextF18C35Style"
                     />
                 <EditText
                     android:layout_width="match_parent"
@@ -39,7 +39,7 @@
                     android:ems="10"
                     android:id="@+id/user_pwd"
                     android:hint="密码"
-                    style="@style/customEditTextStyle" />
+                    style="@style/customEditTextF18C35Style" />
 
                     <Button
                         android:layout_width="match_parent"

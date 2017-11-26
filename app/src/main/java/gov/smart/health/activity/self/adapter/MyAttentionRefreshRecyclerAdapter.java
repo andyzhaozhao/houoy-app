@@ -79,7 +79,7 @@ public class MyAttentionRefreshRecyclerAdapter extends RecyclerView.Adapter<MyAt
                 Intent intent = new Intent();
                 intent.putExtra(SHConstants.PersonAttentionModelKey,model);
                 intent.setClass(mContext, MyAttentionDetailActivity.class);
-                mContext.startActivity(intent);
+                //mContext.startActivity(intent);
             }
         });
     }
