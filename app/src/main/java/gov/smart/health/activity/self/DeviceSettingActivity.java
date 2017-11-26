@@ -152,7 +152,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
         String[] devices = {};
         // add a radio button list
         for (int i = 0 ;i <bleDeviceMap.size() ; i++) {
-            if(bleDeviceMap.get(i).name != null) {
+            if(bleDeviceMap.get(i) != null  && bleDeviceMap.get(i).name != null) {
                 devicesList.add(bleDeviceMap.get(i).name);
             }
         }
