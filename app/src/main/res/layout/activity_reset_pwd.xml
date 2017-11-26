@@ -45,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/reset_mail"
                 android:hint="输入邮箱"
-                style="@style/customEditTextStyle"
+                android:imeOptions="actionDone"
+                style="@style/customEditTextF18C35Style"
                 />
             <Button
                 android:layout_width="match_parent"

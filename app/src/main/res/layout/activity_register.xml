@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/register_user_name"
                     android:hint="用户名"
-                    style="@style/customEditTextStyle"
+                    style="@style/customEditTextF18C35Style"
                     />
                 <EditText
                     android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                     android:hint="手机号码"
                     android:id="@+id/register_user_phone"
                     android:layout_marginTop="@dimen/view_defalut_margin_20"
-                    style="@style/customEditTextStyle"
+                    style="@style/customEditTextF18C35Style"
                     />
                 <EditText
                     android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                     android:id="@+id/register_mail"
                     android:hint="输入邮箱"
                     android:layout_marginTop="@dimen/view_defalut_margin_20"
-                    style="@style/customEditTextStyle"
+                    style="@style/customEditTextF18C35Style"
                     />
 
                 <EditText
@@ -73,17 +73,18 @@
                     android:hint="密码"
                     android:id="@+id/register_first_pwd"
                     android:layout_marginTop="@dimen/view_defalut_margin_20"
-                    style="@style/customEditTextStyle"
+                    style="@style/customEditTextF18C35Style"
                     />
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:ems="10"
+                    android:imeOptions="actionDone"
                     android:hint="确认密码"
                     android:id="@+id/register_second_pwd"
                     android:layout_marginTop="@dimen/view_defalut_margin_20"
-                    style="@style/customEditTextStyle"
+                    style="@style/customEditTextF18C35Style"
                     />
 
                 <Button

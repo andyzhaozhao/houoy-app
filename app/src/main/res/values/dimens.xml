@@ -35,6 +35,7 @@
     <dimen name="view_defalut_margin_20">20dp</dimen>
     <dimen name="view_defalut_margin_15">15dp</dimen>
     <dimen name="view_defalut_margin_10">10dp</dimen>
+    <dimen name="view_defalut_margin_5">5dp</dimen>
     <dimen name="view_defalut_padding_10">10dp</dimen>
     <dimen name="image_btn_defalut_size">30dp</dimen>
 
