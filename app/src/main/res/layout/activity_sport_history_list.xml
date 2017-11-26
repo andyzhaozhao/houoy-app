@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -10,29 +11,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical">
+        <include layout="@layout/btn_back" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="我的运动记录"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/text_size_sub_title"
-            android:id="@+id/title"
+            style="@style/customTitleItemStyle"
             android:layout_centerInParent="true"
             />
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="选择条件"
-            android:textColor="@color/lightskyblue"
-            android:textSize="@dimen/text_size_context"
-            android:background="@drawable/buttonstyle"
-            android:layout_margin="@dimen/view_defalut_margin"
+            android:layout_margin="@dimen/view_defalut_margin_10"
+            android:padding="@dimen/view_defalut_margin_10"
+            android:text="刷选"
+            style="@style/customBtnStyle"
             android:id="@+id/select_condition"
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/blackLine"
+        android:layout_height="0.5dp"/>
     <LinearLayout
         android:layout_below="@+id/ll_title"
         android:layout_width="match_parent"
@@ -51,4 +52,4 @@
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

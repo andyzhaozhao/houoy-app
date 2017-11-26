@@ -59,7 +59,7 @@
 
     <style name="customBtnNoMarginStyle">
         <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/text_size_context</item>
+         <item name="android:textSize">@dimen/text_size_context</item>
         <item name="android:background">@drawable/buttonstyle</item>
         <item name="android:textColor">@color/textlightskyblue</item>
     </style>

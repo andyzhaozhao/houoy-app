@@ -59,8 +59,14 @@ public class SportHistoryRecyclerAdapter extends RecyclerView.Adapter<SportHisto
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.sportTime.setText(mLists.get(position).heart_rate);
-        holder.sportCal.setText(mLists.get(position).heart_rate_max);
+        LikeRecordHistoryInfoListModel model = mLists.get(position);
+        holder.sportStartTime.setText(model.time_start);
+        holder.sportEndTime.setText(model.time_end);
+        holder.sportTime.setText("耗时"+model.time_length+"秒");
+        holder.sportPlace.setText(model.place_name);
+        holder.sportVideo.setText(model.video_name);
+        holder.sportRate.setText(model.heart_rate + "次/分");
+        holder.sportCal.setText(model.indicator_calorie_min == null ? "1cal" : model.indicator_calorie_min+ "cal");
         holder.itemView.setTag(position);
     }
     @Override
@@ -71,13 +77,23 @@ public class SportHistoryRecyclerAdapter extends RecyclerView.Adapter<SportHisto
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView sportStartTime;
+        public TextView sportEndTime;
         public TextView sportTime;
+        public TextView sportPlace;
+        public TextView sportVideo;
+        public TextView sportRate;
         public TextView sportCal;
 
         public ViewHolder(View view){
             super(view);
-            sportTime = (TextView)view.findViewById(R.id.item_date);
-            sportCal = (TextView)view.findViewById(R.id.item_cal);
+            sportStartTime = (TextView)view.findViewById(R.id.item_history_startdate);
+            sportEndTime = (TextView)view.findViewById(R.id.item_history_enddate);
+            sportTime = (TextView)view.findViewById(R.id.item_history_time);
+            sportPlace = (TextView)view.findViewById(R.id.item_history_place);
+            sportVideo = (TextView)view.findViewById(R.id.item_history_video_name);
+            sportRate = (TextView)view.findViewById(R.id.item_history_heart_rate);
+            sportCal = (TextView)view.findViewById(R.id.item_history_cal);
         }
     }
 }

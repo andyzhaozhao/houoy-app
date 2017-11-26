@@ -71,6 +71,7 @@ public class SportVideoListModel implements Serializable{
     public String downlaodTempPath;
 
     public long time_start;
+    public long time_length;
     public long time_end;
 
 }

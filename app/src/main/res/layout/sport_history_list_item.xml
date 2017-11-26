@@ -1,30 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/whiteColor"
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/list_margin"
+        android:padding="@dimen/view_defalut_margin_10"
         android:gravity="center"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/item_date"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/text_size_context"
-            android:text="运动时间"/>
+            android:layout_marginTop="@dimen/view_defalut_margin_10"
+            android:orientation="horizontal">
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:id="@+id/item_cal"
+            android:id="@+id/item_history_startdate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/text_size_context"
-            android:text="消耗能量"/>
+            style="@style/customContextDarkGrayTextStyle"
+            android:layout_alignParentLeft="true"
+            android:text="运动开始时间"/>
+            <TextView
+                android:id="@+id/item_history_enddate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/customContextDarkGrayTextStyle"
+                android:layout_alignParentRight="true"
+                android:text="运动结束时间"/>
+            </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/view_defalut_margin_10">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/item_history_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/customContextDarkGrayTextStyle"
+                    android:text="运动时间间隔"/>
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/view_defalut_margin_10">
+            <TextView
+                android:id="@+id/item_history_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/customContextTextStyle"
+                android:layout_alignParentLeft="true"
+                android:text="运动地点"/>
+            <TextView
+                android:id="@+id/item_history_video_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/customContextTextStyle"
+                android:layout_alignParentRight="true"
+                android:text="视频名称"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/view_defalut_margin_20"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/item_history_heart_rate"
+                android:layout_height="wrap_content"
+                style="@style/customListTitleTextStyle"
+                android:layout_alignParentLeft="true"
+                android:text="心率"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/item_history_cal"
+                android:layout_height="wrap_content"
+                style="@style/customListTitleTextStyle"
+                android:layout_alignParentRight="true"
+                android:text="卡路里"/>
+        </RelativeLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
