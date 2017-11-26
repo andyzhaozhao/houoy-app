@@ -101,6 +101,8 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.vr.SportShareActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.find.FindShareActivity"

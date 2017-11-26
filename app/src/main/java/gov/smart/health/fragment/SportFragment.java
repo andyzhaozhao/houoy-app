@@ -146,6 +146,15 @@ public class SportFragment extends Fragment {
         });
 
         TextView fitpolo =(TextView) rootView.findViewById(R.id.connect_fitpolos);
+        fitpolo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(), DeviceSettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
         BluetoothModule bluetoothModule = BluetoothModule.getInstance();
         if (bluetoothModule.isBluetoothOpen()) {
             String deviceAddress = SharedPreferencesHelper.gettingString(DeviceSettingActivity.AddressKey, null);

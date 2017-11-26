@@ -78,6 +78,17 @@
         <item name="android:textColor">@color/textlightskyblue</item>
     </style>
 
+    <style name="customF18C35TextStyle">
+        <item name="android:textSize">@dimen/text_size_sub_title</item>
+        <item name="android:textColor">@color/textColor_353535</item>
+    </style>
+
+    <style name="customF18C35BTextStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_sub_title</item>
+        <item name="android:textColor">@color/textColor_353535</item>
+    </style>
+
     <style name="customListContextTextStyle">
         <item name="android:textSize">@dimen/text_size_context</item>
         <item name="android:textColor">@color/textColor</item>
@@ -109,6 +120,11 @@
         <item name="android:textSize">@dimen/text_size_context_14</item>
         <item name="android:textColor">@color/textColor_353535</item>
     </style>
+    <style name="customContextF14C88TextStyle">
+        <item name="android:textSize">@dimen/text_size_context_14</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
     <style name="customListTextStyle">
         <item name="android:textSize">@dimen/text_size_context</item>
         <item name="android:textColor">@color/textColor</item>

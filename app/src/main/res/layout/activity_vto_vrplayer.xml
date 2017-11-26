@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitesmoke_bg"
     tools:context="gov.smart.health.activity.vr.VTOVRPlayerActivity">
     <RelativeLayout
         android:id="@+id/activity_player"
@@ -27,13 +28,12 @@
             </RelativeLayout>
             <ImageView
                 android:id="@+id/activity_imgBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/image_btn_defalut_size"
+                android:layout_height="@dimen/image_btn_defalut_size"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/view_defalut_margin"
-                android:layout_marginTop="@dimen/view_defalut_margin"
-                android:src="@drawable/video_back_btn"/>
+                android:layout_margin="@dimen/view_defalut_margin_10"
+                android:src="@mipmap/backlmage"/>
             <ImageView
                 android:id="@+id/activity_imgBuffer"
                 android:layout_width="40dp"
@@ -48,6 +48,7 @@
         android:layout_below="@+id/activity_player"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="none"
         android:fillViewport="false">
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,29 +57,138 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_margin="@dimen/view_defalut_margin"
                 android:layout_height="wrap_content">
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+                <View
+                    android:layout_marginTop="@dimen/view_defalut_margin_10"
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
                 <TextView
-                    android:text="重点"
+                    android:text="名称"
+                    android:padding="@dimen/view_defalut_margin_10"
+                    android:id="@+id/tv_video_name"
+                    android:background="@color/whiteColor"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/text_size_sub_title"
-                    android:textColor="@color/textColor"
-                    android:textStyle="bold"
+                    style="@style/customF18C35TextStyle"
                     />
                 <View
                     android:layout_width="match_parent"
-                    android:background="@color/grayColor"
-                    android:layout_height="1dp"/>
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+                <View
+                    android:layout_marginTop="@dimen/view_defalut_margin_10"
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/whiteColor"
+                     android:padding="@dimen/view_defalut_margin_10"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="视频时长"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        style="@style/customF18C35TextStyle"
+                        />
+                    <TextView
+                        android:text="120秒"
+                        android:id="@+id/tv_video_length"
+                        android:layout_marginTop="@dimen/view_defalut_margin_10"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        style="@style/customContextF13TextStyle"
+                        />
+                    </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+                <View
+                    android:layout_marginTop="@dimen/view_defalut_margin_10"
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/whiteColor"
+                    android:padding="@dimen/view_defalut_margin_10"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="预计心率"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        style="@style/customF18C35TextStyle"
+                        />
+                    <TextView
+                        android:text="120次/分"
+                        android:id="@+id/tv_actor_heart_rate"
+                        android:layout_marginTop="@dimen/view_defalut_margin_10"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        style="@style/customContextF13TextStyle"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+                <View
+                    android:layout_marginTop="@dimen/view_defalut_margin_10"
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/whiteColor"
+                    android:padding="@dimen/view_defalut_margin_10"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="预计消耗卡路里"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        style="@style/customF18C35TextStyle"
+                        />
+                    <TextView
+                        android:text="10cal"
+                        android:id="@+id/tv_actor_cal"
+                        android:layout_marginTop="@dimen/view_defalut_margin_10"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        style="@style/customContextF13TextStyle"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+                <View
+                    android:layout_marginTop="@dimen/view_defalut_margin_10"
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
                 <TextView
+                    android:padding="@dimen/view_defalut_margin_10"
                     android:id="@+id/tv_detail"
+                    android:background="@color/whiteColor"
                     android:text="收紧腰腹"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:textSize="@dimen/text_size_context"
-                    android:textColor="@color/textColor"
-                    android:layout_marginTop="@dimen/view_defalut_margin"
+                    style="@style/customContextF14C88TextStyle"
                     />
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
-        </LinearLayout></ScrollView>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

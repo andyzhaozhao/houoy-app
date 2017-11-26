@@ -78,8 +78,18 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
 
         initView();
 
+
+        TextView textVideoLength = (TextView)findViewById(R.id.tv_video_length);
+        textVideoLength.setText(model.video_length+"秒");
+        TextView textVideoname = (TextView)findViewById(R.id.tv_video_name);
+        textVideoname.setText(model.video_name);
+        TextView textheartRate = (TextView)findViewById(R.id.tv_actor_heart_rate);
+        textheartRate.setText(model.actor_times +"分/秒");
+        TextView textActorCal = (TextView)findViewById(R.id.tv_actor_cal);
+        textActorCal.setText(model.actor_calorie+"cal");
         TextView textView = (TextView)findViewById(R.id.tv_detail);
         textView.setText(model.video_desc);
+
         //初始化播放器
         RelativeLayout rlPlayView = (RelativeLayout) findViewById(R.id.activity_rlPlayView);
         mMediaplayer = new UVMediaPlayer(this, rlPlayView);

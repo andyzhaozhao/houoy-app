@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -39,6 +40,31 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
             videoModel = (SportVideoListModel) getIntent().getSerializableExtra(SHConstants.Video_ModelKey);
         }
         btnShare.setOnClickListener(this);
+
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        findViewById(R.id.btn_cancel_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        long time_length = videoModel.time_end - videoModel.time_start;
+        TextView textVideoLength = (TextView)findViewById(R.id.tv_video_length);
+        textVideoLength.setText(time_length/1000+"秒");
+        TextView textVideoname = (TextView)findViewById(R.id.tv_video_name);
+        textVideoname.setText(videoModel.video_name);
+        TextView textheartRate = (TextView)findViewById(R.id.tv_actor_heart_rate);
+        textheartRate.setText(videoModel.actor_times +"分/秒");
+        TextView textActorCal = (TextView)findViewById(R.id.tv_actor_cal);
+        textActorCal.setText(videoModel.actor_calorie+"cal");
+
         sendData();
     }
 
