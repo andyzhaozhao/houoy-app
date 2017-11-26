@@ -130,6 +130,7 @@
                     android:layout_height="@dimen/list_image_size"
                     android:scaleType="centerInside"
                     android:adjustViewBounds="true"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
                     android:src="@mipmap/find_friend_news"/>
                 <LinearLayout
@@ -137,7 +138,7 @@
                     android:layout_toLeftOf="@+id/btn_goto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/list_margin"
+                    android:padding="@dimen/view_defalut_margin_10"
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/first_item_title"
@@ -146,7 +147,7 @@
                         style="@style/customListTitleTextStyle"
                         android:text="关注圈"/>
                     <TextView
-                        android:layout_marginTop="@dimen/list_margin"
+                        android:layout_marginTop="@dimen/view_defalut_margin_10"
                         android:id="@+id/first_item_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -173,6 +174,7 @@
                     android:layout_height="@dimen/list_image_size"
                     android:scaleType="centerInside"
                     android:adjustViewBounds="true"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
                     android:src="@mipmap/find_news"/>
                 <LinearLayout
@@ -180,7 +182,7 @@
                     android:layout_toLeftOf="@+id/btn_goto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/list_margin"
+                    android:padding="@dimen/view_defalut_margin_10"
                     android:orientation="vertical">
                     <TextView
                         android:id="@+id/second_item_title"
@@ -189,7 +191,7 @@
                         style="@style/customListTitleTextStyle"
                         android:text="随便看看"/>
                     <TextView
-                        android:layout_marginTop="@dimen/list_margin"
+                        android:layout_marginTop="@dimen/view_defalut_margin_10"
                         android:id="@+id/second_item_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

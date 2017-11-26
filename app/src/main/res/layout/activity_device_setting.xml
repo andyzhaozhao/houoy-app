@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/whitesmoke_bg"
     tools:context="gov.smart.health.activity.self.DeviceSettingActivity">
     <RelativeLayout
         android:id="@+id/ll_title"
@@ -11,116 +13,125 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical">
+        <include layout="@layout/btn_back" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="设置"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/text_size_sub_title"
+            android:text="选择设备"
             android:id="@+id/title"
+            style="@style/customTitleItemStyle"
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/blackLine"
+        android:layout_height="0.5dp"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_below="@+id/ll_title"
         android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
-        android:layout_margin="@dimen/view_defalut_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <RelativeLayout
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:padding="@dimen/view_defalut_margin"
+            android:layout_margin="@dimen/view_defalut_margin_10"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textStyle="bold"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:text="VR眼镜" />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/grayColor"
-            android:layout_height="1dp"/>
-        <RelativeLayout
-            android:id="@+id/btn_setting_setting"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:padding="@dimen/view_defalut_margin"
-            android:layout_height="wrap_content">
+                style="@style/customContextTextStyle"
+                android:text="VR眼镜选择" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="15dp"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
+                android:layout_marginLeft="@dimen/view_defalut_margin_10"
+                style="@style/customContextDarkGrayTextStyle"
+                android:text="已选择：" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/customContextDarkGrayTextStyle"
                 android:text="暴风小D" />
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/view_defalut_margin"
-                android:src="@android:drawable/ic_menu_send" />
-        </RelativeLayout>
+        </LinearLayout>
         <View
+            android:layout_marginTop="@dimen/view_defalut_margin_10"
             android:layout_width="match_parent"
-            android:background="@color/grayColor"
-            android:layout_height="1dp"/>
+            android:background="@color/blackLine"
+            android:layout_height="0.5dp"/>
         <RelativeLayout
-            android:orientation="horizontal"
+            android:id="@+id/btn_setting_device1"
             android:layout_width="match_parent"
-            android:padding="@dimen/view_defalut_margin"
+            android:background="@color/whiteColor"
+            android:paddingTop="@dimen/view_defalut_margin_10"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textStyle="bold"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:text="智能手环" />
+                android:layout_marginLeft="@dimen/view_defalut_margin_10"
+                android:paddingLeft="@dimen/view_defalut_margin_10"
+                style="@style/customContextTextStyle"
+                android:text="暴风小D" />
+            <include layout="@layout/btn_goto"/>
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
-            android:background="@color/grayColor"
-            android:layout_height="1dp"/>
+            android:background="@color/blackLine"
+            android:layout_height="0.5dp"/>
         <RelativeLayout
-            android:id="@+id/btn_setting_device"
-            android:orientation="horizontal"
+            android:id="@+id/btn_setting_device2"
             android:layout_width="match_parent"
-            android:padding="@dimen/view_defalut_margin"
+            android:background="@color/whiteColor"
+            android:paddingTop="@dimen/view_defalut_margin_10"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_centerVertical="true"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:text="专用手环" />
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/view_defalut_margin"
-                android:src="@android:drawable/ic_menu_send" />
+                android:layout_marginLeft="@dimen/view_defalut_margin_10"
+                android:paddingLeft="@dimen/view_defalut_margin_10"
+                style="@style/customContextTextStyle"
+                android:text="暴风魔镜2代" />
+            <include layout="@layout/btn_goto"/>
         </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/blackLine"
+            android:layout_height="0.5dp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/view_defalut_margin_10"
+            android:layout_height="wrap_content">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/customContextTextStyle"
+                android:text="智能手环选择" />
+            <TextView
+                android:id="@+id/tv_setting_fitpolo_device"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/view_defalut_margin_10"
+                style="@style/customContextDarkGrayTextStyle"
+                android:text="已绑定：" />
+            </LinearLayout>
+        <Button
+                android:id="@+id/btn_setting_device"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+            android:layout_margin="@dimen/view_defalut_margin_10"
+
+            style="@style/customBtnChartStyle"
+                android:text="搜索Fitpolo手环" />
         <View
             android:layout_width="match_parent"
             android:background="@color/grayColor"
             android:layout_height="1dp"/>
     </LinearLayout>
     </ScrollView>
-</RelativeLayout>
+</LinearLayout>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="gov.smart.health.activity.self.UserSettingInfoActivity">
     <RelativeLayout
         android:id="@+id/ll_title"
@@ -11,17 +12,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical">
+        <include layout="@layout/btn_back" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="设置"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/text_size_sub_title"
-            android:id="@+id/title"
+            android:text="编辑我的信息"
+            style="@style/customTitleItemStyle"
             android:layout_centerInParent="true"
+            android:id="@+id/title"
             />
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/blackLine"
+        android:layout_height="0.5dp"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_below="@+id/ll_title"
@@ -30,76 +34,50 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:gravity="center_horizontal"
+            android:layout_margin="@dimen/view_defalut_margin_20"
             android:layout_height="wrap_content">
             <RelativeLayout
                 android:id="@+id/et_update_user_icon"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_margin="@dimen/view_defalut_margin"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size_context"
-                    android:text="头像选择" />
                 <gov.smart.health.activity.views.CircleImageView
                     android:id="@+id/img_update_user_icon"
                     android:layout_gravity="center"
                     android:layout_width="@dimen/list_image_size"
                     android:layout_height="@dimen/list_image_size"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/view_defalut_margin"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/view_defalut_margin_10"
                     android:src="@mipmap/person_default_icon" />
             </RelativeLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/grayColor"
-                android:layout_height="1dp"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_update_user_name"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:layout_margin="@dimen/textview_defalut_margin"
-                android:padding="@dimen/textview_defalut_margin"
-                android:background="@drawable/textviewstyle"
+                style="@style/customEditTextStyle"
                 android:hint="姓名"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_update_user_age"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
+                android:layout_marginTop="@dimen/view_defalut_margin_20"
                 android:hint="年龄"
-                android:layout_margin="@dimen/textview_defalut_margin"
-                android:padding="@dimen/textview_defalut_margin"
-                android:background="@drawable/textviewstyle"
+                style="@style/customEditTextStyle"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_update_user_content"
+                android:layout_marginTop="@dimen/view_defalut_margin_20"
                 android:hint="格言"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:layout_margin="@dimen/textview_defalut_margin"
-                android:padding="@dimen/textview_defalut_margin"
-                android:background="@drawable/textviewstyle"
+                style="@style/customEditTextStyle"
                 />
             <Button
                 android:id="@+id/btn_update_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/lightskyblue"
-                android:textSize="@dimen/text_size_context"
-                android:background="@drawable/buttonstyle"
-                android:layout_margin="@dimen/textview_defalut_margin"
+                style="@style/customBtnChartStyle"
                 android:text="更新"/>
         </LinearLayout>
     </ScrollView>
-</RelativeLayout>
+</LinearLayout>

@@ -77,13 +77,13 @@
                     <TextView
                         android:id="@+id/detail_time"
                         android:text="时间"
-                        style="@style/customContextTextStyle"
+                        style="@style/customContextDarkGrayTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         />
                     <TextView
                         android:text="著作权归作者所有"
-                        style="@style/customContextTextStyle"
+                        style="@style/customContextDarkGrayTextStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         />

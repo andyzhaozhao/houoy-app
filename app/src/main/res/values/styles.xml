@@ -90,6 +90,10 @@
         <item name="android:textColor">@color/textColor</item>
     </style>
 
+    <style name="customContextDarkGrayTextStyle">
+        <item name="android:textSize">@dimen/text_size_context</item>
+        <item name="android:textColor">@color/textdarkgray</item>
+    </style>
     <style name="customListTextStyle">
         <item name="android:textSize">@dimen/text_size_context</item>
         <item name="android:textColor">@color/textColor</item>

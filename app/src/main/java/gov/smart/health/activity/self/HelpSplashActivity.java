@@ -1,36 +1,29 @@
-package gov.smart.health;
+package gov.smart.health.activity.self;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.fitpolo.support.bluetooth.BluetoothModule;
-import com.fitpolo.support.callback.ConnStateCallback;
 
+import gov.smart.health.R;
 import gov.smart.health.activity.HomeActivity;
 import gov.smart.health.activity.login.LoginActivity;
-import gov.smart.health.activity.self.DeviceSettingActivity;
 import gov.smart.health.fragment.Splash.SplashFragmentPagerAdapter;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
 
-public class SplashActivity extends AppCompatActivity {
+public class HelpSplashActivity extends AppCompatActivity {
 
     private View btnStart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        if(!SharedPreferencesHelper.gettingBoolean(SHConstants.IsShowSplash,false)) {
-            setViews();
-        }else {
-            toHome();
-        }
+        setContentView(R.layout.activity_help_splash);
+        setViews();
     }
 
     private void setViews() {
@@ -41,8 +34,7 @@ public class SplashActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferencesHelper.settingBoolean(SHConstants.IsShowSplash,true);
-                toHome();
+                finish();
             }
         });
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -81,25 +73,5 @@ public class SplashActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
-    }
-
-    private void toHome(){
-        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
-        if (bluetoothModule.isBluetoothOpen()) {
-            String deviceAddress = SharedPreferencesHelper.gettingString(DeviceSettingActivity.AddressKey, null);
-            if (deviceAddress != null && !bluetoothModule.isConnDevice(getApplicationContext(), deviceAddress)) {
-                bluetoothModule.createBluetoothGatt(getApplicationContext(), deviceAddress, null);
-            }
-        }
-
-        Intent intent = new Intent();
-        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
-        if(pk.isEmpty()) {
-            intent.setClass(getApplication(), LoginActivity.class);
-        } else {
-            intent.setClass(getApplication(), HomeActivity.class);
-        }
-        startActivity(intent);
-        finish();
     }
 }

@@ -5,160 +5,137 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="gov.smart.health.activity.self.UserSettingActivity">
+
     <RelativeLayout
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical">
+        <include layout="@layout/btn_back" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="设置"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/text_size_sub_title"
+            style="@style/customTitleItemStyle"
             android:id="@+id/title"
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
-    <ScrollView
+    <View
         android:layout_width="match_parent"
+        android:background="@color/blackLine"
+        android:layout_height="0.5dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_above="@+id/ll_bottom"
         android:layout_below="@+id/ll_title"
+        android:layout_height="match_parent">
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/view_defalut_margin"
             android:layout_height="wrap_content">
-            <RelativeLayout
-                android:id="@+id/btn_setting_setting"
-                android:orientation="horizontal"
-                android:padding="@dimen/view_defalut_margin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size_context"
-                    android:text="基本设置" />
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/view_defalut_margin"
-                    android:src="@android:drawable/ic_menu_send" />
-            </RelativeLayout>
-            <View
-                android:layout_width="match_parent"
-                android:background="@color/grayColor"
-                android:layout_height="1dp"/>
             <RelativeLayout
                 android:id="@+id/btn_setting_device"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:padding="@dimen/view_defalut_margin"
+                android:padding="@dimen/view_defalut_margin_10"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size_context"
+                    style="@style/customContextTextStyle"
                     android:text="设备设置" />
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/view_defalut_margin"
-                    android:src="@android:drawable/ic_menu_send" />
+                <include layout="@layout/btn_goto"/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
-                android:background="@color/grayColor"
-                android:layout_height="1dp"/>
+                android:background="@color/blackLine"
+                android:layout_height="0.5dp"/>
             <RelativeLayout
                 android:id="@+id/btn_setting_help"
                 android:orientation="horizontal"
-                android:padding="@dimen/view_defalut_margin"
+                android:padding="@dimen/view_defalut_margin_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size_context"
-                    android:text="帮助和关于" />
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/view_defalut_margin"
-                    android:src="@android:drawable/ic_menu_send" />
+                    style="@style/customContextTextStyle"
+                    android:text="帮助" />
+                <include layout="@layout/btn_goto"/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
-                android:background="@color/grayColor"
-                android:layout_height="1dp"/>
+                android:background="@color/blackLine"
+                android:layout_height="0.5dp"/>
+            <RelativeLayout
+                android:id="@+id/btn_setting_about"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="@dimen/view_defalut_margin_10"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    style="@style/customContextTextStyle"
+                    android:text="关于" />
+                <include layout="@layout/btn_goto"/>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/blackLine"
+                android:layout_height="0.5dp"/>
             <RelativeLayout
                 android:id="@+id/btn_setting_update"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:padding="@dimen/view_defalut_margin"
+                android:padding="@dimen/view_defalut_margin_10"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size_context"
+                    style="@style/customContextTextStyle"
                     android:text="版本更新" />
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/view_defalut_margin"
-                    android:src="@android:drawable/ic_menu_send" />
+                <include layout="@layout/btn_goto"/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
-                android:background="@color/grayColor"
-                android:layout_height="1dp"/>
+                android:background="@color/blackLine"
+                android:layout_height="0.5dp"/>
         </LinearLayout>
     </ScrollView>
+    </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:layout_marginBottom="@dimen/view_defalut_margin"
+        android:layout_margin="@dimen/view_defalut_margin_10"
         android:orientation="vertical">
         <Button
             android:id="@+id/btn_setting_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/lightskyblue"
-            android:textSize="@dimen/text_size_context"
-            android:background="@drawable/buttonstyle"
-            android:layout_margin="@dimen/view_defalut_margin"
+            style="@style/customBtnChartStyle"
+            android:background="@drawable/buttonstyle_red"
             android:text="退出账号"/>
         <TextView
             android:id="@+id/setting_tv_version"
+            android:layout_marginTop="@dimen/view_defalut_margin_10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/text_size_context"
+            style="@style/customContextTextStyle"
             android:text="V1.0"/>
     </LinearLayout>
 </RelativeLayout>
