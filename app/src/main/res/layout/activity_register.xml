@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whitesmoke_bg"
+    android:orientation="vertical"
     tools:context="gov.smart.health.activity.login.RegisterActivity">
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_height="wrap_content">
+        <include layout="@layout/btn_back" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,11 +18,12 @@
             android:id="@+id/title"
             android:layout_centerInParent="true"
             />
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/blackLine"
-            android:layout_height="0.5dp"/>
-    </LinearLayout>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/blackLine"
+        android:layout_height="0.5dp"/>
     <ScrollView
         android:layout_below="@+id/ll_title"
         android:layout_width="match_parent"
@@ -97,4 +98,4 @@
 
 
 
-</RelativeLayout>
+</LinearLayout>

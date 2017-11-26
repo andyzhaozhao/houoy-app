@@ -45,7 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser();
             }
         });
-
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void registerUser(){

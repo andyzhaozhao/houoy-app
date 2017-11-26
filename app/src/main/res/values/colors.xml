@@ -12,6 +12,9 @@
     <color name="textLight">#555</color>
     <color name="redColor">#F00</color>
 
+    <color name="color_bg_selected">#888888</color>
+    <color name="color_bg_normal">#e7e7e8</color>
+
     <color name="lightskyblue">#2a96db</color>
     <color name="silver">#C0C0C0</color>
     <color name="blackLine">#000</color>

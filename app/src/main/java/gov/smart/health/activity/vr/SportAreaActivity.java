@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -75,6 +76,13 @@ public class SportAreaActivity extends AppCompatActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 mLastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
+            }
+        });
+
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
         this.resetAllData();
