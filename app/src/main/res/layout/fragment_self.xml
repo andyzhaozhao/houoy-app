@@ -3,182 +3,191 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitesmoke_bg"
     tools:context="gov.smart.health.fragment.SelfFragment">
     <ScrollView
         android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:id="@+id/rl_top"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/self_bgimg"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/sport_setting" />
-            <com.androidnetworking.widget.ANImageView
-                android:id="@+id/self_self_img"
-                android:layout_width="@dimen/list_image_size"
-                android:layout_height="@dimen/list_image_size"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/person_default_icon" />
+            <RelativeLayout
+                android:id="@+id/rl_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/self_bgimg"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/sport_setting" />
+                <gov.smart.health.activity.views.CircleImageView
+                    android:id="@+id/self_self_img"
+                    android:layout_width="@dimen/list_image_size"
+                    android:layout_height="@dimen/list_image_size"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/person_default_icon" />
+                <ImageView
+                    android:id="@+id/btn_self_setting"
+                    android:layout_width="@dimen/image_btn_defalut_size"
+                    android:layout_height="@dimen/image_btn_defalut_size"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="@dimen/view_defalut_margin_10"
+                    android:layout_marginTop="@dimen/view_defalut_margin_10"
+                    android:src="@drawable/setting" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginBottom="@dimen/view_defalut_margin_10">
+                    <TextView
+                        android:id="@+id/tv_self_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/customTitleItemStyle"
+                        android:textColor="@color/whiteColor"
+                        android:text="张三" />
 
-            <ImageView
-                android:id="@+id/btn_self_setting"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="@dimen/view_defalut_margin"
-                android:layout_marginTop="@dimen/view_defalut_margin"
-                android:src="@drawable/settings" />
+                    <TextView
+                        android:id="@+id/tv_self_detail"
+                        android:textAlignment="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我就是我，不一样的烟火"
+                        style="@style/customContextTextStyle"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/blackLine"
+                android:layout_marginTop="@dimen/view_defalut_margin_10"
+                android:layout_height="0.5dp"/>
+            <LinearLayout
+                android:id="@+id/ll_age"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:padding="@dimen/view_defalut_margin_10"
+                android:background="@color/whiteColor"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/customContextTextStyle"
+                    android:text="年龄:" />
+                <TextView
+                    android:id="@+id/tv_self_age"
+                    android:layout_width="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/view_defalut_margin_10"
+                    style="@style/customContextDarkGrayTextStyle"
+                    android:text="70岁" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/blackLine"
+                android:layout_height="0.5dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/blackLine"
+                android:layout_marginTop="@dimen/view_defalut_margin_10"
+                android:layout_height="0.5dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/view_defalut_margin">
-                <TextView
-                    android:id="@+id/tv_self_name"
-                    android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/rl_self_history"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/view_defalut_margin"
-                    android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size_sub_title"
-                    android:text="张三" />
+                    android:background="@color/whiteColor"
+                    android:padding="@dimen/view_defalut_margin_10">
+                    <ImageView
+                        android:id="@+id/history_item_img"
+                        android:layout_width="@dimen/list_image_size"
+                        android:layout_height="@dimen/list_image_size"
+                        android:scaleType="centerInside"
+                        android:adjustViewBounds="true"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:src="@mipmap/history_icon"/>
+                    <LinearLayout
+                        android:layout_toRightOf="@+id/history_item_img"
+                        android:layout_toLeftOf="@+id/btn_goto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/view_defalut_margin_10"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/history_item_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/customListTitleTextStyle"
+                            android:text="运动历史记录"/>
+                        <TextView
+                            android:layout_marginTop="@dimen/view_defalut_margin_10"
+                            android:id="@+id/history_item_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/customListContextTextStyle"
+                            android:text="查看运动历史记录"/>
+                    </LinearLayout>
+                    <include layout="@layout/btn_goto"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_marginTop="@dimen/view_defalut_margin_10"
+                    android:layout_height="0.5dp"/>
+                <RelativeLayout
+                    android:id="@+id/rl_self_likes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/whiteColor"
+                    android:padding="@dimen/view_defalut_margin_10">
 
-                <TextView
-                    android:id="@+id/tv_self_detail"
-                    android:textAlignment="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="我就是我，不一样的烟火"
-                    android:textColor="@color/textColor"
-                    android:textSize="@dimen/text_size_context"
-                    android:layout_marginBottom="@dimen/view_defalut_margin"/>
+                    <ImageView
+                        android:id="@+id/likes_item_img"
+                        android:layout_width="@dimen/list_image_size"
+                        android:layout_height="@dimen/list_image_size"
+                        android:scaleType="centerInside"
+                        android:adjustViewBounds="true"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:src="@mipmap/my_attention_icon"/>
+                    <LinearLayout
+                        android:layout_toRightOf="@+id/likes_item_img"
+                        android:layout_toLeftOf="@+id/btn_goto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/view_defalut_margin_10"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/customListTitleTextStyle"
+                            android:text="我关注的人"/>
+                        <TextView
+                            android:layout_marginTop="@dimen/view_defalut_margin_10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/customListContextTextStyle"
+                            android:text="查看我关注的人"/>
+                    </LinearLayout>
+                    <include layout="@layout/btn_goto"/>
+                </RelativeLayout>
             </LinearLayout>
-
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/grayColor"
-            android:layout_height="1dp"/>
-        <LinearLayout
-            android:id="@+id/ll_age"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_margin="@dimen/view_defalut_margin"
-            android:padding="@dimen/view_defalut_margin"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:text="年龄:" />
-            <TextView
-                android:id="@+id/tv_self_age"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:text="70" />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/grayColor"
-            android:layout_height="1dp"/>
-        <RelativeLayout
-            android:id="@+id/rl_self_history"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_margin="@dimen/view_defalut_margin"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:text="运动历史纪录" />
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/view_defalut_margin"
-                android:src="@android:drawable/ic_menu_send" />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/grayColor"
-            android:layout_height="1dp"/>
-        <RelativeLayout
-            android:id="@+id/rl_self_likes"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_margin="@dimen/view_defalut_margin"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:text="我的关注" />
-            <ImageView
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/view_defalut_margin"
-                android:src="@android:drawable/ic_menu_send" />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/grayColor"
-            android:layout_height="1dp"/>
-        <RelativeLayout
-            android:id="@+id/rl_self_like"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_margin="5dp"
-            android:visibility="gone"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="我关注的人" />
-            <ImageView
-                android:id="@+id/learning_item_array"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@android:drawable/ic_menu_send" />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:background="@color/grayColor"
-            android:layout_height="1dp"/>
-    </LinearLayout>
     </ScrollView>
 </FrameLayout>

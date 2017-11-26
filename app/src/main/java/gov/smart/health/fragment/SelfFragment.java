@@ -26,6 +26,7 @@ import gov.smart.health.R;
 import gov.smart.health.activity.self.MyAttentionActivity;
 import gov.smart.health.activity.self.SportHistoryListActivity;
 import gov.smart.health.activity.self.UserSettingActivity;
+import gov.smart.health.activity.self.UserSettingInfoActivity;
 import gov.smart.health.activity.self.model.MyPersonInfoListModel;
 import gov.smart.health.activity.self.model.MyPersonInfoModel;
 import gov.smart.health.utils.SHConstants;
@@ -83,6 +84,16 @@ public class SelfFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_self, container, false);
         ImageView bgImg = (ImageView)rootView.findViewById(R.id.self_bgimg);
         selfImg = (ANImageView)rootView.findViewById(R.id.self_self_img);
+
+        selfImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra(SHConstants.SettingPersonModelKey,personModel);
+                intent.setClass(getContext(), UserSettingInfoActivity.class);
+                startActivity(intent);
+            }
+        });
 
         name = (TextView)rootView.findViewById(R.id.tv_self_name);
         detail = (TextView)rootView.findViewById(R.id.tv_self_detail);
@@ -142,7 +153,7 @@ public class SelfFragment extends Fragment {
                                 personModel = jsonModel.resultData.get(0);
                                 name.setText(personModel.person_name);
                                 detail.setText((personModel.memo == null)?"我什么都不想说":personModel.memo);
-                                age.setText((personModel.age == null)?"秘密":personModel.age);
+                                age.setText((personModel.age == null)?"秘密":personModel.age+"岁");
 
                                 if(personModel.portraitPath != null && !personModel.portraitPath.isEmpty()) {
                                     selfImg.setDefaultImageResId(R.mipmap.person_default_icon);

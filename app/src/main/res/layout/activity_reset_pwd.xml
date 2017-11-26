@@ -7,61 +7,50 @@
     tools:context="gov.smart.health.activity.login.ResetPwdActivity">
     <ScrollView
         android:layout_width="match_parent"
-        android:padding="@dimen/view_defalut_margin"
         android:layout_height="match_parent"
         android:fillViewport="false">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/ll_title"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="重置密码"
-                    android:textColor="@color/textColor"
+                    android:text="找回密码"
+                    style="@style/customTitleItemStyle"
                     android:id="@+id/title"
                     android:layout_centerInParent="true"
                     />
-            </RelativeLayout>
-            <EditText
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
-                android:hint="手机号码"
-                android:id="@+id/reset_user_phone"
-                android:layout_marginTop="@dimen/textview_defalut_margin"
-                android:padding="@dimen/textview_defalut_margin"
-                android:background="@drawable/textviewstyle"
-                android:textColor="@color/textColor"/>
-
+                android:orientation="vertical"
+                android:padding="@dimen/view_defalut_margin_20"
+                android:layout_height="match_parent">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/reset_mail"
                 android:hint="输入邮箱"
-                android:layout_marginTop="@dimen/textview_defalut_margin"
-                android:padding="@dimen/textview_defalut_margin"
-                android:background="@drawable/textviewstyle"
-                android:textColor="@color/textColor"
+                style="@style/customEditTextStyle"
                 />
-
-
             <Button
                 android:layout_width="match_parent"
-                android:text="找回密码"
-                android:layout_marginTop="@dimen/view_defalut_margin"
-                android:textColor="@color/lightskyblue"
-                android:textSize="@dimen/text_size_context"
-                android:background="@drawable/buttonstyle"
+                android:text="确定"
+                style="@style/customBtnChartStyle"
                 android:id="@+id/btn_reset_user"
                 android:layout_height="wrap_content" />
+                </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

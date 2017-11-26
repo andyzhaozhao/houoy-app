@@ -12,7 +12,14 @@
     <color name="textLight">#555</color>
     <color name="redColor">#F00</color>
 
-    <color name="lightskyblue">#87CEFA</color>
+    <color name="lightskyblue">#2a96db</color>
     <color name="silver">#C0C0C0</color>
-
+    <color name="blackLine">#000</color>
+    <color name="whitesmoke_bg">#F5F5F5</color>
+    <color name="chartreuse">#09bb07</color>
+    <color name="textWhiteColor">#fff</color>
+    <color name="textlightskyblue">#87CEFA</color>
+    <color name="textSilver">#C0C0C0</color>
+    <color name="transparent">#00000000</color>
+    <color name="textdarkgray">#A9A9A9</color>
 </resources>

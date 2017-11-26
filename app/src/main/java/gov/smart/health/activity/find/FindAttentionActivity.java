@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -51,7 +53,7 @@ public class FindAttentionActivity extends AppCompatActivity {
                         .getDisplayMetrics()));
         RecyclerView recyclerView = (RecyclerView) this.findViewById(R.id.attention_list);
         recyclerView.setLayoutManager(mLinearLayoutManager = new LinearLayoutManager(this));
-        recyclerView.setAdapter(mAdapter = new AttentionRefreshRecyclerAdapter(this, essayLists));
+        recyclerView.setAdapter(mAdapter = new AttentionRefreshRecyclerAdapter(this, essayLists,false));
 
         mSwiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -79,6 +81,17 @@ public class FindAttentionActivity extends AppCompatActivity {
                 mLastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
             }
         });
+
+        TextView title = (TextView) findViewById(R.id.attention_title);
+        title.setText("关注圈");
+
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         this.resetAllData();
         this.loadData();
     }

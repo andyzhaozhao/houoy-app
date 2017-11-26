@@ -26,14 +26,13 @@ import gov.smart.health.utils.SharedPreferencesHelper;
 
 public class ResetPwdActivity extends AppCompatActivity {
 
-    private TextView userPhone,userMail;
+    private TextView userMail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_pwd);
 
         View btnReset = findViewById(R.id.btn_reset_user);
-        userPhone = (TextView)findViewById(R.id.reset_user_phone);
         userMail = (TextView)findViewById(R.id.reset_mail);
 
         btnReset.setOnClickListener(new View.OnClickListener() {
@@ -46,9 +45,8 @@ public class ResetPwdActivity extends AppCompatActivity {
 
     private void resetPwd(){
 
-        String userPhoneTxt = userPhone.getText().toString();
         String userMailTxt = userMail.getText().toString();
-        if(userPhoneTxt.isEmpty() ||userMailTxt.isEmpty()){
+        if(userMailTxt.isEmpty()){
             Toast.makeText(getApplication(),"请输入完整信息",Toast.LENGTH_LONG).show();
             return;
         }

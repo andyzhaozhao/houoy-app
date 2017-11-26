@@ -25,4 +25,13 @@
     <dimen name="view_defalut_margin">3dp</dimen>
     <dimen name="textview_defalut_margin">5dp</dimen>
 
+
+    <dimen name="text_radius">6dp</dimen>
+    <dimen name="button_radius">6dp</dimen>
+    <dimen name="view_defalut_margin_30">30dp</dimen>
+    <dimen name="view_defalut_margin_20">20dp</dimen>
+    <dimen name="view_defalut_margin_15">15dp</dimen>
+    <dimen name="view_defalut_margin_10">10dp</dimen>
+    <dimen name="view_defalut_padding_10">10dp</dimen>
+    <dimen name="image_btn_defalut_size">30dp</dimen>
 </resources>

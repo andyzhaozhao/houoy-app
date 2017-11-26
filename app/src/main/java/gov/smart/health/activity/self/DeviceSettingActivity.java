@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fitpolo.support.bluetooth.BluetoothModule;
@@ -32,25 +33,28 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
 
     private Map<String,BleDevice> bleDeviceMap = new HashMap<>();
 
-    private static String AddressKey = "addressKey";
+    public static String AddressKey = "addressKey";
+    public static String DeviceNameKey = "deviceNameKey";
     private static int REQUEST_ENABLE_BLUETOOTH = 123;
     private String[] blueToothPermissions = { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
+    private TextView deviceName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_setting);
+        deviceName = (TextView)findViewById(R.id.tv_setting_fitpolo_device);
+        deviceName.setVisibility(View.INVISIBLE);
         findViewById(R.id.btn_setting_device).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BluetoothAdapter Bt = BluetoothAdapter.getDefaultAdapter();
-                if(Bt == null){
+                if (Bt == null) {
                     Toast.makeText(getApplication(), "您的手机不支持蓝牙功能！", Toast.LENGTH_LONG).show();
                     return;
                 }
                 boolean btEnable = Bt.isEnabled();
-                if(btEnable){
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+                if (btEnable) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (EasyPermissions.hasPermissions(getApplicationContext(), blueToothPermissions)) {
                             doConnectionWatch();
                         } else {
@@ -65,6 +69,21 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                 }
             }
         });
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
+        if (bluetoothModule.isBluetoothOpen()) {
+            String deviceAddress = SharedPreferencesHelper.gettingString(AddressKey, null);
+            if (deviceAddress != null && bluetoothModule.isConnDevice(getApplicationContext(), deviceAddress)) {
+                String name = SharedPreferencesHelper.gettingString(DeviceNameKey, null);
+                deviceName.setText("已绑定："+name);
+                deviceName.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -111,8 +130,11 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
 
                     @Override
                     public void onStopScan() {
-                        Toast.makeText(getApplication(), "搜索设备结束", Toast.LENGTH_LONG).show();
-                        showDialog();
+                        if(bleDeviceMap.size() >0){
+                            showDialog();
+                        } else {
+                            Toast.makeText(getApplication(), "没有找到可用设备", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
             }
@@ -143,17 +165,22 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                     @Override
                     public void onConnSuccess() {
                         SharedPreferencesHelper.settingString(AddressKey,device.address);
-                        Toast.makeText(getApplication(), "设备结束成功", Toast.LENGTH_LONG).show();
+                        SharedPreferencesHelper.settingString(DeviceNameKey,device.name);
+                        deviceName.setText("已绑定："+device.name);
+                        deviceName.setVisibility(View.VISIBLE);
+                        Toast.makeText(getApplication(), "设备绑定成功", Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onConnFailure(int errorCode) {
                         Toast.makeText(getApplication(), "设备连接失败", Toast.LENGTH_LONG).show();
+                        deviceName.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
                     public void onDisconnect() {
                         Toast.makeText(getApplication(), "断开连接", Toast.LENGTH_LONG).show();
+                        deviceName.setVisibility(View.INVISIBLE);
                     }
                 });
             }

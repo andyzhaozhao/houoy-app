@@ -3,6 +3,7 @@ package gov.smart.health.activity.vr;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 import gov.smart.health.R;
@@ -57,6 +59,11 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
         String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
 
+        String dateStart = DateFormat.format("yyyy-MM-dd HH:mm:ss", videoModel.time_start).toString();
+        String dateEnd = DateFormat.format("yyyy-MM-dd HH:mm:ss", videoModel.time_end).toString();
+        long time_length = videoModel.time_end - videoModel.time_start;
+
+
         //TODO get data.
         JSONObject jsonObject = new JSONObject();
         try {
@@ -68,7 +75,7 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
             jsonObject.put(SHConstants.Record_VRSport_Save_heart_rate_max, "128");
 
             jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Place, videoModel.pk_folder);
-            jsonObject.put(SHConstants.Record_VRSport_Save_Place_Name, "Place");
+            jsonObject.put(SHConstants.Record_VRSport_Save_Place_Name, videoModel.pk_folder);
 
             jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Video, videoModel.pk_video);
             jsonObject.put(SHConstants.Record_VRSport_Save_Video_Name, videoModel.video_name);
@@ -76,8 +83,9 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
             jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_Code, System.currentTimeMillis());
             jsonObject.put(SHConstants.Record_VRSport_Save_Record_Sport_name, System.currentTimeMillis());
 
-            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Start, videoModel.time_start);
-            jsonObject.put(SHConstants.Record_VRSport_Save_Time_End, videoModel.time_end);
+            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Start, dateStart);
+            jsonObject.put(SHConstants.Record_VRSport_Save_Time_Length, time_length/1000);
+            jsonObject.put(SHConstants.Record_VRSport_Save_Time_End, dateEnd);
         } catch (JSONException e) {
             e.printStackTrace();
         }

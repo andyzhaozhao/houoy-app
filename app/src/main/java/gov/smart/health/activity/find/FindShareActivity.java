@@ -38,6 +38,13 @@ public class FindShareActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_find_share);
         btnShare = findViewById(R.id.btn_share);
         btnShare.setOnClickListener(this);
+
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override

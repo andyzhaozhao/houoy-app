@@ -7,9 +7,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Toast;
+
+import com.fitpolo.support.bluetooth.BluetoothModule;
+import com.fitpolo.support.callback.ConnStateCallback;
 
 import gov.smart.health.activity.HomeActivity;
 import gov.smart.health.activity.login.LoginActivity;
+import gov.smart.health.activity.self.DeviceSettingActivity;
 import gov.smart.health.fragment.Splash.SplashFragmentPagerAdapter;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
@@ -79,6 +84,14 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void toHome(){
+        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
+        if (bluetoothModule.isBluetoothOpen()) {
+            String deviceAddress = SharedPreferencesHelper.gettingString(DeviceSettingActivity.AddressKey, null);
+            if (deviceAddress != null && !bluetoothModule.isConnDevice(getApplicationContext(), deviceAddress)) {
+                bluetoothModule.createBluetoothGatt(getApplicationContext(), deviceAddress, null);
+            }
+        }
+
         Intent intent = new Intent();
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
         if(pk.isEmpty()) {

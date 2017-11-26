@@ -52,5 +52,11 @@ public class SelectConditionActivity extends AppCompatActivity {
                 finish();
             }
         });
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

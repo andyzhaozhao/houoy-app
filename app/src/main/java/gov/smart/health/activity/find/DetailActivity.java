@@ -30,16 +30,14 @@ import gov.smart.health.utils.SharedPreferencesHelper;
 public class DetailActivity extends AppCompatActivity {
 
     private FindEssayListDataModel model;
-    private FindAttentionListDataModel attentionModel ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         model = (FindEssayListDataModel)getIntent().getSerializableExtra( SHConstants.PersonFlowModelKey);
-        attentionModel = (FindAttentionListDataModel)getIntent().getSerializableExtra( SHConstants.PersonAttentionModelKey);
 
-        TextView name = (TextView)findViewById(R.id.detail_name);
+        TextView name = (TextView)findViewById(R.id.title);
         TextView subname = (TextView)findViewById(R.id.detail_subname);
         TextView text = (TextView)findViewById(R.id.detail_text);
         TextView time = (TextView)findViewById(R.id.detail_time);
@@ -57,14 +55,15 @@ public class DetailActivity extends AppCompatActivity {
                     sendAttention();
                 }
             });
-        }else if(attentionModel !=null) {
-            name.setText(attentionModel.record_share_code);
-            subname.setText(attentionModel.record_share_name);
-            time.setText(attentionModel.ts);
-            writer.setText(attentionModel.person_name);
-            text.setText(Html.fromHtml(attentionModel.record_share_desc));
-            button.setVisibility(View.INVISIBLE);
         }
+
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     private void sendAttention() {

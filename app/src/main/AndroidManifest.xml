@@ -39,6 +39,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.self.HelpSplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".activity.login.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_login"
@@ -66,6 +71,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.find.DetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.find.AttentionDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.self.UserSettingActivity"

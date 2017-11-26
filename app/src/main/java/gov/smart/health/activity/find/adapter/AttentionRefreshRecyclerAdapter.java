@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.find.AttentionDetailActivity;
 import gov.smart.health.activity.find.DetailActivity;
 import gov.smart.health.activity.find.model.FindAttentionListDataModel;
 import gov.smart.health.activity.find.model.FindEssayListDataModel;
@@ -26,11 +27,13 @@ public class AttentionRefreshRecyclerAdapter extends RecyclerView.Adapter<Attent
     private LayoutInflater mInflater;
     private List<FindAttentionListDataModel> mLists;
     private Context mContext;
+    private boolean isShowAttention;
 
-    public AttentionRefreshRecyclerAdapter(Context context , List<FindAttentionListDataModel> lists){
+    public AttentionRefreshRecyclerAdapter(Context context , List<FindAttentionListDataModel> lists , boolean isShowAttention){
         mContext = context;
         this.mInflater=LayoutInflater.from(context);
         this.mLists = lists;
+        this.isShowAttention = isShowAttention;
     }
 
     public void addDataLists(List<FindAttentionListDataModel> lists) {
@@ -70,13 +73,15 @@ public class AttentionRefreshRecyclerAdapter extends RecyclerView.Adapter<Attent
         holder.image.setImageResource(R.mipmap.healthicon);
         holder.title.setText(model.record_share_name);
         holder.content.setText(Html.fromHtml(model.record_share_desc));
+        holder.time.setText(model.ts);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                intent.putExtra(SHConstants.ShowAttentionModelKey,isShowAttention);
                 intent.putExtra(SHConstants.PersonAttentionModelKey,model);
-                intent.setClass(mContext, DetailActivity.class);
+                intent.setClass(mContext, AttentionDetailActivity.class);
                 mContext.startActivity(intent);
             }
         });
@@ -91,12 +96,15 @@ public class AttentionRefreshRecyclerAdapter extends RecyclerView.Adapter<Attent
         public ImageView image;
         public TextView title;
         public TextView content;
+        public TextView time;
 
         public ViewHolder(View view){
             super(view);
             image = (ImageView)view.findViewById(R.id.attention_item_img);
             title = (TextView)view.findViewById(R.id.attention_item_title);
             content = (TextView)view.findViewById(R.id.attention_item_content);
+            time = (TextView)view.findViewById(R.id.attention_item_time);
+
         }
     }
 }

@@ -77,6 +77,7 @@ public class SHConstants {
     public static String PersonFlowModelKey = "follow_model_key";
 
     //attention flow
+    public static String ShowAttentionModelKey = "show_attention_model_key";
     public static String PersonAttentionModelKey = "attention_model_key";
     public static String PersonFollow_List_OrderColumnName_Value = "person_name";
     //recordVRSport list parameter.

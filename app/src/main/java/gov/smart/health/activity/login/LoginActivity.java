@@ -46,11 +46,6 @@ public class LoginActivity extends AppCompatActivity {
             mUserName.setText("admin");
             mUserPwd.setText("1");
         }
-        userResetPwd.setMovementMethod(LinkMovementMethod.getInstance());
-        userResetPwd.setText(Html.fromHtml("<u>忘记密码</u>"));
-
-        register.setMovementMethod(LinkMovementMethod.getInstance());
-        register.setText(Html.fromHtml("<u>注册</u>"));
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

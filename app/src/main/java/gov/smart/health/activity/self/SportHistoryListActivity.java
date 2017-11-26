@@ -92,6 +92,13 @@ public class SportHistoryListActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         this.resetAllData();
         this.loadData();
     }
