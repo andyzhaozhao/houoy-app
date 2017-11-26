@@ -92,7 +92,22 @@
 
     <style name="customContextDarkGrayTextStyle">
         <item name="android:textSize">@dimen/text_size_context</item>
-        <item name="android:textColor">@color/textdarkgray</item>
+        <item name="android:textColor">@color/textColor_353535</item>
+    </style>
+
+    <style name="customContextF13TextStyle">
+        <item name="android:textSize">@dimen/text_size_context_13</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="customContextF14CBlueTextStyle">
+        <item name="android:textSize">@dimen/text_size_context_14</item>
+        <item name="android:textColor">@color/textlightskyblue</item>
+    </style>
+
+    <style name="customContextF14C35TextStyle">
+        <item name="android:textSize">@dimen/text_size_context_14</item>
+        <item name="android:textColor">@color/textColor_353535</item>
     </style>
     <style name="customListTextStyle">
         <item name="android:textSize">@dimen/text_size_context</item>

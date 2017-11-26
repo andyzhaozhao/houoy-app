@@ -9,38 +9,13 @@
         android:orientation="horizontal"
         android:padding="@dimen/list_margin"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/sport_area_item_img"
-            android:layout_width="@dimen/list_image_size"
-            android:layout_height="@dimen/list_image_size"
-            android:scaleType="centerInside"
-            android:layout_alignParentLeft="true"
-            android:src="@mipmap/centerlearnings"/>
-        <LinearLayout
-            android:layout_toRightOf="@+id/sport_area_item_img"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/list_margin"
-            android:orientation="vertical">
             <TextView
-                android:id="@+id/sport_area_item_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_sub_title"
-                android:text="应急避难所场所"/>
-            <TextView
-                android:layout_marginTop="@dimen/list_margin"
+                android:padding="@dimen/view_defalut_margin_10"
                 android:id="@+id/sport_area_item_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColor"
-                android:lines="2"
-                android:ellipsize="end"
-                android:textSize="@dimen/text_size_context"
+                style="@style/customContextTextStyle"
                 android:text="应急避难所描述内容"/>
-        </LinearLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

@@ -19,9 +19,12 @@
     <dimen name="caption_text_size">12dip</dimen>
     <dimen name="paragragh_text_size">15dip</dimen>
 
-    <dimen name="text_size_title">26dp</dimen>
-    <dimen name="text_size_sub_title">20dp</dimen>
-    <dimen name="text_size_context">16dp</dimen>
+    <dimen name="text_size_title">20sp</dimen>
+    <dimen name="text_size_sub_title">18sp</dimen>
+    <dimen name="text_size_context">17sp</dimen>
+    <dimen name="text_size_context_13">13sp</dimen>
+    <dimen name="text_size_context_14">14sp</dimen>
+
     <dimen name="view_defalut_margin">3dp</dimen>
     <dimen name="textview_defalut_margin">5dp</dimen>
 

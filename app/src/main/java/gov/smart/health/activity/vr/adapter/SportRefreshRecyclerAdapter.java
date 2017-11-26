@@ -82,16 +82,19 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         String fileName = model.videoModel.video_name;
 
         model.progressBar = holder.downloadprogressBar;
+        model.tvProgress = holder.tvProgress;
         model.downloadStatus = holder.downloadStatus;
         holder.image.setDefaultImageResId(R.mipmap.healthicon);
         holder.image.setErrorImageResId(R.mipmap.healthicon);
         holder.image.setImageUrl(model.videoModel.path_thumbnail);
 
         holder.title.setText(fileName);
-        holder.time.setText(model.videoModel.video_desc);
+        holder.time.setText(model.videoModel.time_length+"秒");
+        holder.cal.setText(model.videoModel.actor_calorie+"cal");
+        holder.actorTime.setText(model.videoModel.actor_times+"次/分");
         holder.downloadprogressBar.setMax(10000);
-        holder.downloadprogressBar.setVisibility(View.INVISIBLE);
-
+        holder.downloadprogressBar.setVisibility(View.GONE);
+        holder.tvProgress.setVisibility(View.GONE);
         DownloadManager downloadManager = DownloadManager.shareDownloadManager();
         SportVideoListModelEx oldModel = downloadManager.downloadMap.get(model.videoModel.video_code);
         if(oldModel != null){
@@ -106,6 +109,8 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         if(model.isDownloading){
             holder.downloadStatus.setText("准备下载");
             holder.downloadprogressBar.setVisibility(View.VISIBLE);
+            holder.tvProgress.setVisibility(View.VISIBLE);
+            holder.tvProgress.setText("0%");
         } else if(isDownloaded){
             holder.downloadStatus.setText("已下载");
         } else {
@@ -113,8 +118,11 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
             if(downlaodTempFile.exists() && downlaodTempFile.length() > 0){
                 holder.downloadStatus.setText("继续下载");
                 holder.downloadprogressBar.setVisibility(View.VISIBLE);
+                holder.tvProgress.setVisibility(View.VISIBLE);
                 long fileLength = SharedPreferencesHelper.gettingLong(SHConstants.VideoLength + model.videoModel.video_code,1);
-                holder.downloadprogressBar.setProgress(DownloadUtils.getProgress(downlaodTempFile.length(),fileLength));
+                int progress = DownloadUtils.getProgress(downlaodTempFile.length(),fileLength);
+                holder.downloadprogressBar.setProgress(progress);
+                holder.tvProgress.setText((progress/100)+"%");
             } else {
                 holder.downloadStatus.setText("未下载");
             }
@@ -124,7 +132,8 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
             @Override
             public void onClick(View v) {
                 if(isDownloaded) {
-                    model.progressBar.setVisibility(View.INVISIBLE);
+                    model.progressBar.setVisibility(View.GONE);
+                    model.tvProgress.setVisibility(View.GONE);
                     Intent intent = new Intent();
                     intent.putExtra(SHConstants.Video_ModelKey, model.videoModel);
                     intent.setClass(mActivity, VTOVRPlayerActivity.class);
@@ -133,6 +142,7 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
                     if(!model.isDownloading) {
                         model.isDownloading = true;
                         model.progressBar.setVisibility(View.VISIBLE);
+                        model.tvProgress.setVisibility(View.VISIBLE);
                         model.downloadStatus.setText("准备下载");
                         downloadVideo(model);
                     } else {
@@ -157,6 +167,7 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
                 public void run() {
                     model.downloadStatus.setText("下载中");
                     model.progressBar.setProgress(model.progress);
+                    model.tvProgress.setText((model.progress/100)+"%");
                 }
             });
         }
@@ -169,6 +180,7 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
                 public void run() {
                     model.downloadStatus.setText("下载中");
                     model.progressBar.setProgress(model.progress);
+                    model.tvProgress.setText((model.progress/100)+"%");
                 }
             });
         }
@@ -210,6 +222,9 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         public ANImageView image;
         public TextView title;
         public TextView time;
+        public TextView tvProgress;
+        public TextView cal;
+        public TextView actorTime;
         public TextView downloadStatus;
         public ProgressBar downloadprogressBar;
 
@@ -218,6 +233,9 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
             image = (ANImageView)view.findViewById(R.id.sport_item_img);
             title = (TextView)view.findViewById(R.id.sport_item_title);
             time = (TextView)view.findViewById(R.id.sport_item_time);
+            tvProgress = (TextView)view.findViewById(R.id.tv_progress);
+            cal = (TextView)view.findViewById(R.id.sport_item_cal);
+            actorTime = (TextView)view.findViewById(R.id.sport_item_actor_time);
             downloadStatus = (TextView)view.findViewById(R.id.sport_item_download);
             downloadprogressBar = (ProgressBar)view.findViewById(R.id.downloadprogressBar);
         }

@@ -19,6 +19,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.fitpolo.support.bluetooth.BluetoothModule;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -26,12 +27,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.self.DeviceSettingActivity;
 import gov.smart.health.activity.vr.SportAreaActivity;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
 import gov.smart.health.activity.vr.model.SportVideoListModelEx;
 import gov.smart.health.activity.vr.model.SportVideoModel;
 import gov.smart.health.activity.vr.model.VideoFolderListModel;
 import gov.smart.health.activity.vr.adapter.SportRefreshRecyclerAdapter;
+import gov.smart.health.activity.vr.model.VideoFolderModel;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
 
@@ -43,12 +46,13 @@ public class SportFragment extends Fragment {
     private SwipeRefreshLayout mSwiperefreshlayout;
     private int mLastVisibleItem;
     private LinearLayoutManager mLinearLayoutManager;
-    private Button selectButton;
+    private TextView selectButton;
     private boolean isLoadingApi;
     private static int SELECT_PLACE = 123;
     private int page;
     private SportVideoModel jsonModel = new SportVideoModel();
     private List<SportVideoListModelEx> modelLists = new ArrayList<>();
+    private VideoFolderListModel selectModel = new VideoFolderListModel();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -89,6 +93,8 @@ public class SportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        selectModel.pk_folder = "2";
+        selectModel.folder_name = "朝阳公园";
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_sport, container, false);
         mSwiperefreshlayout = (SwipeRefreshLayout) rootView.findViewById(R.id.srl_vr_main);
@@ -129,7 +135,7 @@ public class SportFragment extends Fragment {
             }
         });
 
-        selectButton = (Button)rootView.findViewById(R.id.select_park);
+        selectButton = (TextView)rootView.findViewById(R.id.select_park);
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,6 +144,19 @@ public class SportFragment extends Fragment {
                 startActivityForResult(intent,SELECT_PLACE);
             }
         });
+
+        TextView fitpolo =(TextView) rootView.findViewById(R.id.connect_fitpolos);
+        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
+        if (bluetoothModule.isBluetoothOpen()) {
+            String deviceAddress = SharedPreferencesHelper.gettingString(DeviceSettingActivity.AddressKey, null);
+            if (deviceAddress != null && bluetoothModule.isConnDevice(getContext(), deviceAddress)) {
+                fitpolo.setText("已绑定手环");
+            } else {
+                fitpolo.setText("未绑定手环");
+            }
+        } else {
+            fitpolo.setText("未绑定手环");
+        }
         resetAllData();
         this.loadData();
         return rootView;
@@ -179,11 +198,14 @@ public class SportFragment extends Fragment {
         map.put(SHConstants.CommonOrderDir, SHConstants.CommonOrderDir_Desc);
 
         if(data != null && data.getSerializableExtra(SHConstants.Video_Floder_Key) != null){
-            VideoFolderListModel model =  (VideoFolderListModel)data.getSerializableExtra(SHConstants.Video_Floder_Key);
-            map.put(SHConstants.Video_Floder_Pk_Folder, model.pk_folder);
-            selectButton.setText(model.folder_name);
+            selectModel =  (VideoFolderListModel)data.getSerializableExtra(SHConstants.Video_Floder_Key);
+            map.put(SHConstants.Video_Floder_Pk_Folder, selectModel.pk_folder);
+            selectButton.setText(selectModel.folder_name+"▼");
+        } if (selectModel != null){
+            map.put(SHConstants.Video_Floder_Pk_Folder, selectModel.pk_folder);
+            selectButton.setText(selectModel.folder_name+"▼");
         } else {
-            selectButton.setText("选择地点");
+            selectButton.setText("选择地点▼");
         }
 
         AndroidNetworking.get(SHConstants.VideoRetrieve)

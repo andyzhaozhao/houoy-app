@@ -7,7 +7,6 @@
     <color name="grayColor">#eee</color>
     <color name="btnGrayColor">#eee</color>
     <color name="whiteColor">#fff</color>
-    <color name="textColor">#000</color>
     <color name="textDark">#222</color>
     <color name="textLight">#555</color>
     <color name="redColor">#F00</color>
@@ -25,4 +24,7 @@
     <color name="textSilver">#C0C0C0</color>
     <color name="transparent">#00000000</color>
     <color name="textdarkgray">#A9A9A9</color>
+
+    <color name="textColor">#888888</color>
+    <color name="textColor_353535">#353535</color>
 </resources>

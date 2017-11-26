@@ -2,38 +2,39 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="gov.smart.health.fragment.SportFragment">
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/top_margin"
-        android:paddingBottom="@dimen/top_margin"
         android:layout_alignParentTop="true"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="VR运动"
-            android:textColor="@color/textColor"
-            android:id="@+id/title"
+            android:text="选择地点▼"
+            style="@style/customTitleItemStyle"
+            android:id="@+id/select_park"
             android:layout_centerInParent="true"
             />
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/view_defalut_margin"
-            android:text="选择地点"
-            android:textColor="@color/lightskyblue"
-            android:textSize="@dimen/text_size_context"
-            android:background="@drawable/buttonstyle"
-            android:id="@+id/select_park"
+            android:text="已绑定手环"
+            android:layout_marginRight="@dimen/view_defalut_margin_10"
+            android:layout_centerVertical="true"
+            style="@style/customContextTextStyle"
+            android:id="@+id/connect_fitpolos"
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/blackLine"
+            android:layout_height="0.5dp"/>
     <LinearLayout
         android:layout_below="@+id/ll_title"
         android:layout_width="match_parent"
@@ -52,5 +53,5 @@
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </FrameLayout>
