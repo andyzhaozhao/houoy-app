@@ -4,33 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitesmoke_bg"
     tools:context="gov.smart.health.activity.message.FriendsActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ll_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             >
+            <include layout="@layout/btn_back" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="我的关注"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_sub_title"
-                android:id="@+id/title"
-                android:layout_gravity="center"
+                android:text="关注圈"
+                style="@style/customTitleItemStyle"
+                android:layout_centerInParent="true"
+                android:id="@+id/attention_title"
                 />
-        </LinearLayout>
+        </RelativeLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/grayColor" />
+            android:background="@color/blackLine"
+            android:layout_height="0.5dp"/>
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/attention_srl"
             android:layout_height="match_parent"

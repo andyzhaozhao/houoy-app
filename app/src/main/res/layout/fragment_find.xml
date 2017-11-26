@@ -3,6 +3,7 @@
     android:layout_height="match_parent" tools:context="gov.smart.health.fragment.FindFragment">
     <ScrollView
         android:layout_width="match_parent"
+        android:scrollbars="none"
         android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,29 +48,32 @@
                         android:layout_height="wrap_content" />
                 </RadioGroup>
             </RelativeLayout>
-            <Button
+            <ImageButton
                 android:id="@+id/find_share"
                 android:layout_alignParentRight="true"
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/lightskyblue"
-                android:textSize="@dimen/text_size_context"
-                android:background="@drawable/buttonstyle"
-                android:text="分享"/>
+                android:layout_margin="@dimen/view_defalut_margin_10"
+                android:layout_width="@dimen/image_btn_defalut_size"
+                android:layout_height="@dimen/image_btn_defalut_size"
+                android:background="@color/transparent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@mipmap/sharelmage" />
             <LinearLayout
                 android:id="@+id/ll_find_center"
                 android:layout_below="@+id/rl_page_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp"
+                android:orientation="vertical"
                 android:background="@color/grayColor">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/view_defalut_margin_20"
+                    android:layout_height="wrap_content">
                 <LinearLayout
                     android:id="@+id/find_learning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/view_defalut_margin"
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
@@ -80,7 +84,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/textlightskyblue"
                         android:textSize="@dimen/text_size_context"
                         android:text="教学中心"/>
                 </LinearLayout>
@@ -88,7 +92,7 @@
                     android:id="@+id/find_event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/view_defalut_margin"
+                    android:layout_marginLeft="@dimen/view_defalut_margin_10"
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
@@ -99,29 +103,38 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/textlightskyblue"
                         android:textSize="@dimen/text_size_context"
                         android:text="活动中心"/>
                 </LinearLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:background="@color/blackLine"
+                    android:layout_height="0.5dp"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/ll_find_center"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
             <RelativeLayout
                 android:id="@+id/find_item_first"
-                android:layout_below="@+id/ll_find_center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/whiteColor"
-                android:padding="@dimen/list_margin">
-
+                android:padding="@dimen/view_defalut_margin_10">
                 <ImageView
                     android:id="@+id/first_item_img"
                     android:layout_width="@dimen/list_image_size"
                     android:layout_height="@dimen/list_image_size"
                     android:scaleType="centerInside"
+                    android:adjustViewBounds="true"
                     android:layout_alignParentLeft="true"
                     android:src="@mipmap/find_friend_news"/>
                 <LinearLayout
                     android:layout_toRightOf="@+id/first_item_img"
-                    android:layout_toLeftOf="@+id/first_item_array"
+                    android:layout_toLeftOf="@+id/btn_goto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/list_margin"
@@ -130,28 +143,17 @@
                         android:id="@+id/first_item_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/text_size_sub_title"
-                        android:text="最新消息"/>
+                        style="@style/customListTitleTextStyle"
+                        android:text="关注圈"/>
                     <TextView
                         android:layout_marginTop="@dimen/list_margin"
                         android:id="@+id/first_item_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/text_size_context"
+                        style="@style/customListContextTextStyle"
                         android:text="您关注的人有动态啦"/>
                 </LinearLayout>
-                <ImageView
-                    android:id="@+id/first_item_array"
-                    android:adjustViewBounds="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/list_margin"
-                    android:src="@android:drawable/ic_menu_send" />
+                <include layout="@layout/btn_goto"/>
             </RelativeLayout>
             <View
                 android:layout_width="match_parent"
@@ -163,18 +165,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/whiteColor"
-                android:padding="@dimen/list_margin">
+                android:padding="@dimen/view_defalut_margin_10">
 
                 <ImageView
                     android:id="@+id/second_item_img"
                     android:layout_width="@dimen/list_image_size"
                     android:layout_height="@dimen/list_image_size"
                     android:scaleType="centerInside"
+                    android:adjustViewBounds="true"
                     android:layout_alignParentLeft="true"
                     android:src="@mipmap/find_news"/>
                 <LinearLayout
                     android:layout_toRightOf="@+id/second_item_img"
-                    android:layout_toLeftOf="@+id/second_item_array"
+                    android:layout_toLeftOf="@+id/btn_goto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/list_margin"
@@ -183,29 +186,19 @@
                         android:id="@+id/second_item_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/text_size_sub_title"
-                        android:text="我的发现"/>
+                        style="@style/customListTitleTextStyle"
+                        android:text="随便看看"/>
                     <TextView
                         android:layout_marginTop="@dimen/list_margin"
                         android:id="@+id/second_item_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/text_size_context"
+                        style="@style/customListContextTextStyle"
                         android:text="发现新大陆"/>
                 </LinearLayout>
-                <ImageView
-                    android:id="@+id/second_item_array"
-                    android:adjustViewBounds="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/list_margin"
-                    android:src="@android:drawable/ic_menu_send" />
+                <include layout="@layout/btn_goto"/>
             </RelativeLayout>
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 

@@ -73,6 +73,7 @@ public class LearningRefreshRecyclerAdapter extends RecyclerView.Adapter<Learnin
 
         holder.title.setText(model.essay_name);
         holder.content.setText(Html.fromHtml(model.essay_content));
+        holder.time.setText(model.ts);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,12 +95,14 @@ public class LearningRefreshRecyclerAdapter extends RecyclerView.Adapter<Learnin
         public ANImageView image;
         public TextView title;
         public TextView content;
+        public TextView time;
 
         public ViewHolder(View view){
             super(view);
             image = (ANImageView)view.findViewById(R.id.learning_item_img);
             title = (TextView)view.findViewById(R.id.learning_item_title);
             content = (TextView)view.findViewById(R.id.learning_item_content);
+            time = (TextView)view.findViewById(R.id.attention_item_time);
         }
     }
 }

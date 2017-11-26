@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageButton  xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/btn_back"
+android:layout_alignParentLeft="true"
+android:layout_centerVertical="true"
+android:layout_margin="@dimen/view_defalut_margin_10"
+android:layout_width="@dimen/image_btn_defalut_size"
+android:layout_height="@dimen/image_btn_defalut_size"
+android:background="@color/transparent"
+android:adjustViewBounds="true"
+android:scaleType="centerInside"
+android:src="@mipmap/backlmage" />

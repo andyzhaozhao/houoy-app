@@ -2,55 +2,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:background="@color/whiteColor"
     android:orientation="vertical">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="wrap_content"
-        android:padding="@dimen/list_margin">
+        android:padding="@dimen/view_defalut_margin_10">
         <ImageView
             android:id="@+id/attention_item_img"
             android:layout_width="@dimen/list_image_size"
             android:layout_height="@dimen/list_image_size"
             android:scaleType="centerInside"
-            android:layout_alignParentLeft="true" />
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical" />
         <LinearLayout
             android:layout_toRightOf="@+id/attention_item_img"
-            android:layout_toLeftOf="@+id/attention_item_array"
+            android:layout_toLeftOf="@+id/btn_goto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/list_margin"
+            android:layout_marginLeft="@dimen/view_defalut_margin_10"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/attention_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_sub_title"
+                style="@style/customListTitleTextStyle"
                 android:text="应急避难所场所"/>
             <TextView
-                android:layout_marginTop="@dimen/list_margin"
+                android:layout_marginTop="@dimen/view_defalut_margin_10"
                 android:id="@+id/attention_item_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textColor"
-                android:textSize="@dimen/text_size_context"
-                android:lines="2"
-                android:ellipsize="end"
+                style="@style/customListContextTextStyle"
                 android:text="应急避难所描述内容"/>
+            <TextView
+                android:layout_marginTop="@dimen/view_defalut_margin_10"
+                android:id="@+id/attention_item_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/customListTextStyle"
+                android:text="time"/>
         </LinearLayout>
-        <ImageView
-            android:id="@+id/attention_item_array"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"
-            android:layout_marginRight="@dimen/list_margin"
-            android:src="@android:drawable/ic_menu_send" />
-    </LinearLayout>
+        <include layout="@layout/btn_goto"/>
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:background="@color/grayColor"

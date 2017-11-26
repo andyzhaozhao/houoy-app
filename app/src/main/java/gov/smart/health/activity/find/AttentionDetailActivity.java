@@ -1,6 +1,5 @@
 package gov.smart.health.activity.find;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -19,36 +18,38 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import gov.smart.health.R;
-import gov.smart.health.activity.HomeActivity;
 import gov.smart.health.activity.find.model.FindAttentionListDataModel;
 import gov.smart.health.activity.find.model.FindEssayListDataModel;
 import gov.smart.health.activity.find.model.FindPersonFlowModel;
-import gov.smart.health.activity.login.model.LoginModel;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
 
-public class DetailActivity extends AppCompatActivity {
+public class AttentionDetailActivity extends AppCompatActivity {
 
-    private FindEssayListDataModel model;
+    private FindAttentionListDataModel attentionModel ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        model = (FindEssayListDataModel)getIntent().getSerializableExtra( SHConstants.PersonFlowModelKey);
+        setContentView(R.layout.activity_attention_detail);
+        attentionModel = (FindAttentionListDataModel)getIntent().getSerializableExtra( SHConstants.PersonAttentionModelKey);
 
-        TextView name = (TextView)findViewById(R.id.title);
+        TextView title = (TextView)findViewById(R.id.title);
         TextView subname = (TextView)findViewById(R.id.detail_subname);
         TextView text = (TextView)findViewById(R.id.detail_text);
         TextView time = (TextView)findViewById(R.id.detail_time);
-        TextView writer = (TextView)findViewById(R.id.detail_writer);
         View button = findViewById(R.id.btn_attention);
-        if(model !=null) {
-            name.setText(model.essay_name);
-            subname.setText(model.essay_subname);
-            time.setText(model.ts_start);
-            writer.setText(model.person_name);
-            text.setText(Html.fromHtml(model.essay_content));
+        boolean isShow = (boolean) getIntent().getSerializableExtra( SHConstants.ShowAttentionModelKey);
+        if(isShow) {
+            button.setVisibility(View.VISIBLE);
+        } else {
+            button.setVisibility(View.INVISIBLE);
+        }
+        if(attentionModel !=null) {
+            title.setText(attentionModel.record_share_name+"的状态");
+            subname.setText(attentionModel.record_share_name);
+            time.setText(attentionModel.ts);
+            text.setText(Html.fromHtml(attentionModel.record_share_desc));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -63,7 +64,6 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     private void sendAttention() {
@@ -74,8 +74,8 @@ public class DetailActivity extends AppCompatActivity {
         try {
             jsonObject.put(SHConstants.LoginUserPersonName, name);
             jsonObject.put(SHConstants.LoginUserPkPerson, pk);
-            jsonObject.put(SHConstants.PersonFlowPersonName, model.person_name);
-            jsonObject.put(SHConstants.PersonFlowPkPerson, model.pk_person);
+            jsonObject.put(SHConstants.PersonFlowPersonName, attentionModel.person_name);
+            jsonObject.put(SHConstants.PersonFlowPkPerson, attentionModel.pk_person);
         } catch (JSONException e) {
             e.printStackTrace();
         }
