@@ -19,16 +19,15 @@
             style="@style/customTitleItemStyle"
             android:layout_centerInParent="true"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/view_defalut_margin_10"
-            android:padding="@dimen/view_defalut_margin_10"
-            android:text="刷选"
-            style="@style/customBtnStyle"
+        <Button
             android:id="@+id/select_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            />
+            android:layout_centerVertical="true"
+            style="@style/customBtnNoMarginStyle"
+            android:layout_marginRight="@dimen/view_defalut_margin_10"
+            android:text="刷选" />
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

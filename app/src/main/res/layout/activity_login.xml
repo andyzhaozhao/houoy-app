@@ -39,6 +39,7 @@
                     android:ems="10"
                     android:id="@+id/user_pwd"
                     android:hint="密码"
+                    android:imeOptions="actionDone"
                     style="@style/customEditTextF18C35Style" />
 
                     <Button

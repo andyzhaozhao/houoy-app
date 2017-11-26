@@ -42,6 +42,9 @@
         <item name="android:textSize">@dimen/text_size_sub_title</item>
         <item name="android:background">@drawable/textviewstyle</item>
         <item name="android:textColor">@color/textColor_353535</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:imeOptions">actionNext</item>
     </style>
 
     <style name="customEditTextBlackBoaderStyle">

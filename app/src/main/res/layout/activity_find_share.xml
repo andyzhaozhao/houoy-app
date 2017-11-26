@@ -35,10 +35,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            style="@style/customEditTextStyle"
+            style="@style/customEditTextF18C35Style"
             android:textAlignment="textStart"
             android:hint="主题"
-            android:inputType="textMultiLine" />
+            />
         <EditText
             android:id="@+id/tv_context"
             android:layout_below="@+id/tv_title"

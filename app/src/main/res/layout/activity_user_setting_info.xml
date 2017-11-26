@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/et_update_user_name"
-                style="@style/customEditTextStyle"
+                style="@style/customEditTextF18C35Style"
                 android:hint="姓名"
                 />
             <EditText
@@ -62,7 +62,7 @@
                 android:id="@+id/et_update_user_age"
                 android:layout_marginTop="@dimen/view_defalut_margin_20"
                 android:hint="年龄"
-                style="@style/customEditTextStyle"
+                style="@style/customEditTextF18C35Style"
                 />
             <EditText
                 android:layout_width="match_parent"
@@ -70,7 +70,8 @@
                 android:id="@+id/et_update_user_content"
                 android:layout_marginTop="@dimen/view_defalut_margin_20"
                 android:hint="格言"
-                style="@style/customEditTextStyle"
+                style="@style/customEditTextF18C35Style"
+                android:imeOptions="actionDone"
                 />
             <Button
                 android:id="@+id/btn_update_user"
