@@ -78,7 +78,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
 
         initView();
 
-
         TextView textVideoLength = (TextView)findViewById(R.id.tv_video_length);
         textVideoLength.setText(model.video_length+"秒");
         TextView textVideoname = (TextView)findViewById(R.id.tv_video_name);

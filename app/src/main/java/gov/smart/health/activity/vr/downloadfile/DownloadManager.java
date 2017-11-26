@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InterruptedIOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -149,7 +150,6 @@ public class DownloadManager {
                         }
                     }
                 } else {
-                    tmpFile.delete();
                     model.downlaodTask = null;
                     if (downloadMap.containsKey(model.videoModel.video_code)) {
                         downloadMap.remove(model.videoModel.video_code);
@@ -158,11 +158,14 @@ public class DownloadManager {
                         mFileDownloadListener.onFileDownloadFail(model);
                     }
                 }
+            } catch (InterruptedIOException e){
+                e.printStackTrace();
+                model.downlaodTask = null;
+                if (downloadMap.containsKey(model.videoModel.video_code)) {
+                    downloadMap.remove(model.videoModel.video_code);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
-                if (tmpFile != null) {
-                    tmpFile.delete();
-                }
                 model.downlaodTask = null;
                 if (downloadMap.containsKey(model.videoModel.video_code)) {
                     downloadMap.remove(model.videoModel.video_code);
