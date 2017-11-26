@@ -37,4 +37,7 @@
     <dimen name="view_defalut_margin_10">10dp</dimen>
     <dimen name="view_defalut_padding_10">10dp</dimen>
     <dimen name="image_btn_defalut_size">30dp</dimen>
+
+    <!--  find -->
+    <dimen name="center_image_size">55dp</dimen>
 </resources>

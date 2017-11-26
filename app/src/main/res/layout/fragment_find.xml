@@ -29,21 +29,25 @@
                     <RadioButton
                         android:id="@+id/page_r1"
                         android:clickable="false"
+                        android:buttonTint="@color/textColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
                         android:id="@+id/page_r2"
                         android:clickable="false"
+                        android:buttonTint="@color/textColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
                         android:id="@+id/page_r3"
                         android:clickable="false"
+                        android:buttonTint="@color/textColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
                         android:id="@+id/page_r4"
                         android:clickable="false"
+                        android:buttonTint="@color/textColor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </RadioGroup>
@@ -77,9 +81,9 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
-                        android:layout_width="@dimen/list_image_size"
+                        android:layout_width="@dimen/center_image_size"
                         android:adjustViewBounds="true"
-                        android:layout_height="@dimen/list_image_size"
+                        android:layout_height="@dimen/center_image_size"
                         android:src="@mipmap/centerlearnings"/>
                     <TextView
                         android:layout_width="wrap_content"
@@ -96,8 +100,8 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView
-                        android:layout_width="@dimen/list_image_size"
-                        android:layout_height="@dimen/list_image_size"
+                        android:layout_width="@dimen/center_image_size"
+                        android:layout_height="@dimen/center_image_size"
                         android:adjustViewBounds="true"
                         android:src="@mipmap/centersports"/>
                     <TextView
@@ -151,7 +155,7 @@
                         android:id="@+id/first_item_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/customListContextTextStyle"
+                        style="@style/customListF17C88ContextTextStyle"
                         android:text="您关注的人有动态啦"/>
                 </LinearLayout>
                 <include layout="@layout/btn_goto"/>
@@ -195,7 +199,7 @@
                         android:id="@+id/second_item_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/customListContextTextStyle"
+                        style="@style/customListF17C88ContextTextStyle"
                         android:text="发现新大陆"/>
                 </LinearLayout>
                 <include layout="@layout/btn_goto"/>

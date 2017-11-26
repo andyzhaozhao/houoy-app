@@ -27,20 +27,31 @@
         <item name="android:layout_margin">5dip</item>
     </style>
 
+    <!-- F18 edit -->
     <style name="customEditTextStyle">
         <item name="android:textAlignment">center</item>
         <item name="android:padding">@dimen/view_defalut_padding_10</item>
+        <item name="android:textSize">@dimen/text_size_sub_title</item>
         <item name="android:background">@drawable/textviewstyle</item>
         <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="customEditTextF18C35Style">
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">@dimen/view_defalut_padding_10</item>
+        <item name="android:textSize">@dimen/text_size_sub_title</item>
+        <item name="android:background">@drawable/textviewstyle</item>
+        <item name="android:textColor">@color/textColor_353535</item>
     </style>
 
     <style name="customEditTextBlackBoaderStyle">
         <item name="android:textAlignment">center</item>
         <item name="android:padding">@dimen/view_defalut_padding_10</item>
+        <item name="android:textSize">@dimen/text_size_sub_title</item>
         <item name="android:background">@drawable/textviewblackboderstyle</item>
         <item name="android:textColor">@color/textColor</item>
     </style>
-
+    <!-- F17 btn -->
     <style name="customBtnChartStyle">
         <item name="android:textAlignment">center</item>
         <item name="android:layout_marginTop">@dimen/view_defalut_margin_20</item>
@@ -59,11 +70,11 @@
 
     <style name="customBtnNoMarginStyle">
         <item name="android:textAlignment">center</item>
-         <item name="android:textSize">@dimen/text_size_context</item>
+        <item name="android:textSize">@dimen/text_size_context</item>
         <item name="android:background">@drawable/buttonstyle</item>
         <item name="android:textColor">@color/textlightskyblue</item>
     </style>
-
+    <!-- F18 -->
     <style name="customTitleItemStyle">
         <item name="android:textStyle">bold</item>
         <item name="android:layout_gravity">center</item>
@@ -88,8 +99,15 @@
         <item name="android:textSize">@dimen/text_size_sub_title</item>
         <item name="android:textColor">@color/textColor_353535</item>
     </style>
-
+    <!-- F17-->
     <style name="customListContextTextStyle">
+        <item name="android:textSize">@dimen/text_size_context</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:lines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="customListF17C88ContextTextStyle">
         <item name="android:textSize">@dimen/text_size_context</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:lines">2</item>
@@ -101,16 +119,31 @@
         <item name="android:textColor">@color/textColor</item>
     </style>
 
+    <style name="customContextF17C57TextStyle">
+        <item name="android:textSize">@dimen/text_size_context</item>
+        <item name="android:textColor">@color/textColor_576b95</item>
+    </style>
+
+    <style name="customContextF17C88TextStyle">
+        <item name="android:textSize">@dimen/text_size_context</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
     <style name="customContextDarkGrayTextStyle">
         <item name="android:textSize">@dimen/text_size_context</item>
         <item name="android:textColor">@color/textColor_353535</item>
     </style>
 
-    <style name="customContextF13TextStyle">
-        <item name="android:textSize">@dimen/text_size_context_13</item>
-        <item name="android:textColor">@color/textColor</item>
+    <style name="customContextF17C35TextStyle">
+        <item name="android:textSize">@dimen/text_size_context</item>
+        <item name="android:textColor">@color/textColor_353535</item>
     </style>
 
+    <style name="customListTextStyle">
+        <item name="android:textSize">@dimen/text_size_context</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+    <!-- F14 -->
     <style name="customContextF14CBlueTextStyle">
         <item name="android:textSize">@dimen/text_size_context_14</item>
         <item name="android:textColor">@color/textlightskyblue</item>
@@ -125,8 +158,11 @@
         <item name="android:textColor">@color/textColor</item>
     </style>
 
-    <style name="customListTextStyle">
-        <item name="android:textSize">@dimen/text_size_context</item>
+
+    <!-- F13 -->
+    <style name="customContextF13TextStyle">
+        <item name="android:textSize">@dimen/text_size_context_13</item>
         <item name="android:textColor">@color/textColor</item>
     </style>
+
 </resources>

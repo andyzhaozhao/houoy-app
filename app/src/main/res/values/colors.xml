@@ -17,6 +17,7 @@
     <color name="lightskyblue">#2a96db</color>
     <color name="silver">#C0C0C0</color>
     <color name="blackLine">#000</color>
+    <color name="colorC88Line">#888888</color>
     <color name="whitesmoke_bg">#F5F5F5</color>
     <color name="chartreuse">#09bb07</color>
     <color name="textWhiteColor">#fff</color>
@@ -27,4 +28,6 @@
 
     <color name="textColor">#888888</color>
     <color name="textColor_353535">#353535</color>
+    <color name="textColor_e64340">#e64340</color>
+    <color name="textColor_576b95">#576b95</color>
 </resources>
