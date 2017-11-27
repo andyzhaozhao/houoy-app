@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import java.util.List;
 import gov.smart.health.R;
 import gov.smart.health.activity.HomeActivity;
 import gov.smart.health.activity.login.model.LoginModel;
+import gov.smart.health.activity.login.model.RegisterUserModel;
 import gov.smart.health.activity.self.model.MyPersonInfoListModel;
 import gov.smart.health.activity.self.model.UploadPersonImageInfoModel;
 import gov.smart.health.utils.SHConstants;
@@ -56,9 +58,7 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
         setContentView(R.layout.activity_user_setting_info);
 
         //TODO save userInfo.
-        TextView userName = (TextView) findViewById(R.id.et_update_user_name);
-        TextView userAge = (TextView) findViewById(R.id.et_update_user_age);
-        TextView userContent = (TextView) findViewById(R.id.et_update_user_content);
+
 
         View btnIcon = findViewById(R.id.et_update_user_icon);
         if(getIntent() != null) {
@@ -87,7 +87,7 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                updateUser();
             }
         });
 
@@ -243,5 +243,49 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
         return inSampleSize;
     }
 
+    private void updateUser(){
+        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
 
+        TextView userName = (TextView) findViewById(R.id.et_update_user_name);
+        TextView userAge = (TextView) findViewById(R.id.et_update_user_age);
+        TextView userContent = (TextView) findViewById(R.id.et_update_user_content);
+
+        String userNameTxt = userName.getText().toString();
+        String userAgeTxt = userAge.getText().toString();
+        String userContentTxt = userContent.getText().toString();
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SHConstants.LoginUserPkPerson, pk);
+            jsonObject.put(SHConstants.Register_Person_name, userNameTxt);
+            jsonObject.put(SHConstants.Register_Age, userAgeTxt);
+            jsonObject.put(SHConstants.Register_Person_alias, userContentTxt);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        AndroidNetworking.post(SHConstants.PersonSave)
+                .addJSONObjectBody(jsonObject) // posting json
+                .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
+                .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        RegisterUserModel model = gson.fromJson(response,RegisterUserModel.class);
+                        if (model.success){
+                            Toast.makeText(getApplication(),"更新成功",Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplication(),"更新失败",Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d("","response error"+anError.getErrorDetail());
+                        Toast.makeText(getApplication(),"更新失败",Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
 }

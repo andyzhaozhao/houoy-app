@@ -128,8 +128,14 @@ public class SelfFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        loadData();
+
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
     }
 
     public void loadData() {
@@ -152,7 +158,7 @@ public class SelfFragment extends Fragment {
                             if(jsonModel.resultData != null && jsonModel.resultData.size()>0){
                                 personModel = jsonModel.resultData.get(0);
                                 name.setText(personModel.person_name);
-                                detail.setText((personModel.memo == null)?"我什么都不想说":personModel.memo);
+                                detail.setText((personModel.person_alias == null)?"我什么都不想说":personModel.person_alias);
                                 age.setText((personModel.age == null)?"秘密":personModel.age+"岁");
 
                                 if(personModel.portraitPath != null && !personModel.portraitPath.isEmpty()) {
