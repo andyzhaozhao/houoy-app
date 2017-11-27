@@ -35,6 +35,10 @@ public class LoginResultDataModel {
     public String orderDir;
     @SerializedName("pk_user")
     public String pk_user;
+    @SerializedName("pk_person")
+    public String pk_person;
+    @SerializedName("person_name")
+    public String person_name;
     @SerializedName("pk_role")
     public String pk_role;
     @SerializedName("user_code")

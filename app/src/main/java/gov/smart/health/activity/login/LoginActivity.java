@@ -83,8 +83,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Gson gson = new Gson();
                                 LoginModel model = gson.fromJson(response,LoginModel.class);
                                 if (model.success){
-                                    SharedPreferencesHelper.settingString(SHConstants.LoginUserPkPerson,model.resultData.pk_user);
-                                    SharedPreferencesHelper.settingString(SHConstants.LoginUserPersonName,model.resultData.user_name);
+                                    SharedPreferencesHelper.settingString(SHConstants.LoginUserPkPerson,model.resultData.pk_person);
+                                    SharedPreferencesHelper.settingString(SHConstants.LoginUserPersonName,model.resultData.person_name);
                                     Intent intent = new Intent();
                                     intent.setClass(getApplicationContext(),HomeActivity.class);
                                     startActivity(intent);

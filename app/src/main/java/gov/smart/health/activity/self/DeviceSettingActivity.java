@@ -151,6 +151,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                 SharedPreferencesHelper.settingString(AddressKey,null);
                 bluetoothModule.disConnectBle();
                 Toast.makeText(getApplication(), "解除绑定", Toast.LENGTH_LONG).show();
+                deviceName.setVisibility(View.INVISIBLE);
             } else {
                 bluetoothModule.startScanDevice(new ScanDeviceCallback() {
                     @Override
@@ -173,6 +174,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                         }
                     }
                 });
+                bluetoothModule.setOpenReConnect(true);
             }
         } else {
             Toast.makeText(getApplication(), "请确认蓝牙是否正常开启！", Toast.LENGTH_LONG).show();

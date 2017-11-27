@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplication(),"请输入完整信息",Toast.LENGTH_LONG).show();
             return;
         }
-        
+
         if(!Patterns.PHONE.matcher(userPhoneTxt).matches()){
             Toast.makeText(getApplication(),"请输正确的手机号码！",Toast.LENGTH_LONG).show();
             return;

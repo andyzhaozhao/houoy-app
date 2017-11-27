@@ -297,6 +297,8 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                                 }
                             }, lastSyncTime);
                             BluetoothModule.getInstance().sendOrder(taskRate);
+                        }
+                        if (bluetoothModule.isSupportTodayData()) {
                             NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
                                 @Override
                                 public void onOrderResult(OrderEnum order, BaseResponse response) {
@@ -350,6 +352,8 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                                 }
                             }, lastSyncTime);
                             BluetoothModule.getInstance().sendOrder(taskRate);
+                        }
+                        if (bluetoothModule.isSupportTodayData()) {
                             NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
                                 @Override
                                 public void onOrderResult(OrderEnum order, BaseResponse response) {

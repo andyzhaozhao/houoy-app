@@ -2,11 +2,13 @@ package gov.smart.health.app;
 
 import android.app.Application;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 
 import com.androidnetworking.AndroidNetworking;
 import com.crashlytics.android.Crashlytics;
 import com.fitpolo.support.Fitpolo;
 
+import gov.smart.health.activity.vr.service.FitpoloService;
 import gov.smart.health.activity.vr.downloadfile.DownloadManager;
 import gov.smart.health.utils.SharedPreferencesHelper;
 import io.fabric.sdk.android.Fabric;
@@ -27,5 +29,6 @@ public class App extends Application {
         if(Bt != null) {
             Fitpolo.init(this);
         }
+        startService(new Intent(this, FitpoloService.class));
     }
 }

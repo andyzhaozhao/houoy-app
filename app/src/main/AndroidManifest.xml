@@ -136,7 +136,7 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".activity.self.MyAttentionDetailActivity" android:screenOrientation="portrait" />
         <activity android:name=".activity.self.MyDetailActivity" android:screenOrientation="portrait" />
-
+        <service android:name=".activity.vr.service.FitpoloService" />
     </application>
 
 </manifest>
