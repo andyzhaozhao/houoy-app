@@ -113,6 +113,7 @@ public class SportFragment extends Fragment {
             @Override
             public void onRefresh() {
                 resetAllData();
+                Log.d("","SportFragment setOnRefreshListener");
                 loadData();
                 mSwiperefreshlayout.setRefreshing(false);
             }
@@ -124,6 +125,7 @@ public class SportFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && mLastVisibleItem + 1 == mAdapter.getItemCount()&& modelLists.size() < jsonModel.total) {
                     page = page +1;
+                    Log.d("","SportFragment onScrollStateChanged" + page);
                     loadData();
                 }
             }
@@ -235,6 +237,7 @@ public class SportFragment extends Fragment {
                                 modelEx.videoModel = jsonModel.resultData.get(i);
                                 modelLists.add(modelEx);
                             }
+                            Log.d("","SportFragment onResponse" + modelLists.size() + " "+ jsonModel.total);
                             mAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getContext(), "信息获取失败", Toast.LENGTH_LONG).show();

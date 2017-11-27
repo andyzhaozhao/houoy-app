@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/user_name"
                     android:padding="@dimen/view_defalut_padding_10"
-                    android:hint="用户名/手机号/邮箱"
+                    android:hint="手机号"
                     style="@style/customEditTextF18C35Style"
                     />
                 <EditText
@@ -40,6 +40,7 @@
                     android:id="@+id/user_pwd"
                     android:hint="密码"
                     android:imeOptions="actionDone"
+                    android:inputType="textPassword"
                     style="@style/customEditTextF18C35Style" />
 
                     <Button

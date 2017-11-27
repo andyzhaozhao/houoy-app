@@ -34,6 +34,10 @@ public class SHConstants {
 
     public static String LoginUserCode = "user_code";
     public static String LoginUserPassword = "user_password";
+    public static String LoginMobile = "mobile";
+    public static String LoginPassword = "password";
+
+
 
     public static String HeaderContentType = "Content-Type";
     public static String HeaderAccept = "Accept";
