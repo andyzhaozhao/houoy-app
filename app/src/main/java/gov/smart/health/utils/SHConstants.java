@@ -70,7 +70,8 @@ public class SHConstants {
     public static String Register_Person_name = "person_name";
     public static String Register_Mobile = "mobile";
     public static String Register_Email = "email";
-
+    public static String Register_Age = "age";
+    public static String Register_Person_alias = "person_alias";
     //reset pwd
     public static String Password_Email = "email";
     public static String Password_User_PK = "pk_person";
