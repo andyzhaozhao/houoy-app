@@ -3,6 +3,8 @@ package gov.smart.health.activity.vr.model;
 import android.content.Context;
 import android.widget.ProgressBar;
 
+import com.fitpolo.support.entity.DailyStep;
+import com.fitpolo.support.entity.HeartRate;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
@@ -48,9 +50,9 @@ public class SportVideoListModel implements Serializable{
     public String video_name;
     @SerializedName("video_desc")
     public String video_desc;
-    @SerializedName("video_length")
-    public String actor_times;
     @SerializedName("actor_times")
+    public String actor_times;
+    @SerializedName("video_length")
     public String video_length;
     @SerializedName("actor_calorie")
     public String actor_calorie;
@@ -73,5 +75,11 @@ public class SportVideoListModel implements Serializable{
     public long time_start;
     public long time_length;
     public long time_end;
+
+    public HeartRate oldHeartRate;
+    public DailyStep oldDailyStep;
+
+    public HeartRate newHeartRate;
+    public DailyStep newDailyStep;
 
 }
