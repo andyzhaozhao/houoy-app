@@ -1,12 +1,14 @@
 package gov.smart.health.activity.vr;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
-import android.preference.DialogPreference;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
@@ -19,41 +21,33 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.StringRequestListener;
+import com.fitpolo.support.FitConstant;
 import com.fitpolo.support.OrderEnum;
 import com.fitpolo.support.bluetooth.BluetoothModule;
 import com.fitpolo.support.callback.OrderCallback;
 import com.fitpolo.support.entity.BaseResponse;
+import com.fitpolo.support.entity.BleDevice;
+import com.fitpolo.support.entity.DailySleep;
 import com.fitpolo.support.entity.DailyStep;
 import com.fitpolo.support.entity.HeartRate;
 import com.fitpolo.support.log.LogModule;
 import com.fitpolo.support.task.NewDailyStepsTask;
 import com.fitpolo.support.task.NewHeartRateTask;
-import com.google.gson.Gson;
 import com.utovr.player.UVEventListener;
 import com.utovr.player.UVInfoListener;
 import com.utovr.player.UVMediaPlayer;
 import com.utovr.player.UVMediaType;
 import com.utovr.player.UVPlayerCallBack;
 
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.vr.model.SHDailyStep;
+import gov.smart.health.activity.vr.model.SHHeartRate;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
-import gov.smart.health.activity.vr.model.SportVideoListModelEx;
-import gov.smart.health.activity.vr.model.VRSaveRecordModel;
 import gov.smart.health.utils.SHConstants;
-import gov.smart.health.utils.SharedPreferencesHelper;
 
 public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCallBack, VideoController.PlayerControl {
 
@@ -71,28 +65,31 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     private boolean isSecond = false;
     private SportVideoListModel model = new SportVideoListModel();
 
-    private List<String> dateKeylist = new ArrayList<>();
+    //private List<String> dateKeylist = new ArrayList<>();
+
+    private static String showDialog = "showDailog" ;
+    private LocalBroadcastManager mBroadcastManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vto_vrplayer);
 
-        if(getIntent() != null && getIntent().getSerializableExtra(SHConstants.Video_ModelKey)!= null){
+        if (getIntent() != null && getIntent().getSerializableExtra(SHConstants.Video_ModelKey) != null) {
             model = (SportVideoListModel) getIntent().getSerializableExtra(SHConstants.Video_ModelKey);
         }
 
         initView();
 
-        TextView textVideoLength = (TextView)findViewById(R.id.tv_video_length);
-        textVideoLength.setText(model.video_length+"秒");
-        TextView textVideoname = (TextView)findViewById(R.id.tv_video_name);
+        TextView textVideoLength = (TextView) findViewById(R.id.tv_video_length);
+        textVideoLength.setText(model.video_length + "秒");
+        TextView textVideoname = (TextView) findViewById(R.id.tv_video_name);
         textVideoname.setText(model.video_name);
-        TextView textheartRate = (TextView)findViewById(R.id.tv_actor_heart_rate);
-        textheartRate.setText(model.actor_times +"次/秒");
-        TextView textActorCal = (TextView)findViewById(R.id.tv_actor_cal);
-        textActorCal.setText(model.actor_calorie+"cal");
-        TextView textView = (TextView)findViewById(R.id.tv_detail);
+        TextView textheartRate = (TextView) findViewById(R.id.tv_actor_heart_rate);
+        textheartRate.setText(model.actor_times + "次/秒");
+        TextView textActorCal = (TextView) findViewById(R.id.tv_actor_cal);
+        textActorCal.setText(model.actor_calorie + "cal");
+        TextView textView = (TextView) findViewById(R.id.tv_detail);
         textView.setText(model.video_desc);
 
         //初始化播放器
@@ -101,36 +98,38 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         //将工具条的显示或隐藏交个SDK管理，也可自己管理
         RelativeLayout rlToolbar = (RelativeLayout) findViewById(R.id.activity_rlToolbar);
         mMediaplayer.setToolbar(rlToolbar, null, imgBack);
-        mCtrl = new VideoController(rlToolbar, this, true,false);
+        mCtrl = new VideoController(rlToolbar, this, true, false);
         changeOrientation(false);
+
+        mBroadcastManager = LocalBroadcastManager.getInstance(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(showDialog);
+        mBroadcastManager.registerReceiver(mReceiver, filter);
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
-        if (mMediaplayer != null)
-        {
+        if (mMediaplayer != null) {
             mMediaplayer.onResume(this);
         }
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
-        if (mMediaplayer != null)
-        {
+        if (mMediaplayer != null) {
             mMediaplayer.onPause();
         }
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         releasePlayer();
         super.onDestroy();
+        mBroadcastManager.unregisterReceiver(mReceiver);
     }
+
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
@@ -142,20 +141,16 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        changeOrientation(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE);
+        changeOrientation(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
 
-    private void changeOrientation(boolean isLandscape)
-    {
-        if (rlParent == null)
-        {
+    private void changeOrientation(boolean isLandscape) {
+        if (rlParent == null) {
             return;
         }
-        if (isLandscape)
-        {
+        if (isLandscape) {
             CurOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -164,15 +159,12 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.MATCH_PARENT);
             rlParent.setLayoutParams(lp);
-            if (colseDualScreen && mMediaplayer != null)
-            {
+            if (colseDualScreen && mMediaplayer != null) {
                 mCtrl.setDualScreenEnabled(true);
             }
             colseDualScreen = false;
             mCtrl.changeOrientation(true, 0);
-        }
-        else
-        {
+        } else {
             CurOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().addFlags(
@@ -180,8 +172,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
             getSmallPlayHeight();
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, SmallPlayH);
             rlParent.setLayoutParams(lp);
-            if (mMediaplayer != null && mMediaplayer.isDualScreenEnabled())
-            {
+            if (mMediaplayer != null && mMediaplayer.isDualScreenEnabled()) {
                 mCtrl.setDualScreenEnabled(false);
                 colseDualScreen = true;
             }
@@ -189,34 +180,28 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         }
     }
 
-    private void initView()
-    {
+    private void initView() {
         rlParent = (RelativeLayout) findViewById(R.id.activity_rlParent);
         imgBuffer = (ImageView) findViewById(R.id.activity_imgBuffer);
         imgBack = (ImageView) findViewById(R.id.activity_imgBack);
-        imgBack.setOnClickListener(new View.OnClickListener(){
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 back();
             }
         });
     }
 
-    public void releasePlayer()
-    {
-        if (mMediaplayer != null)
-        {
+    public void releasePlayer() {
+        if (mMediaplayer != null) {
             mMediaplayer.release();
             mMediaplayer = null;
         }
     }
 
     @Override
-    public void createEnv()
-    {
-        try
-        {
+    public void createEnv() {
+        try {
             // 创建媒体视频播放器
             mMediaplayer.initPlayer();
             mMediaplayer.setListener(mListener);
@@ -225,30 +210,63 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
             String path = "file:///android_asset/videos/wu.mp4";
             mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, path);
             mMediaplayer.pause();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.e("utovr", e.getMessage(), e);
         }
     }
 
     @Override
-    public void updateProgress(long position)
-    {
+    public void updateProgress(long position) {
         if (mCtrl != null) {
             mCtrl.updateCurrentPosition();
         }
         //getData();
     }
 
-    private UVEventListener mListener = new UVEventListener()
-    {
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
         @Override
-        public void onStateChanged(int playbackState)
-        {
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null) {
+                String action = intent.getAction();
+                if (showDialog.equals(action)) {
+                    final AlertDialog[] alertDialog = {null};
+                    if (mAlertDialogBuilder == null) {
+                        mAlertDialogBuilder = new AlertDialog.Builder(VTOVRPlayerActivity.this);
+                        mAlertDialogBuilder.setMessage("是否分享本次运动？");
+                        mAlertDialogBuilder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mAlertDialogBuilder = null;
+                            }
+                        });
+                        mAlertDialogBuilder.setNeutralButton("好的",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        mAlertDialogBuilder = null;
+                                        Intent intent = new Intent();
+                                         intent.putExtra(SHConstants.Video_ModelKey, model);
+                                        intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
+                                        startActivity(intent);
+                                    }
+                                });
+                        mAlertDialogBuilder.setCancelable(true);
+                        alertDialog[0] = mAlertDialogBuilder.create();
+                        if(alertDialog[0] !=null){
+                            alertDialog[0].show();
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    private UVEventListener mListener = new UVEventListener() {
+        @Override
+        public void onStateChanged(int playbackState) {
             Log.i("utovr", "+++++++ playbackState:" + playbackState);
-            switch (playbackState)
-            {
+            switch (playbackState) {
                 case UVMediaPlayer.STATE_PREPARING:
                     break;
                 case UVMediaPlayer.STATE_BUFFERING:
@@ -260,148 +278,160 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                 case UVMediaPlayer.STATE_READY:
                     // 设置时间和进度条
                     mCtrl.setInfo();
-                    if (bufferResume)
-                    {
+                    if (bufferResume) {
                         bufferResume = false;
                         VTOUtils.setBufferVisibility(imgBuffer, false);
                     }
                     break;
                 case UVMediaPlayer.STATE_ENDED:
-                    if(!isSecond) {
-                        isSecond= true;
-                        String downlaodFile =  model.downlaodPath + File.separator + model.video_name;
-                        mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
+                    if (!isSecond) {
+                        isSecond = true;
                         model.time_start = System.currentTimeMillis();
                         BluetoothModule bluetoothModule = BluetoothModule.getInstance();
                         String lastSyncTime = DateFormat.format("yyyy-MM-dd HH:mm", model.time_start - 2000).toString();
-                        if (bluetoothModule.isSupportHeartRate()) {
-                            NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
-                                @Override
-                                public void onOrderResult(OrderEnum order, BaseResponse response) {
-                                    ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
+                        //if (bluetoothModule.isSupportHeartRate()) {
+                        final NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
+                            @Override
+                            public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
+                                if (heartRates != null && heartRates.size() > 0) {
                                     for (HeartRate heartRate : heartRates) {
-                                        model.oldHeartRate = heartRate;
+                                        SHHeartRate shHeartRate = new SHHeartRate();
+                                        shHeartRate.time = heartRate.time;
+                                        shHeartRate.value = heartRate.value;
+                                        model.oldHeartRate = shHeartRate;
                                         LogModule.i(heartRate.toString());
                                         break;
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onOrderTimeout(OrderEnum order) {
+                            @Override
+                            public void onOrderTimeout(OrderEnum order) {
+                                System.out.println("");
+                            }
 
-                                }
+                            @Override
+                            public void onOrderFinish() {
+                                System.out.println("");
+                                //异步串行的写法：第一步获取记步数据完成，第二步获取心率数据，第三步开始播放第二段视频
+                                String downlaodFile = model.downlaodPath + File.separator + model.video_name;
+                                mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
+                            }
+                        }, lastSyncTime);
 
-                                @Override
-                                public void onOrderFinish() {
-
-                                }
-                            }, lastSyncTime);
-                            BluetoothModule.getInstance().sendOrder(taskRate);
-                        }
-                        if (bluetoothModule.isSupportTodayData()) {
-                            NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
-                                @Override
-                                public void onOrderResult(OrderEnum order, BaseResponse response) {
-                                    ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
+                        //}
+                        // if (bluetoothModule.isSupportTodayData()) {
+                        NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
+                            @Override
+                            public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
+                                if (steps != null && steps.size() > 0) {
                                     for (DailyStep step : steps) {
-                                        model.oldDailyStep = step;
+                                        SHDailyStep dailyStep = new SHDailyStep();
+                                        dailyStep.date = step.date;
+                                        dailyStep.count = step.count;
+                                        dailyStep.duration = step.duration;
+                                        dailyStep.distance = step.distance;
+                                        dailyStep.calories = step.calories;
+                                        model.oldDailyStep = dailyStep;
                                         LogModule.i(step.toString());
                                         break;
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onOrderTimeout(OrderEnum order) {
+                            @Override
+                            public void onOrderTimeout(OrderEnum order) {
+                                System.out.println("");
+                            }
 
-                                }
-
-                                @Override
-                                public void onOrderFinish() {
-
-                                }
-                            }, lastSyncTime);
-                            BluetoothModule.getInstance().sendOrder(taskSteps);
-                        }
+                            @Override
+                            public void onOrderFinish() {
+                                System.out.println("");
+                                BluetoothModule.getInstance().sendOrder(taskRate);
+                            }
+                        }, lastSyncTime);
+                        BluetoothModule.getInstance().sendOrder(taskSteps);
+                        // }
                     } else {
                         seekTo(0);
                         mMediaplayer.pause();
                         mCtrl.settbtnPlayPauseStatus(false);
                         model.time_end = System.currentTimeMillis();
+
+
+
                         BluetoothModule bluetoothModule = BluetoothModule.getInstance();
                         String lastSyncTime = DateFormat.format("yyyy-MM-dd HH:mm", model.time_start).toString();
-                        if (bluetoothModule.isSupportHeartRate()) {
-                            NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
-                                @Override
-                                public void onOrderResult(OrderEnum order, BaseResponse response) {
-                                    ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
+                        //if (bluetoothModule.isSupportHeartRate()) {
+
+                        final NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
+                            @Override
+                            public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
+                                if (heartRates != null && heartRates.size() > 0) {
                                     for (HeartRate heartRate : heartRates) {
-                                        model.newHeartRate = heartRate;
+                                        SHHeartRate shHeartRate = new SHHeartRate();
+                                        shHeartRate.time = heartRate.time;
+                                        shHeartRate.value = heartRate.value;
+                                        model.newHeartRate = shHeartRate;
                                         LogModule.i(heartRate.toString());
                                         break;
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onOrderTimeout(OrderEnum order) {
+                            @Override
+                            public void onOrderTimeout(OrderEnum order) {
+                                System.out.println("");
+                            }
 
-                                }
+                            @Override
+                            public void onOrderFinish() {
+                                System.out.println("");
+                                //最后一步
+                                Intent intent = new Intent(new Intent(showDialog));
+                                mBroadcastManager.sendBroadcast(intent);
+                            }
+                        }, lastSyncTime);
 
-                                @Override
-                                public void onOrderFinish() {
-
-                                }
-                            }, lastSyncTime);
-                            BluetoothModule.getInstance().sendOrder(taskRate);
-                        }
-                        if (bluetoothModule.isSupportTodayData()) {
-                            NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
-                                @Override
-                                public void onOrderResult(OrderEnum order, BaseResponse response) {
-                                    ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
+                        //}
+                        // if (bluetoothModule.isSupportTodayData()) {
+                        NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
+                            @Override
+                            public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
+                                if (steps != null && steps.size() > 0) {
                                     for (DailyStep step : steps) {
-                                        model.oldDailyStep = step;
+                                        SHDailyStep dailyStep = new SHDailyStep();
+                                        dailyStep.date = step.date;
+                                        dailyStep.count = step.count;
+                                        dailyStep.duration = step.duration;
+                                        dailyStep.distance = step.distance;
+                                        dailyStep.calories = step.calories;
+                                        model.newDailyStep = dailyStep;
                                         LogModule.i(step.toString());
                                         break;
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onOrderTimeout(OrderEnum order) {
+                            @Override
+                            public void onOrderTimeout(OrderEnum order) {
+                                System.out.println("");
+                            }
 
-                                }
+                            @Override
+                            public void onOrderFinish() {
+                                System.out.println("");
+                                BluetoothModule.getInstance().sendOrder(taskRate);
+                            }
+                        }, lastSyncTime);
+                        BluetoothModule.getInstance().sendOrder(taskSteps);
+                        // }
 
-                                @Override
-                                public void onOrderFinish() {
 
-                                }
-                            }, lastSyncTime);
-                            BluetoothModule.getInstance().sendOrder(taskSteps);
-                        }
-
-                        if(mAlertDialogBuilder == null) {
-                            mAlertDialogBuilder = new AlertDialog.Builder(VTOVRPlayerActivity.this);
-                            mAlertDialogBuilder.setMessage("是否分享本次运动？");
-                            mAlertDialogBuilder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    mAlertDialogBuilder = null;
-                                }
-                            });
-                            mAlertDialogBuilder.setNeutralButton("好的",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            mAlertDialogBuilder = null;
-                                            Intent intent = new Intent();
-                                            intent.putExtra(SHConstants.Video_ModelKey, model);
-                                            intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
-                                            startActivity(intent);
-                                        }
-                                    });
-                            mAlertDialogBuilder.setCancelable(true);
-                            AlertDialog alertDialog = mAlertDialogBuilder.create();
-                            alertDialog.show();
-                        }
                     }
                     break;
                 case UVMediaPlayer.TRACK_DISABLED:
@@ -411,35 +441,28 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         }
 
         @Override
-        public void onError(Exception e, int ErrType)
-        {
+        public void onError(Exception e, int ErrType) {
             Toast.makeText(VTOVRPlayerActivity.this, VTOUtils.getErrMsg(ErrType), Toast.LENGTH_SHORT).show();
         }
 
         @Override
-        public void onVideoSizeChanged(int width, int height)
-        {
+        public void onVideoSizeChanged(int width, int height) {
         }
 
     };
 
-    private UVInfoListener mInfoListener = new UVInfoListener()
-    {
+    private UVInfoListener mInfoListener = new UVInfoListener() {
         @Override
-        public void onBandwidthSample(int elapsedMs, long bytes, long bitrateEstimate)
-        {
+        public void onBandwidthSample(int elapsedMs, long bytes, long bitrateEstimate) {
         }
 
         @Override
-        public void onLoadStarted()
-        {
+        public void onLoadStarted() {
         }
 
         @Override
-        public void onLoadCompleted()
-        {
-            if (bufferResume)
-            {
+        public void onLoadCompleted() {
+            if (bufferResume) {
                 bufferResume = false;
                 VTOUtils.setBufferVisibility(imgBuffer, false);
             }
@@ -451,119 +474,95 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
     };
 
     @Override
-    public long getDuration()
-    {
+    public long getDuration() {
         return mMediaplayer != null ? mMediaplayer.getDuration() : 0;
     }
 
     @Override
-    public long getBufferedPosition()
-    {
+    public long getBufferedPosition() {
         return mMediaplayer != null ? mMediaplayer.getBufferedPosition() : 0;
     }
 
     @Override
-    public long getCurrentPosition()
-    {
+    public long getCurrentPosition() {
         return mMediaplayer != null ? mMediaplayer.getCurrentPosition() : 0;
     }
 
     @Override
-    public void setGyroEnabled(boolean val)
-    {
+    public void setGyroEnabled(boolean val) {
         if (mMediaplayer != null)
             mMediaplayer.setGyroEnabled(val);
     }
 
     @Override
-    public boolean isGyroEnabled()
-    {
+    public boolean isGyroEnabled() {
         return mMediaplayer != null && mMediaplayer.isGyroEnabled();
     }
 
     @Override
-    public boolean isDualScreenEnabled()
-    {
+    public boolean isDualScreenEnabled() {
         return mMediaplayer != null && mMediaplayer.isDualScreenEnabled();
     }
 
     @Override
-    public void toolbarTouch(boolean start)
-    {
-        if (mMediaplayer != null)
-        {
-            if (true)
-            {
+    public void toolbarTouch(boolean start) {
+        if (mMediaplayer != null) {
+            if (true) {
                 mMediaplayer.cancelHideToolbar();
-            }
-            else
-            {
+            } else {
                 mMediaplayer.hideToolbarLater();
             }
         }
     }
 
     @Override
-    public void pause()
-    {
-        if (mMediaplayer != null && mMediaplayer.isPlaying())
-        {
+    public void pause() {
+        if (mMediaplayer != null && mMediaplayer.isPlaying()) {
             mMediaplayer.pause();
         }
     }
 
     @Override
-    public void seekTo(long positionMs)
-    {
+    public void seekTo(long positionMs) {
         if (mMediaplayer != null)
             mMediaplayer.seekTo(positionMs);
     }
 
     @Override
-    public void play()
-    {
-        if (mMediaplayer != null && !mMediaplayer.isPlaying())
-        {
+    public void play() {
+        if (mMediaplayer != null && !mMediaplayer.isPlaying()) {
             mMediaplayer.play();
         }
     }
 
     @Override
-    public void setDualScreenEnabled(boolean val)
-    {
+    public void setDualScreenEnabled(boolean val) {
         if (mMediaplayer != null)
             mMediaplayer.setDualScreenEnabled(val);
     }
 
     @Override
-    public void toFullScreen()
-    {
+    public void toFullScreen() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
     /* 大小屏切 可以再加上 ActivityInfo.SCREEN_ORIENTATION_SENSOR 效果更佳**/
 
-    private void back()
-    {
-        if (CurOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-        {
+    private void back() {
+        if (CurOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             releasePlayer();
             finish();
-        }
-        else
-        {
+        } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 
-    private void getSmallPlayHeight()
-    {
+    private void getSmallPlayHeight() {
         if (this.SmallPlayH != 0) {
             return;
         }
         int ScreenW = getWindowManager().getDefaultDisplay().getWidth();
         int ScreenH = getWindowManager().getDefaultDisplay().getHeight();
-        if (ScreenW > ScreenH)
-        {
+        if (ScreenW > ScreenH) {
             int temp = ScreenW;
             ScreenW = ScreenH;
             ScreenH = temp;
@@ -607,7 +606,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
 //        }
 //    }
 //
-//    private void sendData(String dateKey, HeartRate heartRate,DailyStep dailyStep){
+//    private void sendData(String dateKey, SHHeartRate heartRate,DailyStep dailyStep){
 //
 //        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
 //        String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");

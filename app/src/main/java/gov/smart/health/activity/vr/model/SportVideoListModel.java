@@ -76,10 +76,10 @@ public class SportVideoListModel implements Serializable{
     public long time_length;
     public long time_end;
 
-    public HeartRate oldHeartRate;
-    public DailyStep oldDailyStep;
+    public SHHeartRate oldHeartRate;
+    public SHDailyStep oldDailyStep;
 
-    public HeartRate newHeartRate;
-    public DailyStep newDailyStep;
+    public SHHeartRate newHeartRate;
+    public SHDailyStep newDailyStep;
 
 }
