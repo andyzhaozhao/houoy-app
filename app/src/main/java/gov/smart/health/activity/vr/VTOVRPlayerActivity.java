@@ -23,9 +23,15 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.fitpolo.support.OrderEnum;
 import com.fitpolo.support.bluetooth.BluetoothModule;
+import com.fitpolo.support.callback.OrderCallback;
+import com.fitpolo.support.entity.BaseResponse;
 import com.fitpolo.support.entity.DailyStep;
 import com.fitpolo.support.entity.HeartRate;
+import com.fitpolo.support.log.LogModule;
+import com.fitpolo.support.task.NewDailyStepsTask;
+import com.fitpolo.support.task.NewHeartRateTask;
 import com.google.gson.Gson;
 import com.utovr.player.UVEventListener;
 import com.utovr.player.UVInfoListener;
@@ -49,7 +55,7 @@ import gov.smart.health.activity.vr.model.VRSaveRecordModel;
 import gov.smart.health.utils.SHConstants;
 import gov.smart.health.utils.SharedPreferencesHelper;
 
-public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCallBack, VideoController.PlayerControl{
+public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCallBack, VideoController.PlayerControl {
 
     private UVMediaPlayer mMediaplayer = null;  // 媒体视频播放器
     private VideoController mCtrl = null;
@@ -83,7 +89,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         TextView textVideoname = (TextView)findViewById(R.id.tv_video_name);
         textVideoname.setText(model.video_name);
         TextView textheartRate = (TextView)findViewById(R.id.tv_actor_heart_rate);
-        textheartRate.setText(model.actor_times +"分/秒");
+        textheartRate.setText(model.actor_times +"次/秒");
         TextView textActorCal = (TextView)findViewById(R.id.tv_actor_cal);
         textActorCal.setText(model.actor_calorie+"cal");
         TextView textView = (TextView)findViewById(R.id.tv_detail);
@@ -232,7 +238,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         if (mCtrl != null) {
             mCtrl.updateCurrentPosition();
         }
-        getData();
+        //getData();
     }
 
     private UVEventListener mListener = new UVEventListener()
@@ -266,10 +272,108 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                         String downlaodFile =  model.downlaodPath + File.separator + model.video_name;
                         mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
                         model.time_start = System.currentTimeMillis();
+                        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
+                        String lastSyncTime = DateFormat.format("yyyy-MM-dd HH:mm", model.time_start - 2000).toString();
+                        if (bluetoothModule.isSupportHeartRate()) {
+                            NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
+                                @Override
+                                public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                    ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
+                                    for (HeartRate heartRate : heartRates) {
+                                        model.oldHeartRate = heartRate;
+                                        LogModule.i(heartRate.toString());
+                                        break;
+                                    }
+                                }
+
+                                @Override
+                                public void onOrderTimeout(OrderEnum order) {
+
+                                }
+
+                                @Override
+                                public void onOrderFinish() {
+
+                                }
+                            }, lastSyncTime);
+                            BluetoothModule.getInstance().sendOrder(taskRate);
+                            NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
+                                @Override
+                                public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                    ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
+                                    for (DailyStep step : steps) {
+                                        model.oldDailyStep = step;
+                                        LogModule.i(step.toString());
+                                        break;
+                                    }
+                                }
+
+                                @Override
+                                public void onOrderTimeout(OrderEnum order) {
+
+                                }
+
+                                @Override
+                                public void onOrderFinish() {
+
+                                }
+                            }, lastSyncTime);
+                            BluetoothModule.getInstance().sendOrder(taskSteps);
+                        }
                     } else {
                         seekTo(0);
                         mMediaplayer.pause();
                         mCtrl.settbtnPlayPauseStatus(false);
+                        model.time_end = System.currentTimeMillis();
+                        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
+                        String lastSyncTime = DateFormat.format("yyyy-MM-dd HH:mm", model.time_start).toString();
+                        if (bluetoothModule.isSupportHeartRate()) {
+                            NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
+                                @Override
+                                public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                    ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
+                                    for (HeartRate heartRate : heartRates) {
+                                        model.newHeartRate = heartRate;
+                                        LogModule.i(heartRate.toString());
+                                        break;
+                                    }
+                                }
+
+                                @Override
+                                public void onOrderTimeout(OrderEnum order) {
+
+                                }
+
+                                @Override
+                                public void onOrderFinish() {
+
+                                }
+                            }, lastSyncTime);
+                            BluetoothModule.getInstance().sendOrder(taskRate);
+                            NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
+                                @Override
+                                public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                    ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
+                                    for (DailyStep step : steps) {
+                                        model.oldDailyStep = step;
+                                        LogModule.i(step.toString());
+                                        break;
+                                    }
+                                }
+
+                                @Override
+                                public void onOrderTimeout(OrderEnum order) {
+
+                                }
+
+                                @Override
+                                public void onOrderFinish() {
+
+                                }
+                            }, lastSyncTime);
+                            BluetoothModule.getInstance().sendOrder(taskSteps);
+                        }
+
                         if(mAlertDialogBuilder == null) {
                             mAlertDialogBuilder = new AlertDialog.Builder(VTOVRPlayerActivity.this);
                             mAlertDialogBuilder.setMessage("是否分享本次运动？");
@@ -284,7 +388,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             mAlertDialogBuilder = null;
-                                            model.time_end = System.currentTimeMillis();
                                             Intent intent = new Intent();
                                             intent.putExtra(SHConstants.Video_ModelKey, model);
                                             intent.setClass(VTOVRPlayerActivity.this, SportShareActivity.class);
@@ -464,96 +567,96 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
         SmallPlayH = ScreenW * ScreenW / ScreenH;
     }
 
-    private void getData(){
-        String dateKey = DateFormat.format("yyyy-MM-dd-HH-mm", Calendar.getInstance()).toString();
-        Log.d("",dateKey);
-        //TODO get data.
-        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
-        if(!dateKeylist.contains(dateKey) && (bluetoothModule.isSupportHeartRate() || bluetoothModule.isSupportTodayData())) {
-            HeartRate heartRate = new HeartRate();
-            DailyStep dailyStep = new DailyStep();
-            if (bluetoothModule.isSupportHeartRate()) {
-                List<HeartRate> heartRates = bluetoothModule.getHeartRates();
-                for (HeartRate rate:heartRates) {
-                    String heartKey = rate.time;
-                    if(dateKey.equals(heartKey)) {
-                        heartRate = rate;
-                        dateKeylist.add(dateKey);
-                        break;
-                    }
-                }
-                Log.d("", heartRates.toString());
-            }
-            if (bluetoothModule.isSupportTodayData()) {
-                ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
-                for (DailyStep step :dailySteps) {
-                    String heartKey = step.date;
-                    if(dateKey.equals(heartKey)) {
-                        dailyStep = step;
-                        dateKeylist.add(dateKey);
-                        break;
-                    }
-                }
-                Log.d("", dailySteps.toString());
-            }
-            sendData(dateKey, heartRate,dailyStep);
-        }
-    }
-
-    private void sendData(String dateKey, HeartRate heartRate,DailyStep dailyStep){
-
-        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
-        String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_calorie, dailyStep.calories);
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_heart, heartRate.value);
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_length, "0");
-
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Person, pk);
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Person_Name, name);
-
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Place, model.pk_folder);
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Place_Name, "Place");
-
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Video, model.pk_video);
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Video_Name, model.video_name);
-
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Timestamp, dateKey);
-            long millis = System.currentTimeMillis();
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailCode, millis);
-            jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailname, millis);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        AndroidNetworking.post(SHConstants.RecordVRSportDetailsave)
-                .addJSONObjectBody(jsonObject)
-                .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
-                .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
-                .setPriority(Priority.MEDIUM)
-                .build()
-                .getAsString(new StringRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson gson = new Gson();
-                        VRSaveRecordModel model = gson.fromJson(response,VRSaveRecordModel.class);
-                        if (model.success){
-                            Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onError(ANError anError) {
-                        Log.d("","response error"+anError.getErrorDetail());
-                        Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
+//    private void getData(){
+//        String dateKey = DateFormat.format("yyyy-MM-dd-HH-mm", Calendar.getInstance()).toString();
+//        Log.d("",dateKey);
+//        //TODO get data.
+//        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
+//        if(!dateKeylist.contains(dateKey) && (bluetoothModule.isSupportHeartRate() || bluetoothModule.isSupportTodayData())) {
+//            HeartRate heartRate = new HeartRate();
+//            DailyStep dailyStep = new DailyStep();
+//            if (bluetoothModule.isSupportHeartRate()) {
+//                List<HeartRate> heartRates = bluetoothModule.getHeartRates();
+//                for (HeartRate rate:heartRates) {
+//                    String heartKey = rate.time;
+//                    if(dateKey.equals(heartKey)) {
+//                        heartRate = rate;
+//                        dateKeylist.add(dateKey);
+//                        break;
+//                    }
+//                }
+//                Log.d("", heartRates.toString());
+//            }
+//            if (bluetoothModule.isSupportTodayData()) {
+//                ArrayList<DailyStep> dailySteps = bluetoothModule.getDailySteps();
+//                for (DailyStep step :dailySteps) {
+//                    String heartKey = step.date;
+//                    if(dateKey.equals(heartKey)) {
+//                        dailyStep = step;
+//                        dateKeylist.add(dateKey);
+//                        break;
+//                    }
+//                }
+//                Log.d("", dailySteps.toString());
+//            }
+//            sendData(dateKey, heartRate,dailyStep);
+//        }
+//    }
+//
+//    private void sendData(String dateKey, HeartRate heartRate,DailyStep dailyStep){
+//
+//        String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
+//        String name = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPersonName,"");
+//
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_calorie, dailyStep.calories);
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_heart, heartRate.value);
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_length, "0");
+//
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Person, pk);
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_Person_Name, name);
+//
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Place, model.pk_folder);
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_Place_Name, "Place");
+//
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_Pk_Video, model.pk_video);
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_Video_Name, model.video_name);
+//
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_Timestamp, dateKey);
+//            long millis = System.currentTimeMillis();
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailCode, millis);
+//            jsonObject.put(SHConstants.Record_VRSportDetailSave_Record_SportDetailname, millis);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        AndroidNetworking.post(SHConstants.RecordVRSportDetailsave)
+//                .addJSONObjectBody(jsonObject)
+//                .addHeaders(SHConstants.HeaderContentType, SHConstants.HeaderContentTypeValue)
+//                .addHeaders(SHConstants.HeaderAccept, SHConstants.HeaderContentTypeValue)
+//                .setPriority(Priority.MEDIUM)
+//                .build()
+//                .getAsString(new StringRequestListener() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        Gson gson = new Gson();
+//                        VRSaveRecordModel model = gson.fromJson(response,VRSaveRecordModel.class);
+//                        if (model.success){
+//                            Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_LONG).show();
+//                        } else {
+//                            Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(ANError anError) {
+//                        Log.d("","response error"+anError.getErrorDetail());
+//                        Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//    }
 
 }
 

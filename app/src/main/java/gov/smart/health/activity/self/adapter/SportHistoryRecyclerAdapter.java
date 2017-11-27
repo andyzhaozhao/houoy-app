@@ -65,7 +65,7 @@ public class SportHistoryRecyclerAdapter extends RecyclerView.Adapter<SportHisto
         holder.sportTime.setText("耗时"+model.time_length+"秒");
         holder.sportPlace.setText(model.place_name);
         holder.sportVideo.setText(model.video_name);
-        holder.sportRate.setText(model.heart_rate + "次/分");
+        holder.sportRate.setText(model.heart_rate + "次/秒");
         holder.sportCal.setText(model.indicator_calorie_min == null ? "1cal" : model.indicator_calorie_min+ "cal");
         holder.itemView.setTag(position);
     }

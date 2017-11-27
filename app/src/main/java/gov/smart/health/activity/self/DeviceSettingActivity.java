@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,15 +36,50 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
 
     public static String AddressKey = "addressKey";
     public static String DeviceNameKey = "deviceNameKey";
+    public static String VRDeviceNameKey = "VRDeviceNameKey";
     private static int REQUEST_ENABLE_BLUETOOTH = 123;
     private String[] blueToothPermissions = { Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private TextView deviceName;
+    private TextView VrDeviceName;
+    private RadioButton r1,r2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_setting);
         deviceName = (TextView)findViewById(R.id.tv_setting_fitpolo_device);
         deviceName.setVisibility(View.INVISIBLE);
+        VrDeviceName = (TextView)findViewById(R.id.btn_setting_device_text);
+        r1 = (RadioButton)findViewById(R.id.device_r1);
+        r2 = (RadioButton)findViewById(R.id.device_r2);
+        // default radio.
+        if(SharedPreferencesHelper.gettingLong(VRDeviceNameKey, 1) == 1) {
+            r1.setChecked(true);
+            r2.setChecked(false);
+            VrDeviceName.setText("暴风小D");
+        } else {
+            r2.setChecked(true);
+            r1.setChecked(false);
+            VrDeviceName.setText("暴风魔镜2代");
+        }
+        findViewById(R.id.btn_setting_device1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferencesHelper.settingLong(VRDeviceNameKey,1);
+                r1.setChecked(true);
+                r2.setChecked(false);
+                VrDeviceName.setText("暴风小D");
+            }
+        });
+        findViewById(R.id.btn_setting_device2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferencesHelper.settingLong(VRDeviceNameKey,2);
+                r2.setChecked(true);
+                r1.setChecked(false);
+                VrDeviceName.setText("暴风魔镜2代");
+            }
+        });
+
         findViewById(R.id.btn_setting_device).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,9 +187,9 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
         final ArrayList<String> devicesList = new ArrayList<String>();
         String[] devices = {};
         // add a radio button list
-        for (int i = 0 ;i <bleDeviceMap.size() ; i++) {
-            if(bleDeviceMap.get(i) != null  && bleDeviceMap.get(i).name != null) {
-                devicesList.add(bleDeviceMap.get(i).name);
+        for (String key : bleDeviceMap.keySet()) {
+            if(bleDeviceMap.get(key) != null  && bleDeviceMap.get(key).name != null) {
+                devicesList.add(bleDeviceMap.get(key).name);
             }
         }
         int checkedItem = 1; // cow
@@ -185,6 +221,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                         deviceName.setVisibility(View.INVISIBLE);
                     }
                 });
+                dialog.dismiss();
             }
         });
 
@@ -193,6 +230,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // user clicked OK
+                dialog.dismiss();
             }
         });
         

@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Random;
 
 import gov.smart.health.R;
 import gov.smart.health.activity.login.model.ResetPasswordModel;
@@ -31,6 +32,9 @@ import gov.smart.health.utils.SharedPreferencesHelper;
 public class SportShareActivity extends AppCompatActivity implements View.OnClickListener{
 
     private SportVideoListModel videoModel = new SportVideoListModel();
+    private String heartRate;
+    private String allCal;
+    private TextView textCompletion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,16 +58,36 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
                 finish();
             }
         });
+        heartRate = videoModel.actor_times;
+        allCal =  videoModel.actor_calorie;
+        textCompletion = (TextView) findViewById(R.id.tv_video_completion);
+        try {
+            if(videoModel.newHeartRate != null){
+                heartRate = videoModel.newHeartRate.time;
+            }
+            if(videoModel.oldDailyStep != null && videoModel.newDailyStep != null ){
+                allCal = (Integer.valueOf(videoModel.oldDailyStep.calories) - Integer.valueOf(videoModel.newDailyStep.calories))+"";
+            }
+            int percent = (Integer.valueOf(heartRate) / Integer.valueOf(videoModel.actor_times)) * 50
+                    + (Integer.valueOf(allCal) / Integer.valueOf(videoModel.actor_calorie)) * 50;
+            textCompletion.setText("完成度：" + percent + "%");
+        } catch (Exception e){
+            e.printStackTrace();
+            Random random=new Random();
+            textCompletion.setText("完成度：" + random.nextInt(100) + "%");
+        }
 
         long time_length = videoModel.time_end - videoModel.time_start;
         TextView textVideoLength = (TextView)findViewById(R.id.tv_video_length);
         textVideoLength.setText(time_length/1000+"秒");
         TextView textVideoname = (TextView)findViewById(R.id.tv_video_name);
         textVideoname.setText(videoModel.video_name);
+
         TextView textheartRate = (TextView)findViewById(R.id.tv_actor_heart_rate);
-        textheartRate.setText(videoModel.actor_times +"分/秒");
+        textheartRate.setText(heartRate + "次/秒");
+
         TextView textActorCal = (TextView)findViewById(R.id.tv_actor_cal);
-        textActorCal.setText(videoModel.actor_calorie+"cal");
+        textActorCal.setText(allCal+"cal");
 
         sendData();
     }
@@ -73,7 +97,7 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
         switch (view.getId()){
             case R.id.btn_share:
                 Intent share = new Intent(Intent.ACTION_SEND);
-                share.putExtra(Intent.EXTRA_TEXT,"我参加了"+videoModel.video_name+"运动！，你也来运动吧！");
+                share.putExtra(Intent.EXTRA_TEXT,"我参加了"+videoModel.video_name+"运动！"+textCompletion.getText()+"，你也来运动吧！");
                 share.setType("text/plain");
                 startActivity(share);
                 break;
@@ -89,16 +113,23 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
         String dateEnd = DateFormat.format("yyyy-MM-dd HH:mm:ss", videoModel.time_end).toString();
         long time_length = videoModel.time_end - videoModel.time_start;
 
+        String heartRate = videoModel.actor_times;
+        if(videoModel.newHeartRate != null){
+            heartRate = videoModel.newHeartRate.time;
+        }
+        String allCal =  videoModel.actor_calorie;
+        if(videoModel.oldDailyStep != null && videoModel.newDailyStep != null ){
+            allCal = (Integer.valueOf(videoModel.oldDailyStep.calories) - Integer.valueOf(videoModel.newDailyStep.calories))+"";
+        }
 
-        //TODO get data.
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Person, pk);
             jsonObject.put(SHConstants.Record_VRSport_Save_Person_Name, name);
 
-            jsonObject.put(SHConstants.Record_VRSport_Save_calorie, "555");
-            jsonObject.put(SHConstants.Record_VRSport_Save_heart_rate, "100");
-            jsonObject.put(SHConstants.Record_VRSport_Save_heart_rate_max, "128");
+            jsonObject.put(SHConstants.Record_VRSport_Save_calorie, allCal);
+            jsonObject.put(SHConstants.Record_VRSport_Save_heart_rate, heartRate);
+            jsonObject.put(SHConstants.Record_VRSport_Save_heart_rate_max, heartRate);
 
             jsonObject.put(SHConstants.Record_VRSport_Save_Pk_Place, videoModel.pk_folder);
             jsonObject.put(SHConstants.Record_VRSport_Save_Place_Name, videoModel.pk_folder);

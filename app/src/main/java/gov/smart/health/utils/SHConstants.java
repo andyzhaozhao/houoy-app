@@ -10,7 +10,7 @@ public class SHConstants {
     public static String BaseUrl8888 = "http://182.92.128.240:8888/api";
     public static String BaseUrlPhoto = "http://47.94.6.120/person/";
 
-    public static String SigninSystemMobile = SHConstants.BaseUrl8889 + "/login/signinSystemMobile";
+    public static String SigninSystemMobile = SHConstants.BaseUrl8889 + "/login/signinMobile";
     public static String PersonSave = SHConstants.BaseUrl8889 + "/person/save";
     public static String ForgetPassword = BaseUrl8889+"/login/forgetPassword";
 

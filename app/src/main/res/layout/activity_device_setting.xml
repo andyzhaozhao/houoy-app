@@ -52,6 +52,7 @@
                 style="@style/customContextDarkGrayTextStyle"
                 android:text="已选择：" />
             <TextView
+                android:id="@+id/btn_setting_device_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/customContextDarkGrayTextStyle"
@@ -62,6 +63,14 @@
             android:layout_width="match_parent"
             android:background="@color/blackLine"
             android:layout_height="0.5dp"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:layout_height="wrap_content" >
+
         <RelativeLayout
             android:id="@+id/btn_setting_device1"
             android:layout_width="match_parent"
@@ -76,7 +85,15 @@
                 android:paddingLeft="@dimen/view_defalut_margin_10"
                 style="@style/customContextTextStyle"
                 android:text="暴风小D" />
-            <include layout="@layout/btn_goto"/>
+            <RadioButton
+                android:id="@+id/device_r1"
+                android:clickable="false"
+                android:layout_marginRight="@dimen/view_defalut_margin_10"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:buttonTint="@color/textColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
@@ -96,8 +113,17 @@
                 android:paddingLeft="@dimen/view_defalut_margin_10"
                 style="@style/customContextTextStyle"
                 android:text="暴风魔镜2代" />
-            <include layout="@layout/btn_goto"/>
+            <RadioButton
+                android:id="@+id/device_r2"
+                android:clickable="false"
+                android:layout_marginRight="@dimen/view_defalut_margin_10"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:buttonTint="@color/textColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
+        </RadioGroup>
         <View
             android:layout_width="match_parent"
             android:background="@color/blackLine"
