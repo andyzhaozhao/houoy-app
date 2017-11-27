@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
             jsonObject.put(SHConstants.Register_Person_Code, userNameTxt);
             jsonObject.put(SHConstants.Register_Person_name, userNameTxt);
             jsonObject.put(SHConstants.Register_Mobile, userPhoneTxt);
-            jsonObject.put(SHConstants.Register_Mobile, userMailTxt);
+            jsonObject.put(SHConstants.Register_Email, userMailTxt);
             jsonObject.put(SHConstants.Register_Password, userFirstPwdTxt);
         } catch (JSONException e) {
             e.printStackTrace();

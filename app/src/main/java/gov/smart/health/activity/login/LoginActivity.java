@@ -43,8 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         TextView register = (TextView)findViewById(R.id.btn_no_register);
 
         if(SHConstants.isDebug){
-            mUserName.setText("admin");
-            mUserPwd.setText("1");
+            mUserName.setText("181212121");
+            mUserPwd.setText("test1");
         }
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -59,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put(SHConstants.LoginUserCode, name);
-                    jsonObject.put(SHConstants.LoginUserPassword, pwd);
+                    jsonObject.put(SHConstants.LoginMobile, name);
+                    jsonObject.put(SHConstants.LoginPassword, pwd);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
