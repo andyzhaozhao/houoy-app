@@ -64,6 +64,12 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
         if(getIntent() != null) {
             personModel = (MyPersonInfoListModel) getIntent().getSerializableExtra(SHConstants.SettingPersonModelKey);
             loadIcon();
+            TextView userName = (TextView) findViewById(R.id.et_update_user_name);
+            TextView userAge = (TextView) findViewById(R.id.et_update_user_age);
+            TextView userContent = (TextView) findViewById(R.id.et_update_user_content);
+            userName.setText(personModel.person_name);
+            userAge.setText(personModel.age);
+            userContent.setText(personModel.person_alias);
         }
 
         View btnUpdate = findViewById(R.id.btn_update_user);

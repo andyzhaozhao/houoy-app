@@ -9,8 +9,12 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.fitpolo.support.OrderEnum;
 import com.fitpolo.support.bluetooth.BluetoothModule;
 import com.fitpolo.support.callback.ConnStateCallback;
+import com.fitpolo.support.callback.OrderCallback;
+import com.fitpolo.support.entity.BaseResponse;
+import com.fitpolo.support.task.InnerVersionTask;
 
 import gov.smart.health.activity.HomeActivity;
 import gov.smart.health.activity.login.LoginActivity;
@@ -90,6 +94,23 @@ public class SplashActivity extends AppCompatActivity {
             if (deviceAddress != null && !bluetoothModule.isConnDevice(getApplicationContext(), deviceAddress)) {
                 bluetoothModule.createBluetoothGatt(getApplicationContext(), deviceAddress, null);
                 bluetoothModule.setOpenReConnect(true);
+                InnerVersionTask task = new InnerVersionTask(new OrderCallback() {
+                    @Override
+                    public void onOrderResult(OrderEnum order, BaseResponse response) {
+
+                    }
+
+                    @Override
+                    public void onOrderTimeout(OrderEnum order) {
+
+                    }
+
+                    @Override
+                    public void onOrderFinish() {
+
+                    }
+                });
+                BluetoothModule.getInstance().sendOrder(task);
             }
         }
 

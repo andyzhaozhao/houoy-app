@@ -16,10 +16,14 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fitpolo.support.OrderEnum;
 import com.fitpolo.support.bluetooth.BluetoothModule;
 import com.fitpolo.support.callback.ConnStateCallback;
+import com.fitpolo.support.callback.OrderCallback;
 import com.fitpolo.support.callback.ScanDeviceCallback;
+import com.fitpolo.support.entity.BaseResponse;
 import com.fitpolo.support.entity.BleDevice;
+import com.fitpolo.support.task.InnerVersionTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -209,6 +213,23 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                         deviceName.setText("已绑定："+device.name);
                         deviceName.setVisibility(View.VISIBLE);
                         Toast.makeText(getApplication(), "设备绑定成功", Toast.LENGTH_LONG).show();
+                        InnerVersionTask task = new InnerVersionTask(new OrderCallback() {
+                            @Override
+                            public void onOrderResult(OrderEnum order, BaseResponse response) {
+
+                            }
+
+                            @Override
+                            public void onOrderTimeout(OrderEnum order) {
+
+                            }
+
+                            @Override
+                            public void onOrderFinish() {
+
+                            }
+                        });
+                        BluetoothModule.getInstance().sendOrder(task);
                     }
 
                     @Override

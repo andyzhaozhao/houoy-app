@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/et_update_user_age"
                 android:layout_marginTop="@dimen/view_defalut_margin_20"
+                android:inputType="number"
                 android:hint="年龄"
                 style="@style/customEditTextF18C35Style"
                 />
