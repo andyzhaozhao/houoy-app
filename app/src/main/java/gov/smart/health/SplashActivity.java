@@ -89,6 +89,7 @@ public class SplashActivity extends AppCompatActivity {
             String deviceAddress = SharedPreferencesHelper.gettingString(DeviceSettingActivity.AddressKey, null);
             if (deviceAddress != null && !bluetoothModule.isConnDevice(getApplicationContext(), deviceAddress)) {
                 bluetoothModule.createBluetoothGatt(getApplicationContext(), deviceAddress, null);
+                bluetoothModule.setOpenReConnect(true);
             }
         }
 

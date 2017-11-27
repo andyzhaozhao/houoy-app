@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -57,6 +58,11 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(!Patterns.PHONE.matcher(name).matches()){
+                    Toast.makeText(getApplication(),"请输正确的手机号码！",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 JSONObject jsonObject = new JSONObject();
                 try {
                     jsonObject.put(SHConstants.LoginMobile, name);
@@ -77,8 +83,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Gson gson = new Gson();
                                 LoginModel model = gson.fromJson(response,LoginModel.class);
                                 if (model.success){
-                                    SharedPreferencesHelper.settingString(SHConstants.LoginUserPkPerson,model.resultData.pk_user);
-                                    SharedPreferencesHelper.settingString(SHConstants.LoginUserPersonName,model.resultData.user_name);
+                                    SharedPreferencesHelper.settingString(SHConstants.LoginUserPkPerson,model.resultData.pk_person);
+                                    SharedPreferencesHelper.settingString(SHConstants.LoginUserPersonName,model.resultData.person_name);
                                     Intent intent = new Intent();
                                     intent.setClass(getApplicationContext(),HomeActivity.class);
                                     startActivity(intent);
