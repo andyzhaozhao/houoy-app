@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -54,6 +55,11 @@ public class LoginActivity extends AppCompatActivity {
                 String pwd = mUserPwd.getText().toString();
                 if (Utils.isEmpty(name) || Utils.isEmpty(pwd)) {
                     Toast.makeText(getApplicationContext(), "请输入用户名或密码!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(!Patterns.PHONE.matcher(name).matches()){
+                    Toast.makeText(getApplication(),"请输正确的手机号码！",Toast.LENGTH_LONG).show();
                     return;
                 }
 

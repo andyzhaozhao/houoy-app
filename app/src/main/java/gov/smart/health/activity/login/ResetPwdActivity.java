@@ -2,6 +2,8 @@ package gov.smart.health.activity.login;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -34,7 +36,6 @@ public class ResetPwdActivity extends AppCompatActivity {
 
         View btnReset = findViewById(R.id.btn_reset_user);
         userMail = (TextView)findViewById(R.id.reset_mail);
-
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +57,11 @@ public class ResetPwdActivity extends AppCompatActivity {
             Toast.makeText(getApplication(),"请输入完整信息",Toast.LENGTH_LONG).show();
             return;
         }
+        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(userMailTxt).matches()){
+            Toast.makeText(getApplication(),"请输正确的邮箱地址！",Toast.LENGTH_LONG).show();
+            return;
+        }
+
         String pk = SharedPreferencesHelper.gettingString(SHConstants.LoginUserPkPerson,"");
 
         HashMap<String,Object> map = new HashMap<>();

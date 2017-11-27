@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +63,15 @@ public class RegisterActivity extends AppCompatActivity {
         String userSecondPwdTxt =  userSecondPwd.getText().toString();
         if(userNameTxt.isEmpty() || userPhoneTxt.isEmpty() ||userMailTxt.isEmpty() ||userFirstPwdTxt.isEmpty() ||userSecondPwdTxt.isEmpty()){
             Toast.makeText(getApplication(),"请输入完整信息",Toast.LENGTH_LONG).show();
+            return;
+        }
+        
+        if(!Patterns.PHONE.matcher(userPhoneTxt).matches()){
+            Toast.makeText(getApplication(),"请输正确的手机号码！",Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(userMailTxt).matches()){
+            Toast.makeText(getApplication(),"请输正确的邮箱地址！",Toast.LENGTH_LONG).show();
             return;
         }
         if(!userFirstPwdTxt.equals(userSecondPwdTxt)){
