@@ -8,13 +8,12 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:padding="@dimen/view_defalut_margin_10">
-        <ImageView
+        <com.androidnetworking.widget.ANImageView
             android:id="@+id/attention_item_img"
             android:layout_width="@dimen/list_image_size"
             android:layout_height="@dimen/list_image_size"
             android:scaleType="centerInside"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical" />
+            android:layout_alignParentTop="true" />
         <LinearLayout
             android:layout_toRightOf="@+id/attention_item_img"
             android:layout_width="match_parent"

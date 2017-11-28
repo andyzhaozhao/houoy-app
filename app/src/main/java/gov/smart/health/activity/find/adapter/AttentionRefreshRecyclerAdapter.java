@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidnetworking.widget.ANImageView;
+
 import java.util.List;
 
 import gov.smart.health.R;
@@ -93,14 +95,14 @@ public class AttentionRefreshRecyclerAdapter extends RecyclerView.Adapter<Attent
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView image;
+        public ANImageView image;
         public TextView title;
         public TextView content;
         public TextView time;
 
         public ViewHolder(View view){
             super(view);
-            image = (ImageView)view.findViewById(R.id.attention_item_img);
+            image = (ANImageView)view.findViewById(R.id.attention_item_img);
             title = (TextView)view.findViewById(R.id.attention_item_title);
             content = (TextView)view.findViewById(R.id.attention_item_content);
             time = (TextView)view.findViewById(R.id.attention_item_time);

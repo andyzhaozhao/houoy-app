@@ -166,11 +166,12 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                     @Override
                     public void onScanDevice(BleDevice device) {
                         bleDeviceMap.put(device.name, device);
-                        Toast.makeText(getApplication(), "搜索设备" + device.name, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplication(), "搜索到设备：" + device.name, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
                     public void onStopScan() {
+                        //BluetoothModule.getInstance().
                         if(bleDeviceMap.size() >0){
                             showDialog();
                         } else {
@@ -178,7 +179,6 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                         }
                     }
                 });
-                bluetoothModule.setOpenReConnect(true);
             }
         } else {
             Toast.makeText(getApplication(), "请确认蓝牙是否正常开启！", Toast.LENGTH_LONG).show();
@@ -244,6 +244,7 @@ public class DeviceSettingActivity extends AppCompatActivity implements EasyPerm
                         deviceName.setVisibility(View.INVISIBLE);
                     }
                 });
+                bluetoothModule.setOpenReConnect(true);
                 dialog.dismiss();
             }
         });

@@ -34,7 +34,7 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
     private SportVideoListModel videoModel = new SportVideoListModel();
     private String heartRate;
     private String allCal;
-    private TextView textCompletion;
+    private TextView textCompletion, videoCompletionComment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,21 +61,33 @@ public class SportShareActivity extends AppCompatActivity implements View.OnClic
         heartRate = videoModel.actor_times;
         allCal =  videoModel.actor_calorie;
         textCompletion = (TextView) findViewById(R.id.tv_video_completion);
+        videoCompletionComment = (TextView) findViewById(R.id.tv_video_completion_comment);
+
+        int percent = 0;
         try {
             if(videoModel.newHeartRate != null){
                 heartRate = videoModel.newHeartRate.time;
             }
             if(videoModel.oldDailyStep != null && videoModel.newDailyStep != null ){
-                allCal = (Integer.valueOf(videoModel.oldDailyStep.calories) - Integer.valueOf(videoModel.newDailyStep.calories))+"";
+                 int allCalInt = (Integer.valueOf(videoModel.oldDailyStep.calories) - Integer.valueOf(videoModel.newDailyStep.calories));
+                allCal = Math.abs(allCalInt) + "";
             }
-            int percent = (Integer.valueOf(heartRate) / Integer.valueOf(videoModel.actor_times)) * 50
+            percent = (Integer.valueOf(heartRate) / Integer.valueOf(videoModel.actor_times)) * 50
                     + (Integer.valueOf(allCal) / Integer.valueOf(videoModel.actor_calorie)) * 50;
-            textCompletion.setText("完成度：" + percent + "%");
+
         } catch (Exception e){
             e.printStackTrace();
             Random random=new Random();
-            textCompletion.setText("完成度：" + random.nextInt(100) + "%");
+            percent = random.nextInt(100);
         }
+        if(percent<=30) {
+            videoCompletionComment.setText("建议您重新运动");
+        } else if(percent > 30 && percent<=70){
+            videoCompletionComment.setText("再接再厉");
+        } else {
+            videoCompletionComment.setText("不错哦");
+        }
+        textCompletion.setText("完成度：" + percent + "%");
 
         long time_length = videoModel.time_end - videoModel.time_start;
         TextView textVideoLength = (TextView)findViewById(R.id.tv_video_length);

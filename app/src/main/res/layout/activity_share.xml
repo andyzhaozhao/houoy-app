@@ -47,6 +47,30 @@
                 >
                 <requestFocus />
             </TextView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="提示："
+                android:layout_toLeftOf="@+id/tv_video_completion_comment"
+                android:padding="@dimen/view_defalut_margin_5"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                style="@style/customContextF14C35TextStyle"
+                />
+            <TextView
+                android:text="建议您重新运动"
+                android:padding="@dimen/view_defalut_margin"
+                android:layout_marginTop="0dp"
+                android:id="@+id/tv_video_completion_comment"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                style="@style/customBtnChartStyle" />
+
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"

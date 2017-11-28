@@ -103,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
                         RegisterUserModel model = gson.fromJson(response,RegisterUserModel.class);
                         if (model.success){
                             Toast.makeText(getApplication(),"注册成功",Toast.LENGTH_LONG).show();
+                            finish();
                         } else {
                             Toast.makeText(getApplication(),"注册失败",Toast.LENGTH_LONG).show();
                         }

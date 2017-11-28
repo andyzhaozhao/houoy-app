@@ -232,7 +232,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
             if (intent != null) {
                 String action = intent.getAction();
                 if (showDialog.equals(action)) {
-                    final AlertDialog[] alertDialog = {null};
                     if (mAlertDialogBuilder == null) {
                         mAlertDialogBuilder = new AlertDialog.Builder(VTOVRPlayerActivity.this);
                         mAlertDialogBuilder.setMessage("是否分享本次运动？");
@@ -254,10 +253,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                                     }
                                 });
                         mAlertDialogBuilder.setCancelable(true);
-                        alertDialog[0] = mAlertDialogBuilder.create();
-                        if(alertDialog[0] !=null){
-                            alertDialog[0].show();
-                        }
+                        mAlertDialogBuilder.create().show();
                     }
                 }
             }

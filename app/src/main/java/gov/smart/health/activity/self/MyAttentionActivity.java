@@ -129,7 +129,7 @@ public class MyAttentionActivity extends AppCompatActivity {
                         jsonModel = gson.fromJson(response, LikeAttentionInfoModel.class);
                         if (jsonModel.success) {
                             modelLists.addAll(jsonModel.resultData);
-                            mAdapter.addDataLists(modelLists);
+                            mAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getApplication(), "信息获取失败", Toast.LENGTH_LONG).show();
                         }
