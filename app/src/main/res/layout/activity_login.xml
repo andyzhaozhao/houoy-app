@@ -14,7 +14,12 @@
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:layout_below="@+id/title"
-                android:src="@drawable/login_bg" />
+                android:src="@drawable/login_bg"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                >
+                <requestFocus />
+            </ImageView>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

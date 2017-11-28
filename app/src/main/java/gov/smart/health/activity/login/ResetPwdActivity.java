@@ -81,6 +81,7 @@ public class ResetPwdActivity extends AppCompatActivity {
                         ResetPasswordModel model = gson.fromJson(response,ResetPasswordModel.class);
                         if (model.success){
                             Toast.makeText(getApplication(),"密码找回成功",Toast.LENGTH_LONG).show();
+                            finish();
                         } else {
                             Toast.makeText(getApplication(),"密码找回失败",Toast.LENGTH_LONG).show();
                         }

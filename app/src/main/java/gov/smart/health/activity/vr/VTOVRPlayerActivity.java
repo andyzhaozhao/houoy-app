@@ -44,10 +44,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gov.smart.health.R;
+import gov.smart.health.activity.self.DeviceSettingActivity;
 import gov.smart.health.activity.vr.model.SHDailyStep;
 import gov.smart.health.activity.vr.model.SHHeartRate;
 import gov.smart.health.activity.vr.model.SportVideoListModel;
 import gov.smart.health.utils.SHConstants;
+import gov.smart.health.utils.SharedPreferencesHelper;
 
 public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCallBack, VideoController.PlayerControl {
 
@@ -230,7 +232,6 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
             if (intent != null) {
                 String action = intent.getAction();
                 if (showDialog.equals(action)) {
-                    final AlertDialog[] alertDialog = {null};
                     if (mAlertDialogBuilder == null) {
                         mAlertDialogBuilder = new AlertDialog.Builder(VTOVRPlayerActivity.this);
                         mAlertDialogBuilder.setMessage("是否分享本次运动？");
@@ -252,10 +253,7 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                                     }
                                 });
                         mAlertDialogBuilder.setCancelable(true);
-                        alertDialog[0] = mAlertDialogBuilder.create();
-                        if(alertDialog[0] !=null){
-                            alertDialog[0].show();
-                        }
+                        mAlertDialogBuilder.create().show();
                     }
                 }
             }
@@ -287,151 +285,152 @@ public class VTOVRPlayerActivity extends AppCompatActivity implements UVPlayerCa
                     if (!isSecond) {
                         isSecond = true;
                         model.time_start = System.currentTimeMillis();
-                        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
-                        String lastSyncTime = DateFormat.format("yyyy-MM-dd HH:mm", model.time_start - 2000).toString();
-                        //if (bluetoothModule.isSupportHeartRate()) {
-                        final NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
-                            @Override
-                            public void onOrderResult(OrderEnum order, BaseResponse response) {
-                                ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
-                                if (heartRates != null && heartRates.size() > 0) {
-                                    for (HeartRate heartRate : heartRates) {
-                                        SHHeartRate shHeartRate = new SHHeartRate();
-                                        shHeartRate.time = heartRate.time;
-                                        shHeartRate.value = heartRate.value;
-                                        model.oldHeartRate = shHeartRate;
-                                        LogModule.i(heartRate.toString());
-                                        break;
+                        String deviceAddress = SharedPreferencesHelper.gettingString(DeviceSettingActivity.AddressKey,null);
+                        if(deviceAddress != null && BluetoothModule.getInstance().isConnDevice(getApplicationContext(),deviceAddress)) {
+                            String lastSyncTime = DateFormat.format("yyyy-MM-dd HH:mm", model.time_start - 2000).toString();
+                            final NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
+                                @Override
+                                public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                    ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
+                                    if (heartRates != null && heartRates.size() > 0) {
+                                        for (HeartRate heartRate : heartRates) {
+                                            SHHeartRate shHeartRate = new SHHeartRate();
+                                            shHeartRate.time = heartRate.time;
+                                            shHeartRate.value = heartRate.value;
+                                            model.oldHeartRate = shHeartRate;
+                                            LogModule.i(heartRate.toString());
+                                            break;
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onOrderTimeout(OrderEnum order) {
-                                System.out.println("");
-                            }
+                                @Override
+                                public void onOrderTimeout(OrderEnum order) {
+                                    System.out.println("");
+                                }
 
-                            @Override
-                            public void onOrderFinish() {
-                                System.out.println("");
-                                //异步串行的写法：第一步获取记步数据完成，第二步获取心率数据，第三步开始播放第二段视频
-                                String downlaodFile = model.downlaodPath + File.separator + model.video_name;
-                                mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
-                            }
-                        }, lastSyncTime);
+                                @Override
+                                public void onOrderFinish() {
+                                    System.out.println("");
+                                    //异步串行的写法：第一步获取记步数据完成，第二步获取心率数据，第三步开始播放第二段视频
+                                    String downlaodFile = model.downlaodPath + File.separator + model.video_name;
+                                    mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
+                                }
+                            }, lastSyncTime);
 
-                        //}
-                        // if (bluetoothModule.isSupportTodayData()) {
-                        NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
-                            @Override
-                            public void onOrderResult(OrderEnum order, BaseResponse response) {
-                                ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
-                                if (steps != null && steps.size() > 0) {
-                                    for (DailyStep step : steps) {
-                                        SHDailyStep dailyStep = new SHDailyStep();
-                                        dailyStep.date = step.date;
-                                        dailyStep.count = step.count;
-                                        dailyStep.duration = step.duration;
-                                        dailyStep.distance = step.distance;
-                                        dailyStep.calories = step.calories;
-                                        model.oldDailyStep = dailyStep;
-                                        LogModule.i(step.toString());
-                                        break;
+                           NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
+                                @Override
+                                public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                    ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
+                                    if (steps != null && steps.size() > 0) {
+                                        for (DailyStep step : steps) {
+                                            SHDailyStep dailyStep = new SHDailyStep();
+                                            dailyStep.date = step.date;
+                                            dailyStep.count = step.count;
+                                            dailyStep.duration = step.duration;
+                                            dailyStep.distance = step.distance;
+                                            dailyStep.calories = step.calories;
+                                            model.oldDailyStep = dailyStep;
+                                            LogModule.i(step.toString());
+                                            break;
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onOrderTimeout(OrderEnum order) {
-                                System.out.println("");
-                            }
+                                @Override
+                                public void onOrderTimeout(OrderEnum order) {
+                                    System.out.println("");
+                                }
 
-                            @Override
-                            public void onOrderFinish() {
-                                System.out.println("");
-                                BluetoothModule.getInstance().sendOrder(taskRate);
-                            }
-                        }, lastSyncTime);
-                        BluetoothModule.getInstance().sendOrder(taskSteps);
-                        // }
+                                @Override
+                                public void onOrderFinish() {
+                                    System.out.println("");
+                                    BluetoothModule.getInstance().sendOrder(taskRate);
+                                }
+                            }, lastSyncTime);
+                            BluetoothModule.getInstance().sendOrder(taskSteps);
+                        } else {
+                            String downlaodFile = model.downlaodPath + File.separator + model.video_name;
+                            mMediaplayer.setSource(UVMediaType.UVMEDIA_TYPE_MP4, downlaodFile);
+                        }
                     } else {
                         seekTo(0);
                         mMediaplayer.pause();
                         mCtrl.settbtnPlayPauseStatus(false);
                         model.time_end = System.currentTimeMillis();
+                        String deviceAddress = SharedPreferencesHelper.gettingString(DeviceSettingActivity.AddressKey,null);
+                        if(deviceAddress != null && BluetoothModule.getInstance().isConnDevice(getApplicationContext(),deviceAddress)) {
+                            String lastSyncTime = DateFormat.format("yyyy-MM-dd HH:mm", model.time_start).toString();
 
+                            //if (bluetoothModule.isSupportHeartRate()) {
 
-
-                        BluetoothModule bluetoothModule = BluetoothModule.getInstance();
-                        String lastSyncTime = DateFormat.format("yyyy-MM-dd HH:mm", model.time_start).toString();
-                        //if (bluetoothModule.isSupportHeartRate()) {
-
-                        final NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
-                            @Override
-                            public void onOrderResult(OrderEnum order, BaseResponse response) {
-                                ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
-                                if (heartRates != null && heartRates.size() > 0) {
-                                    for (HeartRate heartRate : heartRates) {
-                                        SHHeartRate shHeartRate = new SHHeartRate();
-                                        shHeartRate.time = heartRate.time;
-                                        shHeartRate.value = heartRate.value;
-                                        model.newHeartRate = shHeartRate;
-                                        LogModule.i(heartRate.toString());
-                                        break;
+                            final NewHeartRateTask taskRate = new NewHeartRateTask(new OrderCallback() {
+                                @Override
+                                public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                    ArrayList<HeartRate> heartRates = BluetoothModule.getInstance().getHeartRates();
+                                    if (heartRates != null && heartRates.size() > 0) {
+                                        for (HeartRate heartRate : heartRates) {
+                                            SHHeartRate shHeartRate = new SHHeartRate();
+                                            shHeartRate.time = heartRate.time;
+                                            shHeartRate.value = heartRate.value;
+                                            model.newHeartRate = shHeartRate;
+                                            LogModule.i(heartRate.toString());
+                                            break;
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onOrderTimeout(OrderEnum order) {
-                                System.out.println("");
-                            }
+                                @Override
+                                public void onOrderTimeout(OrderEnum order) {
+                                    System.out.println("");
+                                }
 
-                            @Override
-                            public void onOrderFinish() {
-                                System.out.println("");
-                                //最后一步
-                                Intent intent = new Intent(new Intent(showDialog));
-                                mBroadcastManager.sendBroadcast(intent);
-                            }
-                        }, lastSyncTime);
+                                @Override
+                                public void onOrderFinish() {
+                                    System.out.println("");
+                                    //最后一步
+                                    Intent intent = new Intent(new Intent(showDialog));
+                                    mBroadcastManager.sendBroadcast(intent);
+                                }
+                            }, lastSyncTime);
 
-                        //}
-                        // if (bluetoothModule.isSupportTodayData()) {
-                        NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
-                            @Override
-                            public void onOrderResult(OrderEnum order, BaseResponse response) {
-                                ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
-                                if (steps != null && steps.size() > 0) {
-                                    for (DailyStep step : steps) {
-                                        SHDailyStep dailyStep = new SHDailyStep();
-                                        dailyStep.date = step.date;
-                                        dailyStep.count = step.count;
-                                        dailyStep.duration = step.duration;
-                                        dailyStep.distance = step.distance;
-                                        dailyStep.calories = step.calories;
-                                        model.newDailyStep = dailyStep;
-                                        LogModule.i(step.toString());
-                                        break;
+                            //}
+                            // if (bluetoothModule.isSupportTodayData()) {
+                            NewDailyStepsTask taskSteps = new NewDailyStepsTask(new OrderCallback() {
+                                @Override
+                                public void onOrderResult(OrderEnum order, BaseResponse response) {
+                                    ArrayList<DailyStep> steps = BluetoothModule.getInstance().getDailySteps();
+                                    if (steps != null && steps.size() > 0) {
+                                        for (DailyStep step : steps) {
+                                            SHDailyStep dailyStep = new SHDailyStep();
+                                            dailyStep.date = step.date;
+                                            dailyStep.count = step.count;
+                                            dailyStep.duration = step.duration;
+                                            dailyStep.distance = step.distance;
+                                            dailyStep.calories = step.calories;
+                                            model.newDailyStep = dailyStep;
+                                            LogModule.i(step.toString());
+                                            break;
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onOrderTimeout(OrderEnum order) {
-                                System.out.println("");
-                            }
+                                @Override
+                                public void onOrderTimeout(OrderEnum order) {
+                                    System.out.println("");
+                                }
 
-                            @Override
-                            public void onOrderFinish() {
-                                System.out.println("");
-                                BluetoothModule.getInstance().sendOrder(taskRate);
-                            }
-                        }, lastSyncTime);
-                        BluetoothModule.getInstance().sendOrder(taskSteps);
-                        // }
-
-
+                                @Override
+                                public void onOrderFinish() {
+                                    System.out.println("");
+                                    BluetoothModule.getInstance().sendOrder(taskRate);
+                                }
+                            }, lastSyncTime);
+                            BluetoothModule.getInstance().sendOrder(taskSteps);
+                        } else {
+                            Intent intent = new Intent(new Intent(showDialog));
+                            mBroadcastManager.sendBroadcast(intent);
+                        }
                     }
                     break;
                 case UVMediaPlayer.TRACK_DISABLED:

@@ -94,6 +94,7 @@ public class FindShareActivity extends AppCompatActivity implements View.OnClick
                         FindShareModel model = gson.fromJson(response,FindShareModel.class);
                         if (model.success){
                             Toast.makeText(getApplication(),"保存成功",Toast.LENGTH_LONG).show();
+                            finish();
                         } else {
                             Toast.makeText(getApplication(),"保存失败",Toast.LENGTH_LONG).show();
                         }

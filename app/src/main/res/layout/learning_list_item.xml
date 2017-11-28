@@ -14,8 +14,7 @@
         android:layout_width="@dimen/list_image_size"
         android:layout_height="@dimen/list_image_size"
         android:scaleType="centerInside"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentTop="true" />
     <LinearLayout
         android:layout_toRightOf="@+id/learning_item_img"
         android:layout_toLeftOf="@+id/btn_goto"

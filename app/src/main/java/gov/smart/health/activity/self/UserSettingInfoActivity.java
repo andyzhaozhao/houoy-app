@@ -282,6 +282,7 @@ public class UserSettingInfoActivity extends AppCompatActivity implements EasyPe
                         RegisterUserModel model = gson.fromJson(response,RegisterUserModel.class);
                         if (model.success){
                             Toast.makeText(getApplication(),"更新成功",Toast.LENGTH_LONG).show();
+                            finish();
                         } else {
                             Toast.makeText(getApplication(),"更新失败",Toast.LENGTH_LONG).show();
                         }
