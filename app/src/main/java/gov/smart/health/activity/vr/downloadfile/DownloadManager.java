@@ -49,7 +49,6 @@ public class DownloadManager {
     public void downloadData(SportVideoListModelEx model,FileDownloadListener fileDownloadListener) {
         model.downlaodTask =  new AsyncAppTask(fileDownloadListener,model);
         model.downlaodTask.execute();
-        downloadMap.put(model.videoModel.video_code ,model);
     }
 
     public class AsyncAppTask extends AsyncTask<String, Void, String> {
@@ -102,6 +101,9 @@ public class DownloadManager {
                     tmpFile = FileUtils.createTempFile(downlaodFileTempPathStr, fileName);
                 }
                 long fileLength = httpURLConnection.getContentLength() + downloadSize; // 获取文件的大小
+                if(isCancelled()){
+                    return;
+                }
                 SharedPreferencesHelper.settingLong(SHConstants.VideoLength + model.videoModel.video_code, fileLength);
                 if (mFileDownloadListener != null) {
                     model.progress = DownloadUtils.getProgress(downloadSize, fileLength);
@@ -110,6 +112,9 @@ public class DownloadManager {
 
                 //connect
                 httpURLConnection.connect();
+                if(isCancelled()){
+                    return;
+                }
                 if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK || httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_PARTIAL) {
                     long currentTime = System.currentTimeMillis();
                     int len; //读取到的数据长度
@@ -136,10 +141,16 @@ public class DownloadManager {
                             if (downloadMap.containsKey(model.videoModel.video_code)) {
                                 downloadMap.remove(model.videoModel.video_code);
                             }
+                            if(isCancelled()){
+                                return;
+                            }
                             if (mFileDownloadListener != null) {
                                 mFileDownloadListener.onFileDownloadCompleted(model);
                             }
                         } else { //show progress
+                            if(isCancelled()){
+                                return;
+                            }
                             if (mFileDownloadListener != null) {
                                 long nowTime = System.currentTimeMillis();
                                 if (currentTime < nowTime - 500) {

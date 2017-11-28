@@ -100,6 +100,7 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         holder.downloadprogressBar.setMax(10000);
         holder.downloadprogressBar.setVisibility(View.GONE);
         holder.tvProgress.setVisibility(View.GONE);
+        holder.itemView.setClickable(true);
 
         DownloadManager downloadManager = DownloadManager.shareDownloadManager();
         SportVideoListModelEx oldModel = downloadManager.downloadMap.get(model.videoModel.video_code);
@@ -137,14 +138,15 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.setClickable(false);
                 if(isDownloaded) {
                     Intent intent = new Intent();
                     intent.putExtra(SHConstants.Video_ModelKey, model.videoModel);
                     intent.setClass(mActivity, VTOVRPlayerActivity.class);
                     mActivity.startActivity(intent);
                 }else {
+                    DownloadManager downloadManager = DownloadManager.shareDownloadManager();
                     if(model.isDownloading) {
-                        DownloadManager downloadManager = DownloadManager.shareDownloadManager();
                         SportVideoListModelEx oldModel = downloadManager.downloadMap.get(model.videoModel.video_code);
                         if(oldModel != null){
                             if(!oldModel.downlaodTask.isCancelled()) {
@@ -154,23 +156,21 @@ public class SportRefreshRecyclerAdapter extends RecyclerView.Adapter<SportRefre
                                 oldModel.downlaodTask = null;
                                 Toast.makeText(mActivity, model.videoModel.video_name + "已停止下载！", Toast.LENGTH_LONG).show();
                             }
+                            v.setClickable(true);
                             SportRefreshRecyclerAdapter.this.notifyDataSetChanged();
                         }
                     } else {
+                        downloadManager.downloadMap.put(model.videoModel.video_code ,model);
                         model.isDownloading = true;
                         model.progressBar.setVisibility(View.VISIBLE);
                         model.tvProgress.setVisibility(View.VISIBLE);
                         model.downloadStatus.setText(VideoDownaloding);
-                        downloadVideo(model);
+                        downloadManager.downloadData(model,fileDownloadListener);
                     }
                 }
+                v.setClickable(true);
             }
         });
-    }
-
-    private void downloadVideo(SportVideoListModelEx model){
-        DownloadManager downloadManager = DownloadManager.shareDownloadManager();
-        downloadManager.downloadData(model,fileDownloadListener);
     }
 
     private FileDownloadListener fileDownloadListener = new FileDownloadListener() {
